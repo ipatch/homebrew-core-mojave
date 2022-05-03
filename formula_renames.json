@@ -137,6 +137,7 @@
   "ssreflect": "math-comp",
   "stash-cli": "atlassian-cli",
   "subversion18": "subversion@1.8",
+  "szip": "libaec",
   "tachyon": "alluxio",
   "team-explorer-everywhere": "tee-clc",
   "tensorflow": "libtensorflow",
