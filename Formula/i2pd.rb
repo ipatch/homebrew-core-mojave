@@ -1,24 +1,19 @@
 class I2pd < Formula
   desc "Full-featured C++ implementation of I2P client"
   homepage "https://i2pd.website/"
-  url "https://github.com/PurpleI2P/i2pd/archive/2.41.0.tar.gz"
-  sha256 "7b333cd26670903ef0672cf87aa9f895814ce2bbef2e587e69d66ad9427664e6"
+  url "https://github.com/PurpleI2P/i2pd/archive/2.42.1.tar.gz"
+  sha256 "d52b55cf144a6eedbb3433214c035161c07f776090074daba0e5e83c01d09139"
   license "BSD-3-Clause"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/i2pd"
-    sha256 cellar: :any, mojave: "c5fb5077b2adf59239b5d4d337eb78554b5faaa72b80aabe78a14d1600bfe2f9"
+    rebuild 1
+    sha256 cellar: :any, mojave: "bcae96ceab807cf1f52c2907f9b931f3138363fe3b80fb463abdc071d04cd053"
   end
 
   depends_on "boost"
   depends_on "miniupnpc"
   depends_on "openssl@1.1"
-
-  # apply commit 5c15a12116c1e4447b94fd0f36caecfd2e5a40de to fix mutex lock on stop
-  patch do
-    url "https://github.com/PurpleI2P/i2pd/commit/5c15a12116c1e4447b94fd0f36caecfd2e5a40de.patch?full_index=1"
-    sha256 "bc3b1234966bd7d7dd13dcc71fd72f8db316b865aa7fb4e7bffa4fdd2efa4eb9"
-  end
 
   def install
     args = %W[
@@ -30,6 +25,8 @@ class I2pd < Formula
 
     args << "USE_AESNI=no" if Hardware::CPU.arm?
 
+    # Homebrew-specific fix to make sure documentation is installed in `share`.
+    inreplace "Makefile.linux", "${PREFIX}/usr/share", "${PREFIX}/share"
     system "make", "install", *args
 
     # preinstall to prevent overwriting changed by user configs

@@ -1,10 +1,9 @@
 class Tracker < Formula
   desc "Library and daemon that is an efficient search engine and triplestore"
   homepage "https://gnome.pages.gitlab.gnome.org/tracker/"
-  url "https://download.gnome.org/sources/tracker/3.1/tracker-3.1.2.tar.xz"
-  sha256 "da368962665d587bb2e4f164d75919a81dacb35c7d4cfae6f93a94c60f60ec8f"
+  url "https://download.gnome.org/sources/tracker/3.3/tracker-3.3.1.tar.xz"
+  sha256 "5ad6f5bc97781ebf55ecd6947cd4ae7ff4192516580d10bd8380f1dd47196ed2"
   license all_of: ["LGPL-2.1-or-later", "GPL-2.0-or-later"]
-  revision 1
 
   # Tracker doesn't follow GNOME's "even-numbered minor is stable" version scheme.
   livecheck do
@@ -14,31 +13,38 @@ class Tracker < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/tracker"
-    rebuild 2
-    sha256 mojave: "d495c2b8cbee13e8df56ed34ad8676c7edd7a11fad90cdb3d8fa83aa61cb56f8"
+    sha256 mojave: "69e97d028a6a703331bc1b7f7485ba4d6c6b9ba5f3ffe217a353d8867da95455"
   end
 
   depends_on "gobject-introspection" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkg-config" => [:build, :test]
+  depends_on "pygobject3" => :build
   depends_on "vala" => :build
   depends_on "dbus"
+  depends_on "glib"
+  depends_on "icu4c"
   depends_on "json-glib"
-  depends_on "libsoup@2"
-  uses_from_macos "icu4c"
+  depends_on "libsoup"
+  depends_on "sqlite"
+
+  uses_from_macos "libxml2"
 
   def install
     args = std_meson_args + %w[
       -Dman=false
       -Ddocs=false
       -Dsystemd_user_services=false
+      -Dtests=false
+      -Dsoup=soup3
     ]
 
     ENV["DESTDIR"] = "/"
     mkdir "build" do
       system "meson", *args, ".."
-      system "ninja", "-v"
+      # Disable parallel build due to error: 'libtracker-sparql/tracker-sparql-enum-types.h' file not found
+      system "ninja", "-v", "-j1"
       system "ninja", "install", "-v"
     end
   end
@@ -53,13 +59,13 @@ class Tracker < Formula
 
       gint main(gint argc, gchar *argv[]) {
         g_autoptr(GError) error = NULL;
-        g_autoptr(GFile) store, ontology;
+        g_autoptr(GFile) ontology;
         g_autoptr(TrackerSparqlConnection) connection;
         g_autoptr(TrackerSparqlCursor) cursor;
         int i = 0;
 
         ontology = tracker_sparql_get_ontology_nepomuk();
-        connection = tracker_sparql_connection_new(0, store, ontology, NULL, &error);
+        connection = tracker_sparql_connection_new(0, NULL, ontology, NULL, &error);
 
         if (error) {
           g_critical("Error: %s", error->message);
@@ -90,19 +96,8 @@ class Tracker < Formula
         return 0;
       }
     EOS
-    glib = Formula["glib"]
-    flags = %W[
-      -I#{glib.opt_include}/glib-2.0
-      -I#{glib.opt_lib}/glib-2.0/include
-      -I#{include}/tracker-3.0
-      -D_REENTRANT
-      -L#{glib.opt_lib}
-      -L#{lib}
-      -ltracker-sparql-3.0
-      -lgio-2.0
-      -lglib-2.0
-      -lgobject-2.0
-    ]
+    ENV.prepend_path "PKG_CONFIG_PATH", Formula["icu4c"].opt_lib/"pkgconfig" if OS.mac?
+    flags = shell_output("pkg-config --cflags --libs tracker-sparql-3.0").chomp.split
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"
   end

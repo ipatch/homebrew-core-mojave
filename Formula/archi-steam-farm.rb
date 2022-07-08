@@ -2,8 +2,8 @@ class ArchiSteamFarm < Formula
   desc "Application for idling Steam cards from multiple accounts simultaneously"
   homepage "https://github.com/JustArchiNET/ArchiSteamFarm"
   url "https://github.com/JustArchiNET/ArchiSteamFarm.git",
-      tag:      "5.2.4.2",
-      revision: "aea7c7640c4b39e7de187a68d1a413c8460874ae"
+      tag:      "5.2.6.3",
+      revision: "03c2ba049e814df1050c859aae0edd104e95022c"
   license "Apache-2.0"
   head "https://github.com/JustArchiNET/ArchiSteamFarm.git", branch: "main"
 
@@ -14,7 +14,7 @@ class ArchiSteamFarm < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/archi-steam-farm"
-    sha256 cellar: :any_skip_relocation, mojave: "0790aa682aa32ebd73b49dd671361f7e8e15b8acdec8eaf6efa46a6f331c00e1"
+    sha256 cellar: :any_skip_relocation, mojave: "48e0468f980d0ecf1d1db173cd73a0931e692331d8c3445fe23000555ac68e8d"
   end
 
   depends_on "dotnet"

@@ -3,17 +3,18 @@ class Networkit < Formula
 
   desc "Performance toolkit for large-scale network analysis"
   homepage "https://networkit.github.io"
-  url "https://github.com/networkit/networkit/archive/9.1.1.tar.gz"
-  sha256 "0376b3b7b8ba1fefb46549c7dd2cf979237a24708293715b1da92b4da272a742"
+  url "https://github.com/networkit/networkit/archive/10.0.tar.gz"
+  sha256 "77187a96dea59e5ba1f60de7ed63d45672671310f0b844a1361557762c2063f3"
   license "MIT"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/networkit"
-    sha256 mojave: "77ce58ab15b2a213118abbe016fa05527721263aadf667ab9120652453372e30"
+    sha256 cellar: :any, mojave: "1cda82b5eca5f61c5387ba56333f592b4b4982506c1e77e82e38a9978a236745"
   end
 
   depends_on "cmake" => :build
-  depends_on "cython" => :build
+  depends_on "libcython" => :build
+  depends_on "ninja" => :build
   depends_on "tlx" => :build
 
   depends_on "libnetworkit"
@@ -26,7 +27,7 @@ class Networkit < Formula
     rpath_addons = Formula["libnetworkit"].opt_lib
 
     ENV.prepend_create_path "PYTHONPATH", libexec+"lib/python#{xy}/site-packages/"
-    ENV.append_path "PYTHONPATH", Formula["cython"].opt_libexec/"lib/python#{xy}/site-packages"
+    ENV.append_path "PYTHONPATH", Formula["libcython"].opt_libexec/"lib/python#{xy}/site-packages"
     system Formula["python@3.9"].opt_bin/"python3", "setup.py", "build_ext",
           "--networkit-external-core",
           "--external-tlx=#{Formula["tlx"].opt_prefix}",

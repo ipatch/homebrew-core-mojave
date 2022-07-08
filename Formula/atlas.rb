@@ -1,14 +1,14 @@
 class Atlas < Formula
   desc "Database toolkit"
   homepage "https://atlasgo.io/"
-  url "https://github.com/ariga/atlas/archive/v0.3.7.tar.gz"
-  sha256 "e958e6e31cf7f04f082939322875165d38685e1a2f59334733dd47c44c19b747"
+  url "https://github.com/ariga/atlas/archive/v0.4.2.tar.gz"
+  sha256 "d950e9f665cfb8b556c4f921e9d642e9628c1c8c788fa2b5ef9ddcb32d8751e6"
   license "Apache-2.0"
   head "https://github.com/ariga/atlas.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/atlas"
-    sha256 cellar: :any_skip_relocation, mojave: "1c6ba699e2efd5608efc7b4dbe2240a3b8f2b7f2d9719885aa3689c1128e7195"
+    sha256 cellar: :any_skip_relocation, mojave: "de01747529d77cd7f39ac91242828e62af936bc5327f82985e6ddd0529d04d1e"
   end
 
   depends_on "go" => :build
@@ -16,7 +16,7 @@ class Atlas < Formula
   def install
     ldflags = %W[
       -s -w
-      -X ariga.io/atlas/cmd/action.version=v#{version}
+      -X ariga.io/atlas/cmd/atlascmd.version=v#{version}
     ]
     system "go", "build", *std_go_args(ldflags: ldflags), "./cmd/atlas"
 
@@ -32,7 +32,7 @@ class Atlas < Formula
 
   test do
     assert_match "Error: mysql: query system variables:",
-      shell_output("#{bin}/atlas schema inspect -d \"mysql://user:pass@tcp(localhost:3306)/dbname\" 2>&1", 1)
+      shell_output("#{bin}/atlas schema inspect -u \"mysql://user:pass@localhost:3306/dbname\" 2>&1", 1)
 
     assert_match version.to_s, shell_output("#{bin}/atlas version")
   end

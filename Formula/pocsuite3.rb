@@ -3,14 +3,14 @@ class Pocsuite3 < Formula
 
   desc "Open-sourced remote vulnerability testing framework"
   homepage "https://pocsuite.org/"
-  url "https://files.pythonhosted.org/packages/72/68/7e51f93895ba2765e20eced23b5bf501bb49f68874f43edf47e9a9d17af2/pocsuite3-1.9.2.tar.gz"
-  sha256 "474dd34097b511f22e748b5290896d52523923b76373a3b0c43b47cbee3ca915"
+  url "https://files.pythonhosted.org/packages/23/3b/5a06bc7d66cfaca98394315d71086749ea5eaf7bfe9d87c7e4627772d11e/pocsuite3-1.9.5.tar.gz"
+  sha256 "5d42fe4b07bf2c8a1d7557f4c509817e027d9a01ef480ce5768f967b06405783"
   license "GPL-2.0-only"
   head "https://github.com/knownsec/pocsuite3.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/pocsuite3"
-    sha256 cellar: :any_skip_relocation, mojave: "9c68f4deb40d0686fa362f11bdd66c44183cef7faca8cc7f5deaff7275b47cd2"
+    sha256 cellar: :any_skip_relocation, mojave: "64f5eae306462b5ac4669cdfb0d40f8ebe2ca5dd11f268a7198e6c75a252aa4e"
   end
 
   depends_on "python@3.10"
@@ -23,8 +23,8 @@ class Pocsuite3 < Formula
   end
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/6c/ae/d26450834f0acc9e3d1f74508da6df1551ceab6c2ce0766a593362d6d57f/certifi-2021.10.8.tar.gz"
-    sha256 "78884e7c1d4b00ce3cea67b44566851c4343c120abd683433ce934a68ea58872"
+    url "https://files.pythonhosted.org/packages/cc/85/319a8a684e8ac6d87a1193090e06b6bbb302717496380e225ee10487c888/certifi-2022.6.15.tar.gz"
+    sha256 "84c85a9078b11105f04f3036a9482ae10e4621616db313fe045dd24743a0820d"
   end
 
   resource "chardet" do
@@ -38,8 +38,8 @@ class Pocsuite3 < Formula
   end
 
   resource "colorama" do
-    url "https://files.pythonhosted.org/packages/1f/bb/5d3246097ab77fa083a61bd8d3d527b7ae063c7d8e8671b1cf8c4ec10cbe/colorama-0.4.4.tar.gz"
-    sha256 "5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"
+    url "https://files.pythonhosted.org/packages/2b/65/24d033a9325ce42ccbfa3ca2d0866c7e89cc68e5b9d92ecaba9feef631df/colorama-0.4.5.tar.gz"
+    sha256 "e6c6b4334fc50988a639d9b98aa429a0b57da6e17b9a44f0451f930b6967b7a4"
   end
 
   resource "colorlog" do
@@ -48,8 +48,8 @@ class Pocsuite3 < Formula
   end
 
   resource "Faker" do
-    url "https://files.pythonhosted.org/packages/d6/3e/972fd4552247f8a2d746264da80ff720969b9609fef6e687b914deed56ab/Faker-13.3.4.tar.gz"
-    sha256 "188961065fb5c78ea639f42176f55100f72c90c3a3179ac6c955c4bd712b0511"
+    url "https://files.pythonhosted.org/packages/6d/cc/a6f8e71577a744d172bdcd994d41914d595d32e451f4a82498613910dc01/Faker-13.14.0.tar.gz"
+    sha256 "b9f93ec97a70da79d43f497aa7b2b7d2bcd5d0c6d3ab7c102dde4193d0a38351"
   end
 
   resource "idna" do
@@ -58,8 +58,8 @@ class Pocsuite3 < Formula
   end
 
   resource "prettytable" do
-    url "https://files.pythonhosted.org/packages/cb/7d/7e6bc4bd4abc49e9f4f5c4773bb43d1615e4b476d108d1b527318b9c6521/prettytable-3.2.0.tar.gz"
-    sha256 "ae7d96c64100543dc61662b40a28f3b03c0f94a503ed121c6fca2782c5816f81"
+    url "https://files.pythonhosted.org/packages/10/88/ef38a6e4bc375600d3031e405a8d3b3dc4a154fccffd21d5d06e66c96230/prettytable-3.3.0.tar.gz"
+    sha256 "118eb54fd2794049b810893653b20952349df6d3bc1764e7facd8a18064fa9b0"
   end
 
   resource "pycryptodomex" do
@@ -78,8 +78,8 @@ class Pocsuite3 < Formula
   end
 
   resource "requests" do
-    url "https://files.pythonhosted.org/packages/60/f3/26ff3767f099b73e0efa138a9998da67890793bfa475d8278f84a30fec77/requests-2.27.1.tar.gz"
-    sha256 "68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61"
+    url "https://files.pythonhosted.org/packages/e9/23/384d9953bb968731212dc37af87cb75a885dc48e0615bd6a303577c4dc4b/requests-2.28.0.tar.gz"
+    sha256 "d568723a7ebd25875d8d1eaf5dfa068cd2fc8194b2e483d7b1f7c81918dbec6b"
   end
 
   resource "requests-toolbelt" do

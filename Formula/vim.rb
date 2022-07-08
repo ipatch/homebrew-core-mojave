@@ -2,14 +2,24 @@ class Vim < Formula
   desc "Vi 'workalike' with many additional features"
   homepage "https://www.vim.org/"
   # vim should only be updated every 50 releases on multiples of 50
-  url "https://github.com/vim/vim/archive/v8.2.4700.tar.gz"
-  sha256 "ccf96833675361f30064c6ac8a9637cec6362d6eb7df78fcf789e70bca042c6d"
+  url "https://github.com/vim/vim/archive/v8.2.5150.tar.gz"
+  sha256 "3c92f902eeed21880f38191694e87032ae9efedb479afe25eb37f1b743f45383"
   license "Vim"
+  revision 1
   head "https://github.com/vim/vim.git", branch: "master"
+
+  # The Vim repository contains thousands of tags and the `Git` strategy isn't
+  # ideal in this context. This is an exceptional situation, so this checks the
+  # first page of tags on GitHub (to minimize data transfer).
+  livecheck do
+    url "https://github.com/vim/vim/tags"
+    regex(%r{href=["']?[^"' >]*?/tag/v?(\d+(?:\.\d+)+)["' >]}i)
+    strategy :page_match
+  end
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/vim"
-    sha256 mojave: "34a3de14bf8657bc5ea9883f96f1a6648ff2e91e55486a8b1df6f8910411bba0"
+    sha256 mojave: "bf03ffb7e227afdc15f3da0b7908bd3b77e2c6e9b86bb9d3e75ca255714fc8a8"
   end
 
   depends_on "gettext"
@@ -50,7 +60,7 @@ class Vim < Formula
                           "--enable-perlinterp",
                           "--enable-rubyinterp",
                           "--enable-python3interp",
-                          "--enable-gui=no",
+                          "--disable-gui",
                           "--without-x",
                           "--enable-luainterp",
                           "--with-lua-prefix=#{Formula["lua"].opt_prefix}"

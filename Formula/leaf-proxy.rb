@@ -1,28 +1,21 @@
 class LeafProxy < Formula
   desc "Lightweight and fast proxy utility"
   homepage "https://github.com/eycorsican/leaf"
-  url "https://github.com/eycorsican/leaf/archive/v0.4.4.tar.gz"
-  sha256 "6ce46ba0eb4b357fccc36b3be5bdab32dd6879b53130a496b7a8790a47b14f26"
+  url "https://github.com/eycorsican/leaf/archive/v0.6.0.tar.gz"
+  sha256 "5b22932e1dea586ead051a09a4c416e538c29c85d1782718e4652415e59884e8"
   license "Apache-2.0"
   head "https://github.com/eycorsican/leaf.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/leaf-proxy"
-    sha256 cellar: :any_skip_relocation, mojave: "545db39eea08c6f934c00ebf3c926d4452297a267488e6fdceb39ac957c2a3b7"
+    sha256 cellar: :any_skip_relocation, mojave: "ea1cc30cca9f0aa00811f2b81a0ffa1f049030d5f90859a1d8e2d0bcffbe2674"
   end
 
   depends_on "rust" => :build
 
   conflicts_with "leaf", because: "both install a `leaf` binary"
 
-  resource "lwip" do
-    url "https://github.com/eycorsican/lwip-leaf.git",
-        revision: "86632e2747c926a75d32be8bd9af059aa38ae75e"
-  end
-
   def install
-    (buildpath/"leaf/src/proxy/tun/netstack/lwip").install resource("lwip")
-
     cd "leaf-bin" do
       system "cargo", "install", *std_cargo_args
     end
@@ -38,6 +31,6 @@ class LeafProxy < Formula
     EOS
     output = shell_output "#{bin}/leaf -c #{testpath}/config.conf -t SS"
 
-    assert_match "dispatch to outbound SS failed", output
+    assert_match "TCP failed: all attempts failed", output
   end
 end

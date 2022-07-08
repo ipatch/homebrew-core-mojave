@@ -1,8 +1,8 @@
 class Keptn < Formula
   desc "Is the CLI for keptn.sh a message-driven control-plane for application delivery"
   homepage "https://keptn.sh"
-  url "https://github.com/keptn/keptn/archive/0.14.1.tar.gz"
-  sha256 "8ecf1613cfc7e17afe33056512f8cfe4cf02f5c881b2093bf935454167f40f96"
+  url "https://github.com/keptn/keptn/archive/0.16.0.tar.gz"
+  sha256 "09bd95e3eac537d8a040fea1c0b8fc7a0497b8c98b6e402d31ae207a24df0fea"
   license "Apache-2.0"
 
   livecheck do
@@ -12,7 +12,7 @@ class Keptn < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/keptn"
-    sha256 cellar: :any_skip_relocation, mojave: "48c6effa634b2b5e40476c865e7784867e22714db45cbfafb4ab4adfdbdc52e0"
+    sha256 cellar: :any_skip_relocation, mojave: "ef6d2bb934590954da5384b1ccc6e1cf8ebc96df4bdaabae03b87e503f12ca89"
   end
 
   depends_on "go" => :build

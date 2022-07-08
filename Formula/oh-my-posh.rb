@@ -1,14 +1,14 @@
 class OhMyPosh < Formula
   desc "Prompt theme engine for any shell"
   homepage "https://ohmyposh.dev"
-  url "https://github.com/JanDeDobbeleer/oh-my-posh/archive/v7.69.0.tar.gz"
-  sha256 "f01b8c7e5b1d20ffdd47a59a0e3d028ae7219b7a601579541a9807bca10bdc84"
+  url "https://github.com/JanDeDobbeleer/oh-my-posh/archive/v8.6.0.tar.gz"
+  sha256 "bfff84b9a3f0d19aafbf02c0e1dc62c7f26b8491f6d5ba6bbda0ce599dcfa463"
   license "MIT"
   head "https://github.com/JanDeDobbeleer/oh-my-posh.git", branch: "main"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/oh-my-posh"
-    sha256 cellar: :any_skip_relocation, mojave: "92abfb61a217d5a1aef0147cd21bca9f1f81baa7e92e58b18861539388a87ac1"
+    sha256 cellar: :any_skip_relocation, mojave: "572d670bef5516b975c4d44beeb438d2ed7843826787a492eb9fabff4be92c11"
   end
 
   depends_on "go" => :build
@@ -21,7 +21,9 @@ class OhMyPosh < Formula
     cd "src" do
       system "go", "build", *std_go_args(ldflags: ldflags)
     end
-    pkgshare.install "themes"
+
+    prefix.install "themes"
+    pkgshare.install_symlink prefix/"themes"
   end
 
   test do

@@ -1,13 +1,15 @@
 class EasyTag < Formula
   desc "Application for viewing and editing audio file tags"
-  homepage "https://projects.gnome.org/easytag"
+  homepage "https://wiki.gnome.org/Apps/EasyTAG"
   url "https://download.gnome.org/sources/easytag/2.4/easytag-2.4.3.tar.xz"
   sha256 "fc51ee92a705e3c5979dff1655f7496effb68b98f1ada0547e8cbbc033b67dd5"
+  license "GPL-2.0-or-later"
   revision 6
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/easy-tag"
-    sha256 mojave: "f1ae0e14fb55305b1342f01b9aa42d59c95dec49c6a970dcbc2ac466eae18d3b"
+    rebuild 2
+    sha256 mojave: "c348fec7407f2a60e36edc257d0c8450db2ba97fe7aac205f1863025381a63ea"
   end
 
   depends_on "intltool" => :build
@@ -26,12 +28,16 @@ class EasyTag < Formula
   depends_on "taglib"
   depends_on "wavpack"
 
+  uses_from_macos "perl" => :build
+
   # disable gtk-update-icon-cache
   patch :DATA
 
   def install
     xy = Language::Python.major_minor_version Formula["python@3.9"].opt_bin/"python3"
     ENV.append_path "PYTHONPATH", "#{Formula["libxml2"].opt_lib}/python#{xy}/site-packages"
+    ENV.prepend_path "PERL5LIB", Formula["intltool"].libexec/"lib/perl5" unless OS.mac?
+    ENV.append "LDFLAGS", "-lz"
 
     system "./configure", "--disable-dependency-tracking",
                           "--prefix=#{prefix}",
@@ -47,6 +53,10 @@ class EasyTag < Formula
   end
 
   test do
+    # Disable test on Linux because it fails with:
+    # Gtk-WARNING **: 18:38:23.471: cannot open display
+    return if OS.linux? && ENV["HOMEBREW_GITHUB_ACTIONS"]
+
     system "#{bin}/easytag", "--version"
   end
 end

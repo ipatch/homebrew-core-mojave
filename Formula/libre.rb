@@ -1,13 +1,13 @@
 class Libre < Formula
   desc "Toolkit library for asynchronous network I/O with protocol stacks"
   homepage "https://github.com/baresip/re"
-  url "https://github.com/baresip/re/archive/refs/tags/v2.2.2.tar.gz"
-  sha256 "25d66108f827507d1a08dc15d4a2a6d994e0cc2368f2faa6778b3a48c0d15f2f"
+  url "https://github.com/baresip/re/archive/refs/tags/v2.4.0.tar.gz"
+  sha256 "f2b807f6d4cd0ff73e8233d44f81727c013160c0b39b528b056c2d2f93a8fa27"
   license "BSD-3-Clause"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/libre"
-    sha256 cellar: :any, mojave: "4e4fd183c0b002e752e5b05f41dab1568f7af310c62e4226a9190d6a3435ffbb"
+    sha256 cellar: :any, mojave: "33c9d9a2d738723b8835794c96f56c013baa280f8cf874703f0119482b87c6a7"
   end
 
   depends_on "openssl@1.1"

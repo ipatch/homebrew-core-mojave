@@ -13,7 +13,8 @@ class Ffmpeg2theora < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/ffmpeg2theora"
-    sha256 cellar: :any, mojave: "d4a1519a693b9ef9c21b82f7fa83d95e6ab9a32095b8a5e6f147fbeed8365df4"
+    rebuild 2
+    sha256 cellar: :any, mojave: "051b5678a26dc4958e1f368f12c91d0f111e606b2851a9611f30b7928b83747f"
   end
 
   depends_on "pkg-config" => :build
@@ -24,12 +25,22 @@ class Ffmpeg2theora < Formula
   depends_on "libvorbis"
   depends_on "theora"
 
+  on_linux do
+    depends_on "gcc"
+  end
+
   fails_with gcc: "5" # ffmpeg is compiled with GCC
 
   # Use python3 print()
   patch do
     url "https://salsa.debian.org/multimedia-team/ffmpeg2theora/-/raw/master/debian/patches/0002-Use-python3-print.patch"
     sha256 "8cf333e691cf19494962b51748b8246502432867d9feb3d7919d329cb3696e97"
+  end
+
+  # Fix missing linker flags
+  patch do
+    url "https://salsa.debian.org/multimedia-team/ffmpeg2theora/-/raw/debian/0.30-2/debian/patches/link-libm.patch"
+    sha256 "1cf00c93617ecc4833e9d2267d68b70eeb6aa6183f0c939f7caf0af5ce8460b5"
   end
 
   def install
@@ -39,8 +50,14 @@ class Ffmpeg2theora < Formula
     args = [
       "prefix=#{prefix}",
       "mandir=PREFIX/share/man",
-      "APPEND_LINKFLAGS=-headerpad_max_install_names",
     ]
+    if OS.mac?
+      args << "APPEND_LINKFLAGS=-headerpad_max_install_names"
+    else
+      gcc_version = Formula["gcc"].version.major
+      rpaths = "-Wl,-rpath,#{HOMEBREW_PREFIX}/lib -Wl,-rpath,#{Formula["ffmpeg@4"].opt_lib}"
+      args << "APPEND_LINKFLAGS=-L#{Formula["gcc"].opt_lib}/gcc/#{gcc_version} -lstdc++ #{rpaths}"
+    end
     system "scons", "install", *args
   end
 

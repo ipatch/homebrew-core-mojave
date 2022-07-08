@@ -1,10 +1,9 @@
 class Rdkit < Formula
   desc "Open-source chemoinformatics library"
   homepage "https://rdkit.org/"
-  url "https://github.com/rdkit/rdkit/archive/Release_2021_09_4.tar.gz"
-  sha256 "ce192e85bbdc1dcf24d327197229099c8625ee20ef022fcbd980791fdbfc7203"
+  url "https://github.com/rdkit/rdkit/archive/Release_2022_03_3.tar.gz"
+  sha256 "e2832077e258bfe906c9c0dc1664d2ba4fc0acf98bfe073c6383cb1d051b6ef0"
   license "BSD-3-Clause"
-  revision 1
   head "https://github.com/rdkit/rdkit.git", branch: "master"
 
   livecheck do
@@ -17,10 +16,9 @@ class Rdkit < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/rdkit"
-    sha256 cellar: :any, mojave: "1be36aca8967f71870055c6cacfc3e52b0d59839744d3858c2b94aed5c13b00c"
+    sha256 cellar: :any, mojave: "da902a7d712953c674a6650f51e359d91985d2a0dfe789324dd7f7fe7b87f235"
   end
 
-  depends_on "catch2" => :build
   depends_on "cmake" => :build
   depends_on "swig" => :build
   depends_on "boost"
@@ -31,12 +29,6 @@ class Rdkit < Formula
   depends_on "postgresql"
   depends_on "py3cairo"
   depends_on "python@3.9"
-
-  # Fix for Comic Neue md5 checksum change, remove with next release
-  patch do
-    url "https://github.com/rdkit/rdkit/commit/d05501c5db6f30b72b5d751e7100be165549ebdc.patch?full_index=true"
-    sha256 "06eb6f9f8479c9cc227948654c42e71892c4ae19878291cf3e108feb7a8edc7d"
-  end
 
   def install
     ENV.cxx11
@@ -75,7 +67,6 @@ class Rdkit < Formula
       -DPYTHON_INCLUDE_DIR=#{py3include}
       -DPYTHON_EXECUTABLE=#{python_executable}
       -DPYTHON_NUMPY_INCLUDE_PATH=#{numpy_include}
-      -DCATCH_DIR=#{Formula["catch2"].opt_include}/catch2
     ]
 
     system "cmake", ".", *args

@@ -3,13 +3,13 @@ class SvtplayDl < Formula
 
   desc "Download videos from https://www.svtplay.se/"
   homepage "https://svtplay-dl.se/"
-  url "https://files.pythonhosted.org/packages/75/ba/5520a38c8d9b8d119bbf838df5705c95309b9d3f4082bff8bc3ab1345d22/svtplay-dl-4.11.tar.gz"
-  sha256 "bb327ae2a7b7a33d22f088d84f9e7c1d41e1016a1be536e60cfa2919aef1d5ce"
+  url "https://files.pythonhosted.org/packages/40/c0/7363733395c0a88af79ac1097ee2e5fc3d8f984eec2f04e6e539ffb68dff/svtplay-dl-4.13.tar.gz"
+  sha256 "4c0279aefed6d95048e7d01d23bea1c3e97986672ebd5330c061c52c94d1a95d"
   license "MIT"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/svtplay-dl"
-    sha256 cellar: :any, mojave: "d3efbc38f0db4b959c7f9cae768e8fa82a177aa7645e3a9767a646c89c5e3f3d"
+    sha256 cellar: :any, mojave: "25935ba03dce6e07b2eaf1533e661b5a0f80a2c77d1c42904888e13ce9fc5223"
   end
 
   depends_on "rust" => :build
@@ -17,8 +17,8 @@ class SvtplayDl < Formula
   depends_on "python@3.10"
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/6c/ae/d26450834f0acc9e3d1f74508da6df1551ceab6c2ce0766a593362d6d57f/certifi-2021.10.8.tar.gz"
-    sha256 "78884e7c1d4b00ce3cea67b44566851c4343c120abd683433ce934a68ea58872"
+    url "https://files.pythonhosted.org/packages/07/10/75277f313d13a2b74fc56e29239d5c840c2bf09f17bf25c02b35558812c6/certifi-2022.5.18.1.tar.gz"
+    sha256 "9c5705e395cd70084351dd8ad5c41e65655e08ce46f2ec9cf6c2c08390f71eb7"
   end
 
   resource "cffi" do
@@ -32,8 +32,8 @@ class SvtplayDl < Formula
   end
 
   resource "cryptography" do
-    url "https://files.pythonhosted.org/packages/10/a7/51953e73828deef2b58ba1604de9167843ee9cd4185d8aaffcb45dd1932d/cryptography-36.0.2.tar.gz"
-    sha256 "70f8f4f7bb2ac9f340655cbac89d68c527af5bb4387522a8413e841e3e6628c9"
+    url "https://files.pythonhosted.org/packages/51/05/bb2b681f6a77276fc423d04187c39dafdb65b799c8d87b62ca82659f9ead/cryptography-37.0.2.tar.gz"
+    sha256 "f224ad253cc9cea7568f49077007d2263efa57396a2f2f78114066fd54b5c68e"
   end
 
   resource "idna" do
@@ -79,11 +79,7 @@ class SvtplayDl < Formula
 
   test do
     url = "https://tv.aftonbladet.se/abtv/articles/244248"
-    match = <<~EOS
-      https://absvpvod-vh.akamaihd.net/i/2018/02/cdaefe0533c2561f00a41c52a2d790bd
-      /,1280_720_2800,960_540_1500,640_360_800,480_270_300,.mp4.csmil
-      /index_0_av.m3u8
-    EOS
-    assert_match match.delete!("\n"), shell_output("#{bin}/svtplay-dl -g #{url}")
+    match = "https://amd-ab.akamaized.net/ab/vod/2018/02/cdaefe0533c2561f00a41c52a2d790bd/1280_720_pkg.m3u8"
+    assert_match match, shell_output("#{bin}/svtplay-dl -g #{url}")
   end
 end

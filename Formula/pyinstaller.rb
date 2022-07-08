@@ -3,14 +3,14 @@ class Pyinstaller < Formula
 
   desc "Bundle a Python application and all its dependencies"
   homepage "https://pyinstaller.org/"
-  url "https://files.pythonhosted.org/packages/cf/b0/69585629b023056e801a99ee4d669e2d3b85fb5a68fe461c1660af9ea514/pyinstaller-5.0.tar.gz"
-  sha256 "0b7f1a09e1ae617867d4e9b56285dd670bcf0b1362b272c96a933b0195fce226"
+  url "https://files.pythonhosted.org/packages/c9/41/fbb2f0e6e1934a47a99295d67ba178477f8809ae939c96608c711596f478/pyinstaller-5.1.tar.gz"
+  sha256 "9596c70c860cbce19537354db95b180351959b4cd14a70db6ab1d1432668c313"
   license "GPL-2.0-or-later"
   head "https://github.com/pyinstaller/pyinstaller.git", branch: "develop"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/pyinstaller"
-    sha256 cellar: :any_skip_relocation, mojave: "fa8a0de1f5f21d03944de3e84799e822f0290af2028d94b1e449cc2a709f6b30"
+    sha256 cellar: :any_skip_relocation, mojave: "36974d9673b3d6e39b10c8481581902da91ceac17c87067803bd53c6aa133973"
   end
 
   depends_on "python@3.10"
@@ -26,8 +26,8 @@ class Pyinstaller < Formula
   end
 
   resource "pyinstaller-hooks-contrib" do
-    url "https://files.pythonhosted.org/packages/4c/c9/065f97b7e89dcb438ce3e270f3f28af5cba759f4127afe14ce6038701270/pyinstaller-hooks-contrib-2022.4.tar.gz"
-    sha256 "b7f7da20e5b83c22219a21b8f849525e5f735197975313208f4e07ff9549cdaf"
+    url "https://files.pythonhosted.org/packages/b3/8c/c390f589d257717dbb6725147dc3dff89e832c432ac59aa8c1c74030746f/pyinstaller-hooks-contrib-2022.5.tar.gz"
+    sha256 "90a05207ceea2f8c166f12c3add46e24c0ed6a78234e5f99320f8683d56e0dec"
   end
 
   def install

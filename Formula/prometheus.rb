@@ -1,8 +1,8 @@
 class Prometheus < Formula
   desc "Service monitoring system and time series database"
   homepage "https://prometheus.io/"
-  url "https://github.com/prometheus/prometheus/archive/v2.34.0.tar.gz"
-  sha256 "76bb5afff1a9be179b99afe624fae73d5c23a27976f2bcb2dc663d1942e87e22"
+  url "https://github.com/prometheus/prometheus/archive/v2.36.1.tar.gz"
+  sha256 "50f1d1a6eda49f022050708a20bbc04c7410c854be2402d6706a53222417697b"
   license "Apache-2.0"
 
   livecheck do
@@ -12,15 +12,17 @@ class Prometheus < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/prometheus"
-    sha256 cellar: :any_skip_relocation, mojave: "c3bc6a8e0d25c538999d7eb715c620c36d77bcd4da5df10bc10d5eee6a022430"
+    sha256 cellar: :any_skip_relocation, mojave: "78ae203df59bfc625ddc62b36d0a6e4290d9a2faa5793ccc7645ac2d42382b4d"
   end
 
+  depends_on "gnu-tar" => :build
   depends_on "go" => :build
   depends_on "node" => :build
   depends_on "yarn" => :build
 
   def install
     ENV.deparallelize
+    ENV.prepend_path "PATH", Formula["gnu-tar"].opt_libexec/"gnubin"
     ENV.prepend_path "PATH", Formula["node"].opt_libexec/"bin"
     mkdir_p buildpath/"src/github.com/prometheus"
     ln_sf buildpath, buildpath/"src/github.com/prometheus/prometheus"

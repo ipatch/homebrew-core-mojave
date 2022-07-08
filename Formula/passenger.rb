@@ -1,20 +1,27 @@
 class Passenger < Formula
   desc "Server for Ruby, Python, and Node.js apps via Apache/NGINX"
   homepage "https://www.phusionpassenger.com/"
-  url "https://github.com/phusion/passenger/releases/download/release-6.0.13/passenger-6.0.13.tar.gz"
-  sha256 "fed2efaac02596a56298a6a97738a1d28dca41c1f1718ec57a64a3fd09776be3"
+  url "https://github.com/phusion/passenger/releases/download/release-6.0.14/passenger-6.0.14.tar.gz"
+  sha256 "41cd40acfadca1e8adffca3b23d63a1d6d37f976d8c29e4eff0de6250f4113a2"
   license "MIT"
+  revision 1
   head "https://github.com/phusion/passenger.git", branch: "stable-6.0"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/passenger"
-    sha256 cellar: :any, mojave: "aa82594f6ae752764367440cc40f48eb33fa1ecc75ec8ea5929f72cbd31ef07c"
+    sha256 cellar: :any, mojave: "3e0a4d381ca84857ab7eb6cd3cab201c245458cf9b6702068c9bb3e0395824d6"
   end
 
-  # to build nginx module
-  depends_on "nginx" => [:build, :test]
+  depends_on "httpd" => :build # to build the apache2 module
+  depends_on "nginx" => [:build, :test] # to build nginx module
+  depends_on "apr"
+  depends_on "apr-util"
   depends_on "openssl@1.1"
   depends_on "pcre"
+
+  uses_from_macos "xz" => :build
+  uses_from_macos "curl"
+  uses_from_macos "libxcrypt"
   uses_from_macos "ruby", since: :catalina
 
   def install

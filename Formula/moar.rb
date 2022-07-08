@@ -1,13 +1,13 @@
 class Moar < Formula
   desc "Nice to use pager for humans"
   homepage "https://github.com/walles/moar"
-  url "https://github.com/walles/moar/archive/refs/tags/v1.9.2.tar.gz"
-  sha256 "d93375774eb83bde2a171364f8166c1cd0f8d41136286a13758d05d32aeb2fa7"
+  url "https://github.com/walles/moar/archive/refs/tags/v1.9.4.tar.gz"
+  sha256 "3073f3d086ec7a9980b2a9db6e3500233e99626c5c3deec21c3f149199d96b40"
   license "BSD-2-Clause"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/moar"
-    sha256 cellar: :any_skip_relocation, mojave: "d40ab09fa8dfd023f908215dbc42fbd171416e135a76033faa7f96a19f6f821f"
+    sha256 cellar: :any_skip_relocation, mojave: "d62aa6c2b2d9af3c1a30099c2a00016c1c1d1188c62259cbb6944138ecb1b3cd"
   end
 
   depends_on "go" => :build

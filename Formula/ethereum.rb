@@ -1,8 +1,8 @@
 class Ethereum < Formula
   desc "Official Go implementation of the Ethereum protocol"
   homepage "https://geth.ethereum.org/"
-  url "https://github.com/ethereum/go-ethereum/archive/v1.10.17.tar.gz"
-  sha256 "00db123e1b23d3d904bd8a6bd4de8f3330d14db1622e8f22bf1653c94f03e09c"
+  url "https://github.com/ethereum/go-ethereum/archive/v1.10.19.tar.gz"
+  sha256 "4aefb4a26d2146c315955f714ed0d14bb0358c95ff6bad99845678263555c7ee"
   license "LGPL-3.0-or-later"
   head "https://github.com/ethereum/go-ethereum.git", branch: "master"
 
@@ -13,7 +13,7 @@ class Ethereum < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/ethereum"
-    sha256 cellar: :any_skip_relocation, mojave: "b2dd4b1f5eb6626f70006374b5f9a6378f765720b93feda334ba8285a0a0eea9"
+    sha256 cellar: :any_skip_relocation, mojave: "f5724f0638c7ae147d15b770b8bba0c6b3df889445024cf06a592b2ac16ddb3e"
   end
 
   depends_on "go" => :build

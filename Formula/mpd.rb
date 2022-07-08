@@ -1,10 +1,9 @@
 class Mpd < Formula
   desc "Music Player Daemon"
   homepage "https://www.musicpd.org/"
-  url "https://www.musicpd.org/download/mpd/0.23/mpd-0.23.5.tar.xz"
-  sha256 "f22c2c25093a05f4566f9cd7207cfbcd8405af67ed29a989bcf8905f80b7a299"
+  url "https://www.musicpd.org/download/mpd/0.23/mpd-0.23.7.tar.xz"
+  sha256 "960dcbac717c388f5dcc4fd945e3af19a476f2b15f367e9653d4c7a948768211"
   license "GPL-2.0-or-later"
-  revision 3
   head "https://github.com/MusicPlayerDaemon/MPD.git", branch: "master"
 
   livecheck do
@@ -14,7 +13,7 @@ class Mpd < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/mpd"
-    sha256 cellar: :any, mojave: "4bc143b8ed6222dd31809415916add5e12822d98d3066eb5ed21a3663382c599"
+    sha256 cellar: :any, mojave: "16577727c08ebc44369dfa80ddadfdc3fc86944440405f26ea368a033d67ca8f"
   end
 
   depends_on "boost" => :build
@@ -50,6 +49,13 @@ class Mpd < Formula
   end
 
   fails_with gcc: "5"
+
+  # Fix missing header file (see https://github.com/MusicPlayerDaemon/MPD/issues/1530)
+  # Patch accepted upstream, remove on next release
+  patch do
+    url "https://github.com/MusicPlayerDaemon/MPD/commit/c6f7f5777694c448aa42d17f88ab9cf2e3112dd0.patch?full_index=1"
+    sha256 "17c03ecee2a8b91c1b114b2ab340878f6cec5fc28093ec6386f4d7ba47d8b909"
+  end
 
   def install
     # mpd specifies -std=gnu++0x, but clang appears to try to build
@@ -99,11 +105,9 @@ class Mpd < Formula
   end
 
   test do
-    on_linux do
-      # oss_output: Error opening OSS device "/dev/dsp": No such file or directory
-      # oss_output: Error opening OSS device "/dev/sound/dsp": No such file or directory
-      return if ENV["HOMEBREW_GITHUB_ACTIONS"]
-    end
+    # oss_output: Error opening OSS device "/dev/dsp": No such file or directory
+    # oss_output: Error opening OSS device "/dev/sound/dsp": No such file or directory
+    return if OS.linux? && ENV["HOMEBREW_GITHUB_ACTIONS"]
 
     require "expect"
 

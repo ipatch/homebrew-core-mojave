@@ -1,14 +1,14 @@
 class Opa < Formula
   desc "Open source, general-purpose policy engine"
   homepage "https://www.openpolicyagent.org"
-  url "https://github.com/open-policy-agent/opa/archive/v0.39.0.tar.gz"
-  sha256 "19d51c03e940e914da4f707f5095cb1e3d6e0d5becb07bbe916ce20f30355197"
+  url "https://github.com/open-policy-agent/opa/archive/v0.41.0.tar.gz"
+  sha256 "51771d3b0f5d84f6c35948b2253b499041719f683989cf72a596ff8ff23eebeb"
   license "Apache-2.0"
   head "https://github.com/open-policy-agent/opa.git", branch: "main"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/opa"
-    sha256 cellar: :any_skip_relocation, mojave: "8cc374e179a1a9ea4f930abc4baf72c2f85fab4532f718d89795ebc9b4f0558a"
+    sha256 cellar: :any_skip_relocation, mojave: "95a5200d43894fc904980b911f569534d9c17472c2a1fab8f7e06064274a9b3f"
   end
 
   depends_on "go" => :build

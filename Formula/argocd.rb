@@ -2,13 +2,13 @@ class Argocd < Formula
   desc "GitOps Continuous Delivery for Kubernetes"
   homepage "https://argoproj.github.io/cd"
   url "https://github.com/argoproj/argo-cd.git",
-      tag:      "v2.3.3",
-      revision: "07ac038a8f97a93b401e824550f0505400a8c84e"
+      tag:      "v2.4.0",
+      revision: "91aefabc5b213a258ddcfe04b8e69bb4a2dd2566"
   license "Apache-2.0"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/argocd"
-    sha256 cellar: :any_skip_relocation, mojave: "d0fd98271ef9b0252bbcb83493f4c5b208a2fa5d8cdf872d9da605b56375a47b"
+    sha256 cellar: :any_skip_relocation, mojave: "d7451aa191cf469b923b780b4338903d2ad1e6a3d7225dfb3b81026a50b523db"
   end
 
   depends_on "go" => :build
@@ -38,6 +38,7 @@ class Argocd < Formula
 
     # Providing argocd with an empty config file returns the contexts table header
     touch testpath/"argocd-config"
+    (testpath/"argocd-config").chmod 0600
     assert_match "CURRENT  NAME  SERVER\n",
       shell_output("#{bin}/argocd context --config ./argocd-config")
   end

@@ -3,14 +3,17 @@ require "language/node"
 class Whistle < Formula
   desc "HTTP, HTTP2, HTTPS, Websocket debugging proxy"
   homepage "https://github.com/avwo/whistle"
-  url "https://registry.npmjs.org/whistle/-/whistle-2.9.12.tgz"
-  sha256 "54adbaefb196e90e6ce0dd586d8bbd9a566027850be24db9280335103359503a"
+  url "https://registry.npmjs.org/whistle/-/whistle-2.9.22.tgz"
+  sha256 "bcaa19844acb08527091d7d6193bd027e45782011cf17cb13b564a5b258c392e"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "d36e55ea8ae3a6556d4e115b175aae1dae31eeb678956f14888aba580ce29677"
+    sha256 cellar: :any_skip_relocation, all: "1b8d58714e6b860fe5dac96826c69f30a82a9abcd697bfe240e3d780a234f33c"
   end
 
+  # `bin/proxy/mac/Whistle` was only built for `x86_64`
+  # upstream issue tracker, https://github.com/avwo/whistle/issues/734
+  depends_on arch: :x86_64
   depends_on "node"
 
   def install

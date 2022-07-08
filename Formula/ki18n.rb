@@ -1,8 +1,8 @@
 class Ki18n < Formula
   desc "KDE Gettext-based UI text internationalization"
   homepage "https://api.kde.org/frameworks/ki18n/html/index.html"
-  url "https://download.kde.org/stable/frameworks/5.90/ki18n-5.90.0.tar.xz"
-  sha256 "dce136afa95e1f0b41c3bb52f53dda74b5fa46cc45bad51865dcb757e79a688e"
+  url "https://download.kde.org/stable/frameworks/5.94/ki18n-5.94.0.tar.xz"
+  sha256 "0c5a8332343570e8530469840d67c72a28a04a7257578e5a962c73824508944a"
   license all_of: [
     "BSD-3-Clause",
     "LGPL-2.0-or-later",
@@ -19,8 +19,7 @@ class Ki18n < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/ki18n"
-    rebuild 1
-    sha256 mojave: "8c813bedd1ac62d315aff2705260805140f99c802d9095205cdf784b4a2f1241"
+    sha256 mojave: "e5c3b5d2ed98c3f73c5843384b8f15f73d374fa283ab158467c07202da6a798c"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -30,6 +29,12 @@ class Ki18n < Formula
   depends_on "gettext"
   depends_on "iso-codes"
   depends_on "qt@5"
+
+  on_linux do
+    depends_on "gcc"
+  end
+
+  fails_with gcc: "5"
 
   def install
     args = std_cmake_args + %w[

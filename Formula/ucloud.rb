@@ -1,14 +1,13 @@
 class Ucloud < Formula
   desc "Official tool for managing UCloud services"
   homepage "https://www.ucloud.cn"
-  url "https://github.com/ucloud/ucloud-cli/archive/0.1.37.tar.gz"
-  sha256 "91c8153854b102dcd671c58976e35b056b3ed32258a6daea3755c8cb35aed742"
+  url "https://github.com/ucloud/ucloud-cli/archive/v0.1.39.tar.gz"
+  sha256 "b56442ade45554be2dae0807958a863c286f0846f91d5008f276a7e8cce95c54"
   license "Apache-2.0"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/ucloud"
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, mojave: "90c8539f028136421baa277546da2a3b68bbf415d0489b02fefbfc980f28cc9f"
+    sha256 cellar: :any_skip_relocation, mojave: "5f9937be2bf47c43b72fa24d4a0b6bce7ef10f5c069e72507c19f1c575a7cbed"
   end
 
   # Bump to 1.18 on the next release, if possible.

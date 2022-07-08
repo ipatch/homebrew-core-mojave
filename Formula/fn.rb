@@ -1,14 +1,14 @@
 class Fn < Formula
   desc "Command-line tool for the fn project"
   homepage "https://fnproject.io"
-  url "https://github.com/fnproject/cli/archive/0.6.17.tar.gz"
-  sha256 "7fbad5f089aa083aa3d2ab891cc1754457d3a0ccad2ed1e91af40f1ac5d6a110"
+  url "https://github.com/fnproject/cli/archive/0.6.20.tar.gz"
+  sha256 "6a1555e31f1403744248eeb1eb07631ec322cfc9594bba8a4e031b381592b9d0"
   license "Apache-2.0"
   head "https://github.com/fnproject/cli.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/fn"
-    sha256 cellar: :any_skip_relocation, mojave: "ebdc0164232e31ca78860a9981adad606cb64b34c3addc1bfddb6fde8d1ebea3"
+    sha256 cellar: :any_skip_relocation, mojave: "46f8928352a0468527f6db008e863f5d579548f70b314f0579d64021e5ff73ad"
   end
 
   # Bump to 1.18 on the next release, if possible.
@@ -35,6 +35,7 @@ class Fn < Formula
         }.to_json
 
         socket = server.accept
+        socket.gets
         socket.print "HTTP/1.1 200 OK\r\n" \
                      "Content-Length: #{response.bytesize}\r\n" \
                      "Connection: close\r\n"

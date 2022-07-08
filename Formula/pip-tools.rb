@@ -3,25 +3,40 @@ class PipTools < Formula
 
   desc "Locking and sync for Pip requirements files"
   homepage "https://pip-tools.readthedocs.io"
-  url "https://files.pythonhosted.org/packages/ee/f9/bf3ba5c13c8461eb5bd5deda7db953d8ed3e79100669cfb0bbda4f40d28a/pip-tools-6.6.0.tar.gz"
-  sha256 "98aa24004440a1c0489d71a567a4e8afdf23c7782bff483d1219881e7302de83"
+  url "https://files.pythonhosted.org/packages/2c/81/a7f43161f6585b27ad9fd403cc48a02199629e835175dc3b40ed26665f81/pip-tools-6.7.0.tar.gz"
+  sha256 "0aeedc28c0316a30c561893a1f41c3611b46ac536bc271082ffdbdbd1d26924c"
   license "BSD-3-Clause"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/pip-tools"
-    sha256 cellar: :any_skip_relocation, mojave: "db29cfbe76483c1ccdaad0c7dc8f5125f5cabcae5141668cc09158a34e33a71f"
+    sha256 cellar: :any_skip_relocation, mojave: "befac546d7d2757ee2a64478325c70cd466ee3e4b2dfc04f4834d94e3e542574"
   end
 
   depends_on "python@3.10"
 
+  resource "build" do
+    url "https://files.pythonhosted.org/packages/52/fa/931038182be739955cf83179d9b9a6ce9832bc5f9a917a006f765cb53a1f/build-0.8.0.tar.gz"
+    sha256 "887a6d471c901b1a6e6574ebaeeebb45e5269a79d095fe9a8f88d6614ed2e5f0"
+  end
+
   resource "click" do
-    url "https://files.pythonhosted.org/packages/42/e1/4cb2d3a2416bcd871ac93f12b5616f7755a6800bccae05e5a99d3673eb69/click-8.1.2.tar.gz"
-    sha256 "479707fe14d9ec9a0757618b7a100a0ae4c4e236fac5b7f80ca68028141a1a72"
+    url "https://files.pythonhosted.org/packages/59/87/84326af34517fca8c58418d148f2403df25303e02736832403587318e9e8/click-8.1.3.tar.gz"
+    sha256 "7682dc8afb30297001674575ea00d1814d808d6a36af415a82bd481d37ba7b8e"
+  end
+
+  resource "packaging" do
+    url "https://files.pythonhosted.org/packages/df/9e/d1a7217f69310c1db8fdf8ab396229f55a699ce34a203691794c5d1cad0c/packaging-21.3.tar.gz"
+    sha256 "dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb"
   end
 
   resource "pep517" do
     url "https://files.pythonhosted.org/packages/0a/65/6e656d49c679136edfba25f25791f45ffe1ea4ae2ec1c59fe9c35e061cd1/pep517-0.12.0.tar.gz"
     sha256 "931378d93d11b298cf511dd634cf5ea4cb249a28ef84160b3247ee9afb4e8ab0"
+  end
+
+  resource "pyparsing" do
+    url "https://files.pythonhosted.org/packages/71/22/207523d16464c40a0310d2d4d8926daffa00ac1f5b1576170a32db749636/pyparsing-3.0.9.tar.gz"
+    sha256 "2b020ecf7d21b687f219b71ecad3631f644a47f01403fa1d1036b0c6416d70fb"
   end
 
   resource "tomli" do

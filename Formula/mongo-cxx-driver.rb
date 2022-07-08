@@ -1,15 +1,20 @@
 class MongoCxxDriver < Formula
   desc "C++ driver for MongoDB"
   homepage "https://github.com/mongodb/mongo-cxx-driver"
-  url "https://github.com/mongodb/mongo-cxx-driver/archive/r3.6.6.tar.gz"
-  sha256 "f989c371800458ae45ef69f6d9566e010f9420435a01bf5eb14db77fc024662e"
+  url "https://github.com/mongodb/mongo-cxx-driver/archive/r3.6.7.tar.gz"
+  sha256 "a9244d3117d4029a2f039dece242eef10e34502e4600e2afa968ab53589e6de7"
   license "Apache-2.0"
   head "https://github.com/mongodb/mongo-cxx-driver.git", branch: "master"
+
+  livecheck do
+    url :stable
+    regex(/^[rv]?(\d+(?:\.\d+)+)$/i)
+  end
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/mongo-cxx-driver"
     rebuild 1
-    sha256 cellar: :any, mojave: "cb1d753d3ec58e60b7457aa38933aa27f4c8a7351a1ec0ca3b587b16e94474ab"
+    sha256 cellar: :any, mojave: "2d06b29d768d3e311a0aa2c79806d7308345ac0af320c3a3e15d494ffb1dd3d3"
   end
 
   depends_on "cmake" => :build

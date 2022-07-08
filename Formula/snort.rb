@@ -1,19 +1,18 @@
 class Snort < Formula
   desc "Flexible Network Intrusion Detection System"
   homepage "https://www.snort.org"
-  url "https://github.com/snort3/snort3/archive/3.1.25.0.tar.gz"
-  mirror "https://fossies.org/linux/misc/snort3-3.1.25.0.tar.gz"
-  sha256 "8e93a580aa9bb71ed531fc891cec50471476f0851ea61ba569d2347d8f595f09"
+  url "https://github.com/snort3/snort3/archive/3.1.32.0.tar.gz"
+  mirror "https://fossies.org/linux/misc/snort3-3.1.32.0.tar.gz"
+  sha256 "b93f74c6ee249d68ef09d93af2f052d38d0026ec548980d58eeb5470c3a13590"
   license "GPL-2.0-only"
   head "https://github.com/snort3/snort3.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/snort"
-    sha256 cellar: :any, mojave: "8be1ef32fbbd484cb98e81ab0f342767afd8387eff97acb0a8d8f44f32c2a1a3"
+    sha256 cellar: :any, mojave: "43895c57f9761bf948c6e2b962c3e15912ad527bb1c78b95f31eeeedf23df991"
   end
 
   depends_on "cmake" => :build
-  depends_on "flatbuffers" => :build
   depends_on "flex" => :build # need flex>=2.6.0
   depends_on "pkg-config" => :build
   depends_on "daq"
@@ -47,12 +46,6 @@ class Snort < Formula
     # These flags are not needed for LuaJIT 2.1 (Ref: https://luajit.org/install.html).
     # On Apple ARM, building with flags results in broken binaries and they need to be removed.
     inreplace "cmake/FindLuaJIT.cmake", " -pagezero_size 10000 -image_base 100000000\"", "\""
-
-    # Starting with flatbuffers 2.0.6, the function flatbuffer_version_string was renamed to
-    # flatbuffers_version_string. Upstream issue at https://github.com/snort3/snort3/issues/235.
-    inreplace "src/utils/util.cc",
-              "flatbuffers::flatbuffer_version_string",
-              "flatbuffers::flatbuffers_version_string()"
 
     mkdir "build" do
       system "cmake", "..", *std_cmake_args, "-DENABLE_TCMALLOC=ON"

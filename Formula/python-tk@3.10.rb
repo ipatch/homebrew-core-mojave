@@ -1,8 +1,8 @@
 class PythonTkAT310 < Formula
   desc "Python interface to Tcl/Tk"
   homepage "https://www.python.org/"
-  url "https://www.python.org/ftp/python/3.10.2/Python-3.10.2.tgz"
-  sha256 "3c0ede893011319f9b0a56b44953a3d52c7abf9657c23fb4bc9ced93b86e9c97"
+  url "https://www.python.org/ftp/python/3.10.5/Python-3.10.5.tgz"
+  sha256 "18f57182a2de3b0be76dfc39fdcfd28156bb6dd23e5f08696f7492e9e3d0bf2d"
   license "Python-2.0"
 
   livecheck do
@@ -11,8 +11,7 @@ class PythonTkAT310 < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/python-tk@3.10"
-    rebuild 1
-    sha256 cellar: :any, mojave: "20286bc1266efbb8c64083cf68fcbb97a29a5a8cd4d1f6b49777c2f62a2c1cab"
+    sha256 cellar: :any, mojave: "292f34dd1c0c32368250766d1c1d556418e18cb6786ef44a3e47b7e2a94489a2"
   end
 
   keg_only :versioned_formula

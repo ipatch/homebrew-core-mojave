@@ -1,8 +1,8 @@
 class Pyenv < Formula
   desc "Python version management"
   homepage "https://github.com/pyenv/pyenv"
-  url "https://github.com/pyenv/pyenv/archive/refs/tags/v2.2.5.tar.gz"
-  sha256 "9eb4f7083c28d56d1bd05bfaf66f31df36e83d099200c4a81f2e5983c024bb42"
+  url "https://github.com/pyenv/pyenv/archive/refs/tags/v2.3.1.tar.gz"
+  sha256 "adf687597fc103180e6262667f8f3edaaacde298ee689de9bbdeed0f0b8e3efc"
   license "MIT"
   version_scheme 1
   head "https://github.com/pyenv/pyenv.git", branch: "master"
@@ -14,7 +14,7 @@ class Pyenv < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/pyenv"
-    sha256 cellar: :any, mojave: "6e094f455cd1de747c61839a618994d6677e030c894f86a9232717645877dca3"
+    sha256 cellar: :any, mojave: "e7e67e09f5e6e03a8e4a0ea80cbe157d2ce072eccaedc53324ce5a87bc014cdd"
   end
 
   depends_on "autoconf"
@@ -29,7 +29,7 @@ class Pyenv < Formula
   uses_from_macos "zlib"
 
   on_linux do
-    depends_on "python@3.10" => :test
+    depends_on "python@3.9" => :test
   end
 
   def install

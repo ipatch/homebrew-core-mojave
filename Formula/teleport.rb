@@ -1,8 +1,8 @@
 class Teleport < Formula
   desc "Modern SSH server for teams managing distributed infrastructure"
   homepage "https://gravitational.com/teleport"
-  url "https://github.com/gravitational/teleport/archive/v9.1.0.tar.gz"
-  sha256 "2f76403e800f60e127a8ffb6b57582233754f3d81b756f966d3b76f15ca8171f"
+  url "https://github.com/gravitational/teleport/archive/v9.3.7.tar.gz"
+  sha256 "63d0ba8756c013c9ca76a902561f8af56d8c9b5a038189d79725f951d2217a38"
   license "Apache-2.0"
   head "https://github.com/gravitational/teleport.git", branch: "master"
 
@@ -17,7 +17,7 @@ class Teleport < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/teleport"
-    sha256 cellar: :any_skip_relocation, mojave: "fce43f343e32fb9edadef6ff1746da894d66ea87bc993b9fb06128789502a968"
+    sha256 cellar: :any_skip_relocation, mojave: "f1f50e8ca6181badbcdab338f97248ff67b5db5258f38d3ce286432435f8fae2"
   end
 
   depends_on "go" => :build
@@ -30,8 +30,8 @@ class Teleport < Formula
 
   # Keep this in sync with https://github.com/gravitational/teleport/tree/v#{version}
   resource "webassets" do
-    url "https://github.com/gravitational/webassets/archive/b26c8f005e371e313193d4996625459c6968ea2b.tar.gz"
-    sha256 "faf11bf286d1ff7d1e637208b3d9a9d6074a7669c522b69c228232a58b791eed"
+    url "https://github.com/gravitational/webassets/archive/6e79f9805b7659b2d59bc4ba7c30a92072efcf7b.tar.gz"
+    sha256 "305117f1162ac02cb65c28334f982f2bae4855c230fc471e8858950461cf05df"
   end
 
   def install
@@ -42,8 +42,7 @@ class Teleport < Formula
 
   test do
     curl_output = shell_output("curl \"https://api.github.com/repos/gravitational/teleport/contents/webassets?ref=v#{version}\"")
-    webassets_version = JSON.parse(curl_output)["sha"]
-    assert_match webassets_version, resource("webassets").url
+    assert_match JSON.parse(curl_output)["sha"], resource("webassets").url
     assert_match version.to_s, shell_output("#{bin}/teleport version")
     assert_match version.to_s, shell_output("#{bin}/tsh version")
     assert_match version.to_s, shell_output("#{bin}/tctl version")

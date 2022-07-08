@@ -1,14 +1,14 @@
 class Gmailctl < Formula
   desc "Declarative configuration for Gmail filters"
   homepage "https://github.com/mbrt/gmailctl"
-  url "https://github.com/mbrt/gmailctl/archive/v0.10.0.tar.gz"
-  sha256 "ebc3f13b71363e49b804daadc3e1fff394cf42769429e4b081de86100fb5f685"
+  url "https://github.com/mbrt/gmailctl/archive/v0.10.4.tar.gz"
+  sha256 "779752e853d5f59d73e37a74681d52ba6f98ecb54c31fe266d4b85bedafc7774"
   license "MIT"
   head "https://github.com/mbrt/gmailctl.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/gmailctl"
-    sha256 cellar: :any_skip_relocation, mojave: "1b0a2a9214b3c283333d955f08da457e2c7f6cdd1d47e4bbe8a6cf36450a6d91"
+    sha256 cellar: :any_skip_relocation, mojave: "5ce0bc7ece68745c7ce563dbbeb7634a59dbdb9bed1fddf2565f6d6248db2f4d"
   end
 
   depends_on "go" => :build

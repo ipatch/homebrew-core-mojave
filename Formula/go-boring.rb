@@ -1,9 +1,9 @@
 class GoBoring < Formula
   desc "Go programming language with BoringCrypto"
   homepage "https://go.googlesource.com/go/+/dev.boringcrypto/README.boringcrypto.md"
-  url "https://go-boringcrypto.storage.googleapis.com/go1.18.1b7.src.tar.gz"
-  version "1.18.1b7"
-  sha256 "c7f91549b3a197e4a08f64e07546855ca8f82d597f60fd23c7ad2f082640a9fe"
+  url "https://go-boringcrypto.storage.googleapis.com/go1.18.3b7.src.tar.gz"
+  version "1.18.3b7"
+  sha256 "d8123121c491569c698ef713001a2193f13d9a8111a1ba7b2b0d4a2e9bf863db"
   license "BSD-3-Clause"
 
   livecheck do
@@ -13,7 +13,7 @@ class GoBoring < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/go-boring"
-    sha256 mojave: "5d45546750ab274d88d32182346c596c403412e49510fffc08658382805c05eb"
+    sha256 mojave: "391256e5f28f4793a9d631c231ce7e6002f71b3fefb712bb10484902595b8bfd"
   end
 
   keg_only "it conflicts with the Go formula"

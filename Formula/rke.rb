@@ -1,8 +1,8 @@
 class Rke < Formula
   desc "Rancher Kubernetes Engine, a Kubernetes installer that works everywhere"
   homepage "https://rancher.com/docs/rke/latest/en/"
-  url "https://github.com/rancher/rke/archive/v1.3.8.tar.gz"
-  sha256 "4087a7e04a106dac40db3a84a61eed757e87ccac8dc792aeab4c328576099013"
+  url "https://github.com/rancher/rke/archive/v1.3.12.tar.gz"
+  sha256 "23e1c832b12063bd5faa04d166d3560bc036f7fe05fb81a461fd80055b863cba"
   license "Apache-2.0"
 
   # It's necessary to check releases instead of tags here (to avoid upstream
@@ -18,8 +18,7 @@ class Rke < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/rke"
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, mojave: "e70e390386d14946b77edce667d36a140c449c489c4af53419f0f13d4c2339a4"
+    sha256 cellar: :any_skip_relocation, mojave: "a6f741d7e8387e6866390745edbad510db86f762069c34047eb48682a3236b38"
   end
 
   depends_on "go" => :build

@@ -1,8 +1,8 @@
 class Lxc < Formula
   desc "CLI client for interacting with LXD"
   homepage "https://linuxcontainers.org"
-  url "https://linuxcontainers.org/downloads/lxd/lxd-5.0.0.tar.gz"
-  sha256 "a99b7edfb52c8195b2de4988844d32d73be6426f6cff28408250517b238fdef9"
+  url "https://linuxcontainers.org/downloads/lxd/lxd-5.3.tar.gz"
+  sha256 "0d174a09fa749cbde58393bf5a6eef5f682b3bf0c1bb2847462f395c8e656995"
   license "Apache-2.0"
 
   livecheck do
@@ -12,18 +12,17 @@ class Lxc < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/lxc"
-    sha256 cellar: :any_skip_relocation, mojave: "85a1f9e8f223c99ef7526faef51696c01a9e2d3141e30476f8e57ff082da91ea"
+    sha256 cellar: :any_skip_relocation, mojave: "da055c8a45e47c6648add10751c7081527e5f306e773233cdbf5978b1acebac2"
   end
 
   depends_on "go" => :build
 
   def install
-    ENV["GOBIN"] = bin
-
     system "go", "build", *std_go_args, "./lxc"
   end
 
   test do
-    system "#{bin}/lxc", "--version"
+    output = JSON.parse(shell_output("#{bin}/lxc remote list --format json"))
+    assert_equal "https://images.linuxcontainers.org", output["images"]["Addr"]
   end
 end

@@ -1,14 +1,14 @@
 class Gopass < Formula
   desc "Slightly more awesome Standard Unix Password Manager for Teams"
   homepage "https://github.com/gopasspw/gopass"
-  url "https://github.com/gopasspw/gopass/releases/download/v1.14.0/gopass-1.14.0.tar.gz"
-  sha256 "832aabe92da82216b77af5745e10d24a4edbd50afcfc85b5ef2221353ca3cab7"
+  url "https://github.com/gopasspw/gopass/releases/download/v1.14.3/gopass-1.14.3.tar.gz"
+  sha256 "93896ed1011dc154cc8c4bbc47d34be945af4e7e4358df6ead4472639ca900f2"
   license "MIT"
   head "https://github.com/gopasspw/gopass.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/gopass"
-    sha256 cellar: :any_skip_relocation, mojave: "c628be02e60da5bb14bce8bc43fc85e414bacc7aabdb29d8ff41c9e0ab867bd1"
+    sha256 cellar: :any_skip_relocation, mojave: "ffac77e51d9385aff3bc62208ade08868011782ac93b1440ccc9a9fe82c739ea"
   end
 
   depends_on "go" => :build

@@ -2,8 +2,8 @@ class Kamel < Formula
   desc "Apache Camel K CLI"
   homepage "https://camel.apache.org/"
   url "https://github.com/apache/camel-k.git",
-      tag:      "v1.8.2",
-      revision: "3d22f48f909f99daf2a5d50c9cd518267f984616"
+      tag:      "v1.9.2",
+      revision: "405f535a9fe6f1f051ae2f5cd11c6b447e3d9e1c"
   license "Apache-2.0"
   head "https://github.com/apache/camel-k.git", branch: "main"
 
@@ -14,7 +14,7 @@ class Kamel < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/kamel"
-    sha256 cellar: :any_skip_relocation, mojave: "c1c73d4df2c09cb5a1c65f915077ebace24e4d6a23dd76782e59d40ef5f604a7"
+    sha256 cellar: :any_skip_relocation, mojave: "871063f1012e498760c72ab107e51172518892b295467a7d8dff678452df05d2"
   end
 
   depends_on "go" => :build
@@ -23,7 +23,7 @@ class Kamel < Formula
 
   def install
     ENV["JAVA_HOME"] = Language::Java.java_home("11")
-    system "make"
+    system "make", "build-kamel"
     bin.install "kamel"
 
     output = Utils.safe_popen_read("#{bin}/kamel", "completion", "bash")

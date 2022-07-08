@@ -1,14 +1,22 @@
 class Werf < Formula
   desc "Consistent delivery tool for Kubernetes"
   homepage "https://werf.io/"
-  url "https://github.com/werf/werf/archive/refs/tags/v1.2.90.tar.gz"
-  sha256 "b6b93075be1117449a69ff6e41b1b89bba723e5aacb6c213dc602e83423e9609"
+  url "https://github.com/werf/werf/archive/refs/tags/v1.2.117.tar.gz"
+  sha256 "f967d527c6149c32e4cd1985d4bea68a6c5f726c01a158733900c4932a94ca23"
   license "Apache-2.0"
   head "https://github.com/werf/werf.git", branch: "main"
 
+  # This repository has some tagged versions that are higher than the newest
+  # stable release (e.g., `v1.5.2`) and the `GithubLatest` strategy is
+  # currently necessary to identify the correct latest version.
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/werf"
-    sha256 cellar: :any_skip_relocation, mojave: "3527a0d45d562fdb087614af8d34f15393530e68e649e2022af6393d6056dae5"
+    sha256 cellar: :any_skip_relocation, mojave: "ba7a178540314c97eb91fd65c3c1f24124ba483c44cf514453f64e87bdc2cddc"
   end
 
   depends_on "go" => :build

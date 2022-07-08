@@ -1,11 +1,11 @@
 class Curl < Formula
   desc "Get a file from an HTTP, HTTPS or FTP server"
   homepage "https://curl.se"
-  url "https://curl.se/download/curl-7.83.0.tar.bz2"
-  mirror "https://github.com/curl/curl/releases/download/curl-7_82_0/curl-7.83.0.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/curl-7.83.0.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/legacy/curl-7.83.0.tar.bz2"
-  sha256 "247c7ec7521c4258e65634e529270d214fe32969971cccb72845e7aa46831f96"
+  url "https://curl.se/download/curl-7.84.0.tar.bz2"
+  mirror "https://github.com/curl/curl/releases/download/curl-7_84_0/curl-7.84.0.tar.bz2"
+  mirror "http://fresh-center.net/linux/www/curl-7.84.0.tar.bz2"
+  mirror "http://fresh-center.net/linux/www/legacy/curl-7.84.0.tar.bz2"
+  sha256 "702fb26e73190a3bd77071aa146f507b9817cc4dfce218d2ab87f00cd3bc059d"
   license "curl"
 
   livecheck do
@@ -15,7 +15,7 @@ class Curl < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/curl"
-    sha256 cellar: :any, mojave: "882583c14d0e3f693d828eecc5cc67c3f3b14cf858f7e0fb6eedbda23fbdedac"
+    sha256 cellar: :any, mojave: "c90a879731844e46d53e551daf832e6608c9971497be42ca239c57f6744b49a2"
   end
 
   head do

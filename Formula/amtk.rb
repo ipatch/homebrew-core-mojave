@@ -1,30 +1,28 @@
 class Amtk < Formula
   desc "Actions, Menus and Toolbars Kit for GNOME"
-  homepage "https://wiki.gnome.org/Projects/Amtk"
-  url "https://download.gnome.org/sources/amtk/5.2/amtk-5.2.0.tar.xz"
-  sha256 "820545bb4cf87ecebc2c3638d6b6e58b8dbd60a419a9b43cf020124e5dad7078"
+  homepage "https://gitlab.gnome.org/World/amtk"
+  url "https://gitlab.gnome.org/World/amtk.git",
+      tag:      "5.5.1",
+      revision: "fa2835b2e60d60c924fc722a330524a378446a7d"
   license "LGPL-2.1-or-later"
 
   bottle do
-    sha256 arm64_monterey: "63effad091e0f6f472dc0aeec62cf1623eff536542ecb91a08ea018b796a538f"
-    sha256 arm64_big_sur:  "d540852fa3ee1d9af33c5c1effe96547a98c7e03d20064b508662b14c6da202f"
-    sha256 monterey:       "09d224f622a97da7897d6c2bd12eeb301b99bd18f53da33ef2b816673d5095ee"
-    sha256 big_sur:        "6ab887f121458fad7c480b897bb296d48daf01e3379b96098ce18ca2ae9da7b7"
-    sha256 catalina:       "89e24e19e0614b13d387b9c0d2ccf89ac15f485edf49c7c39bcaa4f80deba3c1"
-    sha256 mojave:         "004425110c03c91144cfd53df0f6141b05e38d86b64e96303cd6760db9e66a42"
-    sha256 high_sierra:    "67ad617a78c6922647c2af49225a5f4b8fd7eff3635d0e7f8b4320687b896b60"
-    sha256 x86_64_linux:   "816d3b14c924a5024ba23409a3af828a578325c0fe3eaeff9e4f81b553142ca9"
+    root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/amtk"
+    sha256 mojave: "c7f768097146390b3851de743567899fa71dd29eb9486a2afba9e726ecd79d8d"
   end
 
   depends_on "gobject-introspection" => :build
+  depends_on "meson" => :build
+  depends_on "ninja" => :build
   depends_on "pkg-config" => :build
   depends_on "gtk+3"
 
   def install
-    system "./configure", "--disable-dependency-tracking",
-                          "--disable-silent-rules",
-                          "--prefix=#{prefix}"
-    system "make", "install"
+    cd "build" do
+      system "meson", *std_meson_args, "-Dgtk_doc=false", ".."
+      system "ninja", "-v"
+      system "ninja", "install", "-v"
+    end
   end
 
   test do

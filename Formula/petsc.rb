@@ -1,8 +1,8 @@
 class Petsc < Formula
   desc "Portable, Extensible Toolkit for Scientific Computation (real)"
   homepage "https://www.mcs.anl.gov/petsc/"
-  url "https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-3.16.5.tar.gz"
-  sha256 "7de8570eeb94062752d82a83208fc2bafc77b3f515023a4c14d8ff9440e66cac"
+  url "https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-lite-3.17.2.tar.gz"
+  sha256 "2313dd1ca41bf0ace68671ea6f8d4abf90011ed899f5e1e08658d3f18478359d"
   license "BSD-2-Clause"
 
   livecheck do
@@ -12,7 +12,7 @@ class Petsc < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/petsc"
-    sha256 mojave: "bbf55449096d699db4ab24edb1d8ffc37b3f53ccb835238fb59a1efbcb395b17"
+    sha256 mojave: "9857f340c30a800c209b45ac34f13127f0d46c2474870cc4598e73d9273af296"
   end
 
   depends_on "hdf5"
@@ -23,6 +23,8 @@ class Petsc < Formula
   depends_on "openblas"
   depends_on "scalapack"
   depends_on "suite-sparse"
+
+  uses_from_macos "python" => :build
 
   conflicts_with "petsc-complex", because: "petsc must be installed with either real or complex support, not both"
 

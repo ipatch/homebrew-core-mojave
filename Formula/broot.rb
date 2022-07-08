@@ -1,14 +1,14 @@
 class Broot < Formula
   desc "New way to see and navigate directory trees"
   homepage "https://dystroy.org/broot/"
-  url "https://github.com/Canop/broot/archive/v1.11.1.tar.gz"
-  sha256 "0cc09d5bcc5c6b80d6161c2ba234df0332c1dabd6c3c9f2f6ebe2f82b8eef5c3"
+  url "https://github.com/Canop/broot/archive/v1.13.1.tar.gz"
+  sha256 "95b4b01c43f23b8d4f06030b57c9b2e47a4fbbc4f6099acaf6e42d1f1697385e"
   license "MIT"
   head "https://github.com/Canop/broot.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/broot"
-    sha256 cellar: :any_skip_relocation, mojave: "52c115d5cb35c502197ebae53f7e413c8ca503d96d7077cfae63c5d0e9c7ad0d"
+    sha256 cellar: :any_skip_relocation, mojave: "577a0756c58b3785e9797dc33ee1c104d92a8a2784252ffb9a4a079c30b66f33"
   end
 
   depends_on "rust" => :build

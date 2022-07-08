@@ -1,8 +1,8 @@
 class Nss < Formula
   desc "Libraries for security-enabled client and server applications"
   homepage "https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS"
-  url "https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_77_RTM/src/nss-3.77.tar.gz"
-  sha256 "825edf5a2fd35b788a23ff80face591f82919ae3ad2b8f77d424a450d618dedd"
+  url "https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_80_RTM/src/nss-3.80.tar.gz"
+  sha256 "c0bf1fd2c7e29a6b02b309622baafc443eec90c8934bb155da4bb98988784b6a"
   license "MPL-2.0"
 
   livecheck do
@@ -15,7 +15,7 @@ class Nss < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/nss"
-    sha256 cellar: :any, mojave: "0ec9e77ff385d419de77ee935748f0be6fcc92bd480b94cbf962af5e00128a44"
+    sha256 cellar: :any, mojave: "b4c237a75697d5ff83e27b22f3535773946dda640fb3f0464c42ee3f13f8e4ec"
   end
 
   depends_on "nspr"
@@ -24,7 +24,6 @@ class Nss < Formula
   uses_from_macos "zlib"
 
   conflicts_with "resty", because: "both install `pp` binaries"
-  conflicts_with "googletest", because: "both install `libgtest.a`"
 
   def install
     ENV.deparallelize
@@ -33,6 +32,7 @@ class Nss < Formula
     args = %W[
       BUILD_OPT=1
       NSS_ALLOW_SSLKEYLOGFILE=1
+      NSS_DISABLE_GTESTS=1
       NSS_USE_SYSTEM_SQLITE=1
       NSPR_INCLUDE_DIR=#{Formula["nspr"].opt_include}/nspr
       NSPR_LIB_DIR=#{Formula["nspr"].opt_lib}
@@ -68,7 +68,7 @@ class Nss < Formula
         cp file, lib
       end
     end
-    # resolves conflict with openssl, see #28258
+    # resolves conflict with openssl, see legacy-homebrew#28258
     rm lib/"libssl.a"
 
     (bin/"nss-config").write config_file

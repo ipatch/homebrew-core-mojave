@@ -5,17 +5,16 @@ class NodeAT12 < Formula
   sha256 "bc42b7f8495b9bfc7f7850dd180bb02a5bdf139cc232b8c6f02a6967e20714f2"
   license "MIT"
 
-  livecheck do
-    url "https://nodejs.org/dist/"
-    regex(%r{href=["']?v?(12(?:\.\d+)+)/?["' >]}i)
-  end
-
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/node@12"
-    sha256 cellar: :any, mojave: "ba55554ede1ebb7fbd75b5fa374e326dfc51606028f1f66de8acd5f172075515"
+    rebuild 2
+    sha256 cellar: :any, mojave: "f75b6eb5b8422c43314a80d8739b4019d2b768b8e7a48f214b2d3d2efa6e49f0"
   end
 
   keg_only :versioned_formula
+
+  # https://nodejs.org/en/about/releases/
+  deprecate! date: "2022-04-30", because: :unsupported
 
   depends_on "pkg-config" => :build
   depends_on "python@3.9" => :build

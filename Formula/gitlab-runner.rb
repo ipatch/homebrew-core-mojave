@@ -2,8 +2,8 @@ class GitlabRunner < Formula
   desc "Official GitLab CI runner"
   homepage "https://gitlab.com/gitlab-org/gitlab-runner"
   url "https://gitlab.com/gitlab-org/gitlab-runner.git",
-      tag:      "v14.10.0",
-      revision: "c6bb62f6a7cfe0d0422aa97a32de029b4267a88b"
+      tag:      "v15.1.0",
+      revision: "76984217c7ef0bf669da0eb0d6337a54ba1ff14a"
   license "MIT"
   head "https://gitlab.com/gitlab-org/gitlab-runner.git", branch: "main"
 
@@ -14,7 +14,7 @@ class GitlabRunner < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/gitlab-runner"
-    sha256 cellar: :any_skip_relocation, mojave: "4ee4326d63f0a409059e32b4badcd6eb4561095a4f5f9f8f1203ec82ac840954"
+    sha256 cellar: :any_skip_relocation, mojave: "9944013ca26ed8b126837b232ce3935cb769bdf2158ff7ef8597b41563001c90"
   end
 
   # Bump to 1.18 when x/sys is updated (likely 14.9).
@@ -35,7 +35,7 @@ class GitlabRunner < Formula
   service do
     run [opt_bin/"gitlab-runner", "run", "--syslog"]
     environment_variables PATH: std_service_path_env
-    working_dir ENV["HOME"]
+    working_dir Dir.home
     keep_alive true
     macos_legacy_timers true
     process_type :interactive

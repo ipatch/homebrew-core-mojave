@@ -1,8 +1,8 @@
 class PerconaServer < Formula
   desc "Drop-in MySQL replacement"
   homepage "https://www.percona.com"
-  url "https://downloads.percona.com/downloads/Percona-Server-8.0/Percona-Server-8.0.26-17/source/tarball/percona-server-8.0.26-17.tar.gz"
-  sha256 "b861ba44c83ed3a233d255fc04c3e3e6c0c3b204a375d3287ef4325834e13764"
+  url "https://downloads.percona.com/downloads/Percona-Server-8.0/Percona-Server-8.0.28-19/source/tarball/percona-server-8.0.28-19.tar.gz"
+  sha256 "1394ba4700f3c48307b1faed5804cf774f3a4d71f27680e9b09d08fb70db8e31"
   license "BSD-3-Clause"
 
   livecheck do
@@ -12,13 +12,14 @@ class PerconaServer < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/percona-server"
-    sha256 mojave: "837a6d24a8af8d2b08ec9da0fe0eb224911bd3b815dcb4063ab74e001dbe104a"
+    sha256 mojave: "a0ccf7a552308fc6fd93d47543a837558c5dcaadd3a0c8c9f8a9a57cb29a6a8f"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on "icu4c"
   depends_on "libevent"
+  depends_on "libfido2"
   depends_on "lz4"
   depends_on "openssl@1.1"
   depends_on "protobuf"
@@ -32,6 +33,7 @@ class PerconaServer < Formula
 
   on_linux do
     depends_on "patchelf" => :build
+    depends_on "gcc"
     depends_on "readline"
 
     # Fix build with OpenLDAP 2.5+, which merged libldap_r into libldap
@@ -48,27 +50,33 @@ class PerconaServer < Formula
     cause "Wrong inlining with Clang 8.0, see MySQL Bug #86711"
   end
 
+  fails_with :gcc do
+    version "6"
+    cause "GCC 7.1 or newer is required"
+  end
+
   # https://github.com/percona/percona-server/blob/Percona-Server-#{version}/cmake/boost.cmake
   resource "boost" do
     url "https://boostorg.jfrog.io/artifactory/main/release/1.73.0/source/boost_1_73_0.tar.bz2"
     sha256 "4eb3b8d442b426dc35346235c8733b5ae35ba431690e38c6a8263dce9fcbb402"
   end
 
-  # Fix build on Monterey.
-  # Remove with 8.0.28.
+  # Fix libfibo2 finding; fix unneeded copying of openssl@1.1 libs
+  # Remove in the next version (8.0.29)
   patch do
-    url "https://raw.githubusercontent.com/Homebrew/formula-patches/fcbea58e245ea562fbb749bfe6e1ab178fd10025/mysql/monterey.diff"
-    sha256 "6709edb2393000bd89acf2d86ad0876bde3b84f46884d3cba7463cd346234f6f"
-  end
-
-  # Fix build on Monterey.
-  # Remove with the next version.
-  patch do
-    url "https://github.com/percona/percona-server/commit/e5b2df737987ce72d285b68fb802cf5b1a15f843.patch?full_index=1"
-    sha256 "6b529dc9e756d137429c36625aafb309298510c46705d0bef71b9265d53e6d80"
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/3e668c9996eef41f7d7fa4e2d647f2b80da699e1/percona-server/8.0.28-19.diff"
+    sha256 "1410c30b8634c2bb011de08a45ea2b2c7edce13b846871a8447658c1c262ddbf"
   end
 
   def install
+    # Fix mysqlrouter_passwd RPATH to link to metadata_cache.so
+    inreplace "router/src/http/src/CMakeLists.txt",
+              "ADD_INSTALL_RPATH(mysqlrouter_passwd \"${ROUTER_INSTALL_RPATH}\")",
+              "\\0\nADD_INSTALL_RPATH(mysqlrouter_passwd \"${RPATH_ORIGIN}/../${ROUTER_INSTALL_PLUGINDIR}\")"
+
+    # Disable ABI checking
+    inreplace "cmake/abi_check.cmake", "RUN_ABI_CHECK 1", "RUN_ABI_CHECK 0" if OS.linux?
+
     # -DINSTALL_* are relative to `CMAKE_INSTALL_PREFIX` (`prefix`)
     args = %W[
       -DFORCE_INSOURCE_BUILD=1
@@ -89,6 +97,7 @@ class PerconaServer < Formula
       -DWITH_UNIT_TESTS=OFF
       -DWITH_SYSTEM_LIBS=ON
       -DWITH_EDITLINE=system
+      -DWITH_FIDO=system
       -DWITH_ICU=system
       -DWITH_LIBEVENT=system
       -DWITH_LZ4=system
@@ -123,14 +132,6 @@ class PerconaServer < Formula
       # Docker containers lack CAP_SYS_NICE capability by default.
       test_args << "--nowarnings" if OS.linux?
       system "./mysql-test-run.pl", "status", *test_args
-    end
-
-    if OS.mac?
-      # Remove libssl copies as the binaries use the keg anyway and they create problems for other applications
-      rm lib/"libssl.dylib"
-      rm lib/"libssl.1.1.dylib"
-      rm lib/"libcrypto.1.1.dylib"
-      rm lib/"libcrypto.dylib"
     end
 
     # Remove the tests directory

@@ -1,6 +1,6 @@
 class UtilLinux < Formula
   desc "Collection of Linux utilities"
-  homepage "https://github.com/karelzak/util-linux"
+  homepage "https://github.com/util-linux/util-linux"
   url "https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.38/util-linux-2.38.tar.xz"
   sha256 "6d111cbe4d55b336db2f1fbeffbc65b89908704c01136371d32aa9bec373eb64"
   license all_of: [
@@ -12,10 +12,11 @@ class UtilLinux < Formula
     "LGPL-2.1-or-later",
     :public_domain,
   ]
+  revision 1
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/util-linux"
-    sha256 mojave: "775198d05ea35e869dde97a96f4625cb206182f0d4c313ccf052134eca0ae39b"
+    sha256 mojave: "db67a9aa30ce27d67efc04e486621c2c89777a8198801fee4c664aa116d38642"
   end
 
   keg_only :shadowed_by_macos, "macOS provides the uuid.h header"
@@ -23,6 +24,7 @@ class UtilLinux < Formula
   depends_on "asciidoctor" => :build
   depends_on "gettext"
 
+  uses_from_macos "libxcrypt"
   uses_from_macos "ncurses"
   uses_from_macos "zlib"
 

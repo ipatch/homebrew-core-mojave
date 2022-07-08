@@ -1,8 +1,8 @@
 class Modules < Formula
   desc "Dynamic modification of a user's environment via modulefiles"
   homepage "https://modules.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/modules/Modules/modules-5.0.1/modules-5.0.1.tar.bz2"
-  sha256 "b236fd0a5823091799ff98b13b6c482e8adbfff1f2e861d69f542eb9774ef4a1"
+  url "https://downloads.sourceforge.net/project/modules/Modules/modules-5.1.1/modules-5.1.1.tar.bz2"
+  sha256 "28354dd1ab2ff25e9fb9ce759c77eeefec21f22a112d579fbf3cc802174ec944"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -11,13 +11,8 @@ class Modules < Formula
   end
 
   bottle do
-    sha256                               arm64_monterey: "a136b5b82c0273c00efbd4485fb9b7c203778daa7798caed460387b3303bca9b"
-    sha256                               arm64_big_sur:  "99989d4c1b3bd3ea7917046ace4d54d3184d8bec4ff82145f5f6bb2a17444c78"
-    sha256                               monterey:       "798d7f1208a0552e2a0fa874aa0506fd36557abe1ffcec123d28070c10392f27"
-    sha256                               big_sur:        "c30c9be63dc8fc0f8d83ef063e56c6d459b8ded76e51f8b76ce90a48f89124f8"
-    sha256 cellar: :any,                 catalina:       "32433c130fc3615af0fe6013201486f02cadfbaebf3af8dbf45bccf7f3942cc4"
-    sha256 cellar: :any,                 mojave:         "c66463bc0006612e617657bc194d588f1f054196e4ab5a5b94078a0105482c0e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "59fd50c28a705deaf3ffb014e816ff6bc50877757134a0509cc11db4546cd79d"
+    root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/modules"
+    sha256 cellar: :any, mojave: "fd72726ba555fed156e1cb51025ce9818b3fa71f2849a045b0830655dec18d85"
   end
 
   depends_on "tcl-tk"

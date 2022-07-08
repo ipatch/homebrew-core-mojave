@@ -1,14 +1,14 @@
 class Xh < Formula
   desc "Friendly and fast tool for sending HTTP requests"
   homepage "https://github.com/ducaale/xh"
-  url "https://github.com/ducaale/xh/archive/refs/tags/v0.15.0.tar.gz"
-  sha256 "67dcea38d58115fb745eb41142a118110ff070d7d484128cc066d9b4bb01c68d"
+  url "https://github.com/ducaale/xh/archive/refs/tags/v0.16.1.tar.gz"
+  sha256 "c1fd4f33be96ba1c19580fc66dd9d059a716f00f532a516e159ce9342e50cd43"
   license "MIT"
   head "https://github.com/ducaale/xh.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/xh"
-    sha256 cellar: :any_skip_relocation, mojave: "c27cceff5d57c11e140d8a2e669ec62f8297496c1f9bf071ac10c2cae9605fdc"
+    sha256 cellar: :any_skip_relocation, mojave: "d58b052e613110b8bbac7be97fcdd46b45574ad8bb00933b36cdccf7d4aeb22b"
   end
 
   depends_on "rust" => :build

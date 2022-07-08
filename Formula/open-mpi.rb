@@ -1,8 +1,8 @@
 class OpenMpi < Formula
   desc "High performance message passing library"
   homepage "https://www.open-mpi.org/"
-  url "https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.3.tar.bz2"
-  sha256 "3d81d04c54efb55d3871a465ffb098d8d72c1f48ff1cbaf2580eb058567c0a3b"
+  url "https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.4.tar.bz2"
+  sha256 "92912e175fd1234368c8730c03f4996fe5942e7479bb1d10059405e7f2b3930d"
   license "BSD-3-Clause"
 
   livecheck do
@@ -12,11 +12,12 @@ class OpenMpi < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/open-mpi"
-    sha256 mojave: "492508728500460a4763f4e1e5daac8c06b826a4761f15b6de4e06c45d50165a"
+    rebuild 1
+    sha256 mojave: "a1e13260e4b9c6024ec4a1440f52009254276a7d43fb8cf40af551de1eca5317"
   end
 
   head do
-    url "https://github.com/open-mpi/ompi.git"
+    url "https://github.com/open-mpi/ompi.git", branch: "main"
     depends_on "autoconf" => :build
     depends_on "automake" => :build
     depends_on "libtool" => :build
@@ -33,21 +34,17 @@ class OpenMpi < Formula
     ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version
 
     # Avoid references to the Homebrew shims directory
-    %w[
+    inreplace_files = %w[
       ompi/tools/ompi_info/param.c
-      orte/tools/orte-info/param.c
       oshmem/tools/oshmem_info/param.c
-      opal/mca/pmix/pmix3x/pmix/src/tools/pmix_info/support.c
-    ].each do |fname|
-      inreplace fname, /(OPAL|PMIX)_CC_ABSOLUTE/, "\"#{ENV.cc}\""
-    end
+    ]
 
-    %w[
-      ompi/tools/ompi_info/param.c
-      oshmem/tools/oshmem_info/param.c
-    ].each do |fname|
-      inreplace fname, "OMPI_CXX_ABSOLUTE", "\"#{ENV.cxx}\""
-    end
+    inreplace inreplace_files, "OMPI_CXX_ABSOLUTE", "\"#{ENV.cxx}\""
+
+    inreplace_files << "orte/tools/orte-info/param.c" unless build.head?
+    inreplace_files << "opal/mca/pmix/pmix3x/pmix/src/tools/pmix_info/support.c" unless build.head?
+
+    inreplace inreplace_files, /(OPAL|PMIX)_CC_ABSOLUTE/, "\"#{ENV.cc}\""
 
     ENV.cxx11
     ENV.runtime_cpu_detection

@@ -1,8 +1,8 @@
 class Pgroonga < Formula
   desc "PostgreSQL plugin to use Groonga as index"
   homepage "https://pgroonga.github.io/"
-  url "https://packages.groonga.org/source/pgroonga/pgroonga-2.3.6.tar.gz"
-  sha256 "fc68a66a216e304bb0e2ef627f767fff528f4fbf2bbda27e8cd8db1b7ba090b0"
+  url "https://packages.groonga.org/source/pgroonga/pgroonga-2.3.7.tar.gz"
+  sha256 "12876aa58177c0925d8331d91ea998d2db2b1766271a2ae741609668367dbfc1"
   license "PostgreSQL"
 
   livecheck do
@@ -12,7 +12,7 @@ class Pgroonga < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/pgroonga"
-    sha256 cellar: :any, mojave: "31290755883a851d9530b751be6c160ec888fa08eac1eedea103e3012fdc8eb4"
+    sha256 cellar: :any, mojave: "c3fbe6119b453827f704b23345203597a995312e02ce1ca4709eafa528700dce"
   end
 
   depends_on "pkg-config" => :build
@@ -24,7 +24,14 @@ class Pgroonga < Formula
     mkdir "stage"
     system "make", "install", "DESTDIR=#{buildpath}/stage"
 
-    lib.install Dir["stage/**/lib/*"]
-    (share/"postgresql/extension").install Dir["stage/**/share/postgresql/extension/*"]
+    stage_path = File.join("stage", HOMEBREW_PREFIX)
+    lib.install (buildpath/stage_path/"lib").children
+    share.install (buildpath/stage_path/"share").children
+    include.install (buildpath/stage_path/"include").children
+  end
+
+  test do
+    expected = "PGroonga database management module"
+    assert_match expected, (share/"postgresql/extension/pgroonga_database.control").read
   end
 end

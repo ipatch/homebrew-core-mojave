@@ -1,8 +1,8 @@
 class CdogsSdl < Formula
   desc "Classic overhead run-and-gun game"
   homepage "https://cxong.github.io/cdogs-sdl/"
-  url "https://github.com/cxong/cdogs-sdl/archive/1.2.0.tar.gz"
-  sha256 "20ed6d261dcc1a6c5f197ffa49aeb2b9c30d2ece514745b144c6ebaeada9bcaf"
+  url "https://github.com/cxong/cdogs-sdl/archive/1.3.1.tar.gz"
+  sha256 "3b863a092b23da8b210383831ff490a10dd6fda77b997fe2bf39cedcfa0a8937"
   license "GPL-2.0-or-later"
   head "https://github.com/cxong/cdogs-sdl.git", branch: "master"
 
@@ -13,7 +13,7 @@ class CdogsSdl < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/cdogs-sdl"
-    sha256 mojave: "251c696cd2fa5f83633a2127115cf1ac8dba0ddf4744e09f8c1ee5d122267932"
+    sha256 mojave: "143ade34b1662319b3e96cb9d600ed21842d600472b63959b66cc84836a2d8de"
   end
 
   depends_on "cmake" => :build

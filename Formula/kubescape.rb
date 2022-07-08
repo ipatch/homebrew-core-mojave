@@ -1,14 +1,14 @@
 class Kubescape < Formula
   desc "Kubernetes testing according to Hardening Guidance by NSA and CISA"
   homepage "https://github.com/armosec/kubescape"
-  url "https://github.com/armosec/kubescape/archive/v2.0.152.tar.gz"
-  sha256 "6132b81ebabcadca67fe87406f9be43d48af943f72af6217d80a41d14fbbcbe2"
+  url "https://github.com/armosec/kubescape/archive/v2.0.158.tar.gz"
+  sha256 "616c047f3ac233e1555ee1ef97dd9a579fd9f700508f0cf17d123c4bfd146729"
   license "Apache-2.0"
   head "https://github.com/armosec/kubescape.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/kubescape"
-    sha256 cellar: :any_skip_relocation, mojave: "942b5d15a1c0d2c0f7c2050dc41f715ae68310be3df0f37bebb43740fedd69cf"
+    sha256 cellar: :any_skip_relocation, mojave: "1387fb9f516ef45e592758921621b847e436654b2cb95be48a10fb7bfcceb9eb"
   end
 
   depends_on "go" => :build

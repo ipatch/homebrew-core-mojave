@@ -1,11 +1,12 @@
 class Ffmpeg < Formula
   desc "Play, record, convert, and stream audio and video"
   homepage "https://ffmpeg.org/"
-  url "https://ffmpeg.org/releases/ffmpeg-5.0.tar.xz"
-  sha256 "51e919f7d205062c0fd4fae6243a84850391115104ccf1efc451733bc0ac7298"
+  url "https://ffmpeg.org/releases/ffmpeg-5.0.1.tar.xz"
+  sha256 "ef2efae259ce80a240de48ec85ecb062cecca26e4352ffb3fda562c21a93007b"
   # None of these parts are used by default, you have to explicitly pass `--enable-gpl`
   # to configure to activate them. In this case, FFmpeg's license changes to GPL v2+.
   license "GPL-2.0-or-later"
+  revision 2
   head "https://github.com/FFmpeg/FFmpeg.git", branch: "master"
 
   livecheck do
@@ -15,8 +16,7 @@ class Ffmpeg < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/ffmpeg"
-    rebuild 1
-    sha256 mojave: "5faa57561c048741bb110080c9742fe31dd7c8eb0913cba4102bd15cced05610"
+    sha256 mojave: "599eb32b830570be5c87e848849227ce1aafb2870a505982077b3b941cb6ae67"
   end
 
   depends_on "nasm" => :build
@@ -61,7 +61,7 @@ class Ffmpeg < Formula
 
   on_linux do
     depends_on "libxv"
-    depends_on "gcc" # because rubbernand is compiled with gcc
+    depends_on "gcc" # because rubberband is compiled with gcc
   end
 
   fails_with gcc: "5"

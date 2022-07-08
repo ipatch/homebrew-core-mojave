@@ -1,17 +1,17 @@
 class Scipy < Formula
   desc "Software for mathematics, science, and engineering"
   homepage "https://www.scipy.org"
-  url "https://files.pythonhosted.org/packages/b4/a2/4faa34bf0cdbefd5c706625f1234987795f368eb4e97bde9d6f46860843e/scipy-1.8.0.tar.gz"
-  sha256 "31d4f2d6b724bc9a98e527b5849b8a7e589bf1ea630c33aa563eda912c9ff0bd"
+  url "https://files.pythonhosted.org/packages/26/b5/9330f004b9a3b2b6a31f59f46f1617ce9ca15c0e7fe64288c20385a05c9d/scipy-1.8.1.tar.gz"
+  sha256 "9e3fb1b0e896f14a85aa9a28d5f755daaeeb54c897b746df7a55ccb02b340f33"
   license "BSD-3-Clause"
   head "https://github.com/scipy/scipy.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/scipy"
-    sha256 cellar: :any, mojave: "f84bd2cd0cffb1c04dec83b07177869672af37ee73e75ecc66e06f3e74eca3aa"
+    sha256 cellar: :any, mojave: "d4e024bc79d1e041634c52f7b8efca9b04a2757ac60be8e6f51af4aeca8403c0"
   end
 
-  depends_on "cython" => :build
+  depends_on "libcython" => :build
   depends_on "pythran" => :build
   depends_on "swig" => :build
   depends_on "gcc" # for gfortran
@@ -42,7 +42,7 @@ class Scipy < Formula
     Pathname("site.cfg").write config
 
     site_packages = Language::Python.site_packages("python3")
-    ENV.prepend_create_path "PYTHONPATH", Formula["cython"].opt_libexec/site_packages
+    ENV.prepend_create_path "PYTHONPATH", Formula["libcython"].opt_libexec/site_packages
     ENV.prepend_create_path "PYTHONPATH", Formula["pythran"].opt_libexec/site_packages
     ENV.prepend_create_path "PYTHONPATH", Formula["numpy"].opt_prefix/site_packages
     ENV.prepend_create_path "PYTHONPATH", site_packages

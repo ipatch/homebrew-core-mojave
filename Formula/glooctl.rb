@@ -4,8 +4,8 @@ class Glooctl < Formula
   # NOTE: Please wait until the newest stable release is finished building and
   # no longer marked as "Pre-release" before creating a PR for a new version.
   url "https://github.com/solo-io/gloo.git",
-      tag:      "v1.11.6",
-      revision: "5bc01ca9e1d63092bb6d9470df8f310c41c3e3f8"
+      tag:      "v1.11.16",
+      revision: "c66079e45bc3e9ee5bac933bc4ac080e22b8737c"
   license "Apache-2.0"
   head "https://github.com/solo-io/gloo.git", branch: "master"
 
@@ -16,7 +16,7 @@ class Glooctl < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/glooctl"
-    sha256 cellar: :any_skip_relocation, mojave: "a030b8b65a4676145ef13605160d75ad530f50ad5bc72fa6cd1834698e1af6b7"
+    sha256 cellar: :any_skip_relocation, mojave: "8ee01522a5cd0c9c6324aaf2d074c61f6089088e51489f6b817c27e252446399"
   end
 
   depends_on "go" => :build

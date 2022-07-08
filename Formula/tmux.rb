@@ -1,20 +1,9 @@
 class Tmux < Formula
   desc "Terminal multiplexer"
   homepage "https://tmux.github.io/"
+  url "https://github.com/tmux/tmux/releases/download/3.3a/tmux-3.3a.tar.gz"
+  sha256 "e4fd347843bd0772c4f48d6dde625b0b109b7a380ff15db21e97c11a4dcdf93f"
   license "ISC"
-  revision 1
-
-  stable do
-    url "https://github.com/tmux/tmux/releases/download/3.2a/tmux-3.2a.tar.gz"
-    sha256 "551553a4f82beaa8dadc9256800bcc284d7c000081e47aa6ecbb6ff36eacd05f"
-
-    # Fix occasional crash on exit.
-    # Remove with the next release (3.3).
-    patch do
-      url "https://github.com/tmux/tmux/commit/5fdea440cede1690db9a242a091df72f16e53d24.patch?full_index=1"
-      sha256 "3752098eb9ec21f4711b12d399eaa1a7dcebe9c66afc147790fba217edcf340f"
-    end
-  end
 
   livecheck do
     url :stable
@@ -24,7 +13,8 @@ class Tmux < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/tmux"
-    sha256 cellar: :any, mojave: "9925d2f5b200285cbcaa1a1cb2b6eed97542eda208ad3ef4fcf434e9db8ee766"
+    rebuild 1
+    sha256 cellar: :any, mojave: "5d515f060b7b5b3af03aa1bda7721947e2dbbda7b3877fd01a2e87e10f2ed724"
   end
 
   head do
@@ -59,6 +49,11 @@ class Tmux < Formula
       --sysconfdir=#{etc}
     ]
 
+    # tmux finds the `tmux-256color` terminfo provided by our ncurses
+    # and uses that as the default `TERM`, but this causes issues for
+    # tools that link with the very old ncurses provided by macOS.
+    # https://github.com/Homebrew/homebrew-core/issues/102748
+    args << "--with-TERM=screen-256color" if OS.mac?
     args << "--enable-utf8proc" if MacOS.version >= :high_sierra
 
     ENV.append "LDFLAGS", "-lresolv"

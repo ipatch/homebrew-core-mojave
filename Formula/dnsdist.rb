@@ -1,8 +1,8 @@
 class Dnsdist < Formula
   desc "Highly DNS-, DoS- and abuse-aware loadbalancer"
   homepage "https://www.dnsdist.org/"
-  url "https://downloads.powerdns.com/releases/dnsdist-1.7.0.tar.bz2"
-  sha256 "78cc72cb0ccf7fb5f3f2fae09c79eda65a5256374da09bb541b735ea6868fc64"
+  url "https://downloads.powerdns.com/releases/dnsdist-1.7.2.tar.bz2"
+  sha256 "524bd2bb05aa2e05982a971ae8510f2812303ab4486a3861b62212d06b1127cd"
   license "GPL-2.0-only"
 
   livecheck do
@@ -12,8 +12,7 @@ class Dnsdist < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/dnsdist"
-    rebuild 1
-    sha256 mojave: "097328868f1cd598c183e92cc47ed84a5e2c8a7a7196e99ecc63d796402475d6"
+    sha256 mojave: "19d771050c8e1bfcb46bcd24225225c8ebe7e9a7ed78f397f1f520fdf694a570"
   end
 
   depends_on "boost" => :build

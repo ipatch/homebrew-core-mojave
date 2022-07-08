@@ -1,8 +1,8 @@
 class MinimalRacket < Formula
   desc "Modern programming language in the Lisp/Scheme family"
   homepage "https://racket-lang.org/"
-  url "https://mirror.racket-lang.org/installers/8.4/racket-minimal-8.4-src.tgz"
-  sha256 "1599545af8ed8a87b84bc80f7ad8fbbdd9de557ea310582e268e23db026c280c"
+  url "https://mirror.racket-lang.org/installers/8.5/racket-minimal-8.5-src.tgz"
+  sha256 "55d585e3ac9fbaacfbe840a6ec74ce3e7bee9fe85e32213f1b3e4f6f593cae39"
   license any_of: ["MIT", "Apache-2.0"]
 
   # File links on the download page are created using JavaScript, so we parse
@@ -17,7 +17,7 @@ class MinimalRacket < Formula
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/minimal-racket"
     rebuild 1
-    sha256 mojave: "909b04b8f9869a0e0b0b8120734f99daea0bb5e872475243655bf3f8b1cbda95"
+    sha256 mojave: "68ca4720e78426211f5a358b7e65639c2966b58baa30fd8e8c56f219939674fb"
   end
 
   depends_on "openssl@1.1"
@@ -51,6 +51,13 @@ class MinimalRacket < Formula
       system "make"
       system "make", "install"
     end
+  end
+
+  def post_install
+    # Run raco setup to make sure core libraries are properly compiled.
+    # Sometimes the mtimes of .rkt and .zo files are messed up after a fresh
+    # install, making Racket take 15s to start up because interpreting is slow.
+    system "#{bin}/raco", "setup"
   end
 
   def caveats

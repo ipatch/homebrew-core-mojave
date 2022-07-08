@@ -1,14 +1,14 @@
 class Kind < Formula
   desc "Run local Kubernetes cluster in Docker"
   homepage "https://kind.sigs.k8s.io/"
-  url "https://github.com/kubernetes-sigs/kind/archive/v0.12.0.tar.gz"
-  sha256 "cd1d09921b3c8a0f58c6423e5706be0c6e556f0c3d2b9e62f42be59263b209bb"
+  url "https://github.com/kubernetes-sigs/kind/archive/v0.14.0.tar.gz"
+  sha256 "7850a3bb4c644622a1c643e63306ddcd76a5b729375df9bc97f87a82375b9439"
   license "Apache-2.0"
   head "https://github.com/kubernetes-sigs/kind.git", branch: "main"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/kind"
-    sha256 cellar: :any_skip_relocation, mojave: "198f7d99a3ef32390a0a8986696275492ad1d40db55f4f15a44394e54e08b89e"
+    sha256 cellar: :any_skip_relocation, mojave: "ff35f792be3afaa9235a9045ef36e8be5c9c0de5fb3990c788c193a743fd918a"
   end
 
   depends_on "go" => :build

@@ -3,14 +3,14 @@ class Certbot < Formula
 
   desc "Tool to obtain certs from Let's Encrypt and autoenable HTTPS"
   homepage "https://certbot.eff.org/"
-  url "https://files.pythonhosted.org/packages/9c/78/90a464a4a10c6ac506243273db9bae4186b36e7c02e47ee613403e7d95cb/certbot-1.26.0.tar.gz"
-  sha256 "9d136fab6968829db9774a264a96a7923a5482d0c90894b009253f374d480693"
+  url "https://files.pythonhosted.org/packages/74/32/a0ef0c1ea68c72cc579862cfac7aef710fefd09273d802b40dee8e51c991/certbot-1.28.0.tar.gz"
+  sha256 "4b54d8cf1f4e372c6755b3f2720ddfd95bad44f619f7473fa388cdd0a7ba8c5c"
   license "Apache-2.0"
   head "https://github.com/certbot/certbot.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/certbot"
-    sha256 cellar: :any, mojave: "f3dba9c2853b0b0ca7fcc143aad40c4f95d88b1d1e37433eac9cb611a2f4502c"
+    sha256 cellar: :any, mojave: "c0d549a5d185ddfe282c1eddd53696924e4f217b933c926356378ab6d0280753"
   end
 
   depends_on "rust" => :build # for cryptography
@@ -27,23 +27,13 @@ class Certbot < Formula
   end
 
   resource "acme" do
-    url "https://files.pythonhosted.org/packages/34/39/de2b128948d82accbc83d8407ef68f538853246c4bf874f55420e18c8900/acme-1.26.0.tar.gz"
-    sha256 "7269209192189c5b0bd5bc69388229737e23e52e8422315e2fcd3aff4c8e13c8"
-  end
-
-  resource "certbot-apache" do
-    url "https://files.pythonhosted.org/packages/b9/60/f68fb2f44f932dc0e62da32179c25c8f9ef7c7d64819e2b59319e26cf894/certbot-apache-1.26.0.tar.gz"
-    sha256 "efb573a1fd926ecf74618286d21ac3f7539b2be426face7f1364dcca8b0e316e"
-  end
-
-  resource "certbot-nginx" do
-    url "https://files.pythonhosted.org/packages/9a/c0/6faba9ec8ca10d339eb858b138154d761ecce45dc77301a014fe3f271609/certbot-nginx-1.26.0.tar.gz"
-    sha256 "c9f2ee27dfb98525e507f516f8c1cd37a5b61f3090bcf64284fee95cfcf6ab10"
+    url "https://files.pythonhosted.org/packages/e8/f7/7f83128c44cb3fe58f6843aeb4b9052c21c67daa2ea8a3760d00105d3be9/acme-1.28.0.tar.gz"
+    sha256 "1f822d0f1a4140606c7569333dba97a6df32c17bd0cc996bcdebdf611ee1d589"
   end
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/6c/ae/d26450834f0acc9e3d1f74508da6df1551ceab6c2ce0766a593362d6d57f/certifi-2021.10.8.tar.gz"
-    sha256 "78884e7c1d4b00ce3cea67b44566851c4343c120abd683433ce934a68ea58872"
+    url "https://files.pythonhosted.org/packages/07/10/75277f313d13a2b74fc56e29239d5c840c2bf09f17bf25c02b35558812c6/certifi-2022.5.18.1.tar.gz"
+    sha256 "9c5705e395cd70084351dd8ad5c41e65655e08ce46f2ec9cf6c2c08390f71eb7"
   end
 
   resource "cffi" do
@@ -67,8 +57,8 @@ class Certbot < Formula
   end
 
   resource "cryptography" do
-    url "https://files.pythonhosted.org/packages/10/a7/51953e73828deef2b58ba1604de9167843ee9cd4185d8aaffcb45dd1932d/cryptography-36.0.2.tar.gz"
-    sha256 "70f8f4f7bb2ac9f340655cbac89d68c527af5bb4387522a8413e841e3e6628c9"
+    url "https://files.pythonhosted.org/packages/51/05/bb2b681f6a77276fc423d04187c39dafdb65b799c8d87b62ca82659f9ead/cryptography-37.0.2.tar.gz"
+    sha256 "f224ad253cc9cea7568f49077007d2263efa57396a2f2f78114066fd54b5c68e"
   end
 
   resource "distro" do
@@ -101,19 +91,9 @@ class Certbot < Formula
     sha256 "660b1b1425aac4a1bea1d94168a85d99f0b3144c869dd4390d27629d0087f1bf"
   end
 
-  resource "pyparsing" do
-    url "https://files.pythonhosted.org/packages/d6/60/9bed18f43275b34198eb9720d4c1238c68b3755620d20df0afd89424d32b/pyparsing-3.0.7.tar.gz"
-    sha256 "18ee9022775d270c55187733956460083db60b37d0d0fb357445f3094eed3eea"
-  end
-
   resource "pyRFC3339" do
     url "https://files.pythonhosted.org/packages/00/52/75ea0ae249ba885c9429e421b4f94bc154df68484847f1ac164287d978d7/pyRFC3339-1.1.tar.gz"
     sha256 "81b8cbe1519cdb79bed04910dd6fa4e181faf8c88dff1e1b987b5f7ab23a5b1a"
-  end
-
-  resource "python-augeas" do
-    url "https://files.pythonhosted.org/packages/41/e6/4b6740cb3e31b82252099994cea751c648b846aa7874343c31d68c2215be/python-augeas-0.5.0.tar.gz"
-    sha256 "67d59d66cdba8d624e0389b87b2a83a176f21f16a87553b50f5703b23f29bac2"
   end
 
   resource "pytz" do

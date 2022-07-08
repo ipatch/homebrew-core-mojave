@@ -3,8 +3,8 @@ require "language/node"
 class Pulp < Formula
   desc "Build tool for PureScript projects"
   homepage "https://github.com/purescript-contrib/pulp"
-  url "https://registry.npmjs.org/pulp/-/pulp-16.0.0-1.tgz"
-  sha256 "19a4af16751aa8c2a9ed9dbe9f192498836eb4cc1d86bed9b306246ccabd7d22"
+  url "https://registry.npmjs.org/pulp/-/pulp-16.0.2.tgz"
+  sha256 "a70585e06c1786492fde10c9c1bc550405351c2e6283bbd3f777a6a04fb462ff"
   license "LGPL-3.0-or-later"
 
   livecheck do
@@ -13,7 +13,7 @@ class Pulp < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "df1346996d722c8a351fea7a59cabe00f3e1dd83548b19d2b789361c219405ec"
+    sha256 cellar: :any_skip_relocation, all: "9955ac49b00b61c6111d73f01fbe9b33316ed86f63517ee2cd1e1f8ddd0ad4a6"
   end
 
   depends_on "bower"

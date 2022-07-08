@@ -2,8 +2,8 @@ class Zeek < Formula
   desc "Network security monitor"
   homepage "https://www.zeek.org"
   url "https://github.com/zeek/zeek.git",
-      tag:      "v4.2.0",
-      revision: "ce38609161cfd10a67cad301e60b7d96e3333835"
+      tag:      "v4.2.2",
+      revision: "40eb7f80378284202e52e6c45299cac10abf07ab"
   license "BSD-3-Clause"
   head "https://github.com/zeek/zeek.git", branch: "master"
 
@@ -14,7 +14,7 @@ class Zeek < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/zeek"
-    sha256 mojave: "3672ef591662591effc795e4a6296cd4a9b306e564596673b7e2739c3c0d3b9f"
+    sha256 mojave: "c4415ded2f06415c06e6f837716fd6c0ff0adb67d2ad3c12f310f092bd52bcab"
   end
 
   depends_on "bison" => :build
@@ -29,6 +29,7 @@ class Zeek < Formula
 
   uses_from_macos "flex"
   uses_from_macos "libpcap"
+  uses_from_macos "libxcrypt"
   uses_from_macos "zlib"
 
   on_linux do

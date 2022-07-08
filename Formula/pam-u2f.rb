@@ -1,10 +1,9 @@
 class PamU2f < Formula
   desc "Provides an easy way to use U2F-compliant authenticators with PAM"
   homepage "https://developers.yubico.com/pam-u2f/"
-  url "https://developers.yubico.com/pam-u2f/Releases/pam_u2f-1.2.0.tar.gz"
-  sha256 "2303e6f99b1fde8ee3c3ab28a4de2da6ddd225c953693e845d6b2d8388221fb3"
+  url "https://developers.yubico.com/pam-u2f/Releases/pam_u2f-1.2.1.tar.gz"
+  sha256 "70e741bca197b64b4fbe8dd1f6d57ce2b8ad58ca786352c525f3f2d44125894c"
   license "BSD-2-Clause"
-  revision 1
   head "https://github.com/Yubico/pam-u2f.git", branch: "master"
 
   livecheck do
@@ -14,8 +13,7 @@ class PamU2f < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/pam-u2f"
-    rebuild 2
-    sha256 cellar: :any, mojave: "bce346471937907335348245e5694bf4b3afe9a038c6fec05872d1cfbc391a31"
+    sha256 cellar: :any, mojave: "7cd37308f1753f6a3fde08db711dcc9cc18708981b01fceed57b9afd0fc7f24e"
   end
 
   depends_on "asciidoc" => :build
@@ -24,6 +22,10 @@ class PamU2f < Formula
   depends_on "libtool" => :build
   depends_on "pkg-config" => :build
   depends_on "libfido2"
+
+  on_linux do
+    depends_on "linux-pam"
+  end
 
   def install
     system "autoreconf", "--install"

@@ -1,13 +1,13 @@
 class Librem < Formula
   desc "Toolkit library for real-time audio and video processing"
   homepage "https://github.com/baresip/rem"
-  url "https://github.com/baresip/rem/archive/refs/tags/v2.0.1.tar.gz"
-  sha256 "6fda6f29999143ae2198044d9c08a0dca9c8af979413b31e010f4eed3404f72b"
+  url "https://github.com/baresip/rem/archive/refs/tags/v2.4.0.tar.gz"
+  sha256 "e9c4ebb63fe37dcf77638f280e619776d4e93884d9063084432f18bff2020cfe"
   license "BSD-3-Clause"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/librem"
-    sha256 cellar: :any, mojave: "25e9c49ece927cad06fd3411eadcf1043830e432c03a6787ce5b38edb0dcf233"
+    sha256 cellar: :any, mojave: "f0f3cf123926649cd6bc9063b56d97e7baa30fbb8b79cf239521ea21e9ea415e"
   end
 
   depends_on "libre"

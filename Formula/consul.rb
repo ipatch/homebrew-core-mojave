@@ -1,8 +1,8 @@
 class Consul < Formula
   desc "Tool for service discovery, monitoring and configuration"
   homepage "https://www.consul.io"
-  url "https://github.com/hashicorp/consul/archive/refs/tags/v1.12.0.tar.gz"
-  sha256 "87b3fe01d0a772dc1cbab31cf38ab05d651d93cd1632aa289faf06988a65d617"
+  url "https://github.com/hashicorp/consul/archive/refs/tags/v1.12.2.tar.gz"
+  sha256 "74d627b778760d8f0a77f65742c3fd1e07bef18e8ce1710dd7791032072b4029"
   license "MPL-2.0"
   head "https://github.com/hashicorp/consul.git", branch: "main"
 
@@ -13,7 +13,7 @@ class Consul < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/consul"
-    sha256 cellar: :any_skip_relocation, mojave: "406e0c51fdbf45ad634bc5e7e60373b30fa5e3d3a7eaab44b1d1eb3d845c2b41"
+    sha256 cellar: :any_skip_relocation, mojave: "8378951d4af69da9d2a5cb6c605efe93a54fc86f609a134a1572f4215612a14a"
   end
 
   depends_on "go" => :build

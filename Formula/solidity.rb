@@ -1,8 +1,8 @@
 class Solidity < Formula
   desc "Contract-oriented programming language"
   homepage "https://soliditylang.org"
-  url "https://github.com/ethereum/solidity/releases/download/v0.8.13/solidity_0.8.13.tar.gz"
-  sha256 "474c76b30f6de12e1d84171d094a110f4a9dbee8e110313de430e7ebabccb3da"
+  url "https://github.com/ethereum/solidity/releases/download/v0.8.15/solidity_0.8.15.tar.gz"
+  sha256 "5720a50b3fa463afb90bf22c3cf5d2d8541b3a689bdb057da259fde88a472a49"
   license all_of: ["GPL-3.0-or-later", "MIT", "BSD-3-Clause", "Apache-2.0", "CC0-1.0"]
 
   livecheck do
@@ -12,7 +12,7 @@ class Solidity < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/solidity"
-    sha256 cellar: :any_skip_relocation, mojave: "454f3f3af315eecdb6cd637854321d84b227dd32415d09351c57110a207cf7f7"
+    sha256 cellar: :any_skip_relocation, mojave: "8fa589d62e8714267e262870dc939e2b9eecfa6ad66559ad444fe6e15d64423d"
   end
 
   depends_on "cmake" => :build

@@ -1,8 +1,8 @@
 class Groonga < Formula
   desc "Fulltext search engine and column store"
   homepage "https://groonga.org/"
-  url "https://packages.groonga.org/source/groonga/groonga-12.0.2.tar.gz"
-  sha256 "7ef0bb0607c0a92f414e74359683315e0fc993736a09cbd2cf28b9d5a467405a"
+  url "https://packages.groonga.org/source/groonga/groonga-12.0.4.tar.gz"
+  sha256 "baf0b9c5c46b015fa2c1ea34e17d55f184e06dea89d36aa5ada1a8fcd34680db"
   license "LGPL-2.1-or-later"
 
   livecheck do
@@ -12,7 +12,7 @@ class Groonga < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/groonga"
-    sha256 mojave: "5a09a62b1e3dcd5e54b202ab41c3af911473ce1cb5543422094e4d7de0ee1ea6"
+    sha256 mojave: "8d6a6e5b1f18d4e7de3d109573065be5e592fcf3039128159c71c623df6bbcd8"
   end
 
   head do
@@ -28,6 +28,8 @@ class Groonga < Formula
   depends_on "msgpack"
   depends_on "openssl@1.1"
   depends_on "pcre"
+
+  uses_from_macos "libxcrypt"
 
   on_linux do
     depends_on "glib"

@@ -3,13 +3,13 @@ class Diffoscope < Formula
 
   desc "In-depth comparison of files, archives, and directories"
   homepage "https://diffoscope.org"
-  url "https://files.pythonhosted.org/packages/7b/34/36239eb947c2ec9c1e0be5c6a98fad57a7717f7b1b62d761074116a4fe21/diffoscope-210.tar.gz"
-  sha256 "772b5f2e3522bd9c5d2047ad6cdff38e02fa990cffd9300516435028d923e1cc"
+  url "https://files.pythonhosted.org/packages/32/ee/7042f6f8c9e7f561b3638a77ab6479a98c1475927a2de63812468575e54d/diffoscope-217.tar.gz"
+  sha256 "1e9791e3f718ca809d98fb319b150ce6222a682b4009ea00838b9d8705003950"
   license "GPL-3.0-or-later"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/diffoscope"
-    sha256 cellar: :any_skip_relocation, mojave: "2273e4299a360382017cce24f7ec7372ae81323e8d8f61ac717256a2736f398e"
+    sha256 cellar: :any_skip_relocation, mojave: "bfcbb27ada2d1c2a9e7ee81e5f32c8665c27c5b1d3f27efd35d08aad8b8a7b0d"
   end
 
   depends_on "libarchive"
@@ -32,8 +32,8 @@ class Diffoscope < Formula
   end
 
   resource "python-magic" do
-    url "https://files.pythonhosted.org/packages/f7/46/fecfd32c126d26c8dd5287095cad01356ec0a761205f0b9255998bff96d1/python-magic-0.4.25.tar.gz"
-    sha256 "21f5f542aa0330f5c8a64442528542f6215c8e18d2466b399b0d9d39356d83fc"
+    url "https://files.pythonhosted.org/packages/da/db/0b3e28ac047452d079d375ec6798bf76a036a08182dbb39ed38116a49130/python-magic-0.4.27.tar.gz"
+    sha256 "c1ba14b08e4a5f5c31a302b7721239695b2f0f058d125bd5ce1ee36b9d9d3c3b"
   end
 
   def install

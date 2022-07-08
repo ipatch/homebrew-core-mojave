@@ -3,18 +3,19 @@ class Regipy < Formula
 
   desc "Offline registry hive parsing tool"
   homepage "https://github.com/mkorman90/regipy"
-  url "https://files.pythonhosted.org/packages/b1/7c/7198c96f40a40a70a3c8d0ff269b957fdf7a573e26c6c499d3a3b7a89835/regipy-2.3.0.tar.gz"
-  sha256 "d7d446fcf09c510fe2e896ec0db491c7fd8c842de812fc7383f553e38def7c95"
+  url "https://files.pythonhosted.org/packages/73/4a/7a5c7ccdfa0858c636ebe267c235d32a6d75e83e26477c98c4e550396ef0/regipy-2.5.3.tar.gz"
+  sha256 "4d69dd28dfe0796829fa4ac032208df686242b94df90bb8ff96c286176dcd153"
   license "MIT"
+  revision 1
   head "https://github.com/mkorman90/regipy.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/regipy"
-    sha256 cellar: :any_skip_relocation, mojave: "a2403ad8b3d144ef7ed8202abe676f4e9864f52d66872e72918767f83d29f634"
+    sha256 cellar: :any_skip_relocation, mojave: "d975a62d406ef94230c21c972824030fe810e3a1ed9ec207cdaf86669699bc6c"
   end
 
-  depends_on "python-tabulate"
-  depends_on "python@3.9"
+  depends_on "libpython-tabulate"
+  depends_on "python@3.10"
 
   resource "attrs" do
     url "https://files.pythonhosted.org/packages/d7/77/ebb15fc26d0f815839ecd897b919ed6d85c050feeb83e100e020df9153d2/attrs-21.4.0.tar.gz"
@@ -22,8 +23,8 @@ class Regipy < Formula
   end
 
   resource "click" do
-    url "https://files.pythonhosted.org/packages/45/2b/7ebad1e59a99207d417c0784f7fb67893465eef84b5b47c788324f1b4095/click-8.1.0.tar.gz"
-    sha256 "977c213473c7665d3aa092b41ff12063227751c41d7b17165013e10069cc5cd2"
+    url "https://files.pythonhosted.org/packages/59/87/84326af34517fca8c58418d148f2403df25303e02736832403587318e9e8/click-8.1.3.tar.gz"
+    sha256 "7682dc8afb30297001674575ea00d1814d808d6a36af415a82bd481d37ba7b8e"
   end
 
   resource "construct" do
@@ -34,6 +35,11 @@ class Regipy < Formula
   resource "inflection" do
     url "https://files.pythonhosted.org/packages/e1/7e/691d061b7329bc8d54edbf0ec22fbfb2afe61facb681f9aaa9bff7a27d04/inflection-0.5.1.tar.gz"
     sha256 "1a29730d366e996aaacffb2f1f1cb9593dc38e2ddd30c91250c6dde09ea9b417"
+  end
+
+  resource "libfwsi-python" do
+    url "https://files.pythonhosted.org/packages/63/c8/47a7197167a11da6a68704f08053057922c1f73a91441824207099310b90/libfwsi-python-20220123.tar.gz"
+    sha256 "faef9fb8e76faf6ad43a785a9129a110d80eb7d540c1382349ed5cec07714873"
   end
 
   resource "pytz" do
@@ -47,14 +53,8 @@ class Regipy < Formula
   end
 
   def install
-    venv = virtualenv_create(libexec, "python3.9")
-    res = resources.map(&:name).to_set
-    res -= %w[test_hive]
-
-    res.each do |r|
-      venv.pip_install resource(r)
-    end
-
+    venv = virtualenv_create(libexec, "python3")
+    venv.pip_install resources.reject { |r| r.name == "test_hive" }
     venv.pip_install_and_link buildpath
   end
 

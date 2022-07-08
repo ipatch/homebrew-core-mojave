@@ -1,8 +1,8 @@
 class Karchive < Formula
   desc "Reading, creating, and manipulating file archives"
   homepage "https://api.kde.org/frameworks/karchive/html/index.html"
-  url "https://download.kde.org/stable/frameworks/5.90/karchive-5.90.0.tar.xz"
-  sha256 "a6e2f3a7cb1aef7db7b4f7dfb9ffb1d929d0d5b147c25a93fbc0b794dfcd2110"
+  url "https://download.kde.org/stable/frameworks/5.94/karchive-5.94.0.tar.xz"
+  sha256 "55cd87a5437a649c168efbce4af132b992aa67dd9a3a8ced7cff0144f155e1e4"
   license all_of: [
     "BSD-2-Clause",
     "LGPL-2.0-only",
@@ -20,8 +20,7 @@ class Karchive < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/karchive"
-    rebuild 1
-    sha256 cellar: :any, mojave: "cc4aef45a141ae71aae30be202bdda35f801454bb22963305d56940242a3f818"
+    sha256 cellar: :any, mojave: "21e3afe63edc9fecff21fcf7471a6784158839e6d70e8acf42df7031ae7f718f"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -69,8 +68,17 @@ class Karchive < Formula
        unzipper].each do |test_name|
       mkdir test_name.to_s do
         system "cmake", (pkgshare/"examples/#{test_name}"), *args
-        system "make"
+        system "cmake", "--build", "."
       end
     end
+
+    assert_match "The whole world inside a hello.", shell_output("helloworld/helloworld 2>&1")
+    assert_predicate testpath/"hello.zip", :exist?
+
+    system "unzipper/unzipper", "hello.zip"
+    assert_predicate testpath/"world", :exist?
+
+    system "tarlocalfiles/tarlocalfiles", "world"
+    assert_predicate testpath/"myFiles.tar.gz", :exist?
   end
 end

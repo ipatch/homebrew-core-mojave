@@ -3,14 +3,14 @@ require "language/node"
 class Postgraphile < Formula
   desc "GraphQL schema created by reflection over a PostgreSQL schema 🐘"
   homepage "https://www.graphile.org/postgraphile/"
-  url "https://registry.npmjs.org/postgraphile/-/postgraphile-4.12.9.tgz"
-  sha256 "dd9a8446cc8e29640ce6ddc94cb7a9e812718755598053686f63fbe49a71c166"
+  url "https://registry.npmjs.org/postgraphile/-/postgraphile-4.12.11.tgz"
+  sha256 "553191171d304b35846d8fc8c40beace5649f85982d4363da13b992fd2aad3d3"
   license "MIT"
   head "https://github.com/graphile/postgraphile.git", branch: "main"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/postgraphile"
-    sha256 cellar: :any_skip_relocation, mojave: "20cdb15059a2a06e0306506226170673cc0321ea7b65d56a85794ab0b87f0833"
+    sha256 cellar: :any_skip_relocation, mojave: "a93c0fea60f58bfea019b7ec4f3e3e07fae26fe4a0d53a25ef63e16fb505fb63"
   end
 
   depends_on "node"

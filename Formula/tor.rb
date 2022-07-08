@@ -1,9 +1,9 @@
 class Tor < Formula
   desc "Anonymizing overlay network for TCP"
   homepage "https://www.torproject.org/"
-  url "https://www.torproject.org/dist/tor-0.4.6.10.tar.gz"
-  mirror "https://www.torservers.net/mirrors/torproject.org/dist/tor-0.4.6.10.tar.gz"
-  sha256 "94ccd60e04e558f33be73032bc84ea241660f92f58cfb88789bda6893739e31c"
+  url "https://www.torproject.org/dist/tor-0.4.7.8.tar.gz"
+  mirror "https://www.torservers.net/mirrors/torproject.org/dist/tor-0.4.7.8.tar.gz"
+  sha256 "9e9a5c67ad2acdd5f0f8be14ed591fed076b1708abf8344066990a0fa66fe195"
   # Complete list of licenses:
   # https://gitweb.torproject.org/tor.git/plain/LICENSE
   license all_of: [
@@ -20,8 +20,7 @@ class Tor < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/tor"
-    rebuild 1
-    sha256 mojave: "65688039bc7e28654983542f5d49783e2c2e98429777049d1081c5445581ac73"
+    sha256 mojave: "d910a751136c70cc72db4ccf91bf5ac86b7ef24010f969bdb4f2d8019a2f3338"
   end
 
   depends_on "pkg-config" => :build

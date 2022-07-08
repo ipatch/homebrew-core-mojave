@@ -1,8 +1,8 @@
 class Qbs < Formula
   desc "Build tool for developing projects across multiple platforms"
   homepage "https://wiki.qt.io/Qbs"
-  url "https://download.qt.io/official_releases/qbs/1.21.0/qbs-src-1.21.0.tar.gz"
-  sha256 "bfed9d93f94989986dd72e81fac5f39e30de058431133a21aaf9971455b335e7"
+  url "https://download.qt.io/official_releases/qbs/1.22.1/qbs-src-1.22.1.tar.gz"
+  sha256 "b06003f49683971b552bb800bc134bf6c76cff79e1809cce741c40382b297b04"
   license :cannot_represent
   head "https://code.qt.io/qbs/qbs.git", branch: "master"
 
@@ -13,12 +13,17 @@ class Qbs < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/qbs"
-    rebuild 1
-    sha256 cellar: :any, mojave: "2a4230cf789ae9cc439da2859683ad783123fc7097d3f8110303e40f77eed0d0"
+    sha256 cellar: :any, mojave: "c3ebb7a5b1b3de1f4dce6f96c00906a6a628b40a61fb982367c9d246b596a729"
   end
 
   depends_on "cmake" => :build
   depends_on "qt@5"
+
+  on_linux do
+    depends_on "gcc"
+  end
+
+  fails_with gcc: "5"
 
   def install
     qt5 = Formula["qt@5"].opt_prefix

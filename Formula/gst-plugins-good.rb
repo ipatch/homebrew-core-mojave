@@ -1,8 +1,8 @@
 class GstPluginsGood < Formula
   desc "GStreamer plugins (well-supported, under the LGPL)"
   homepage "https://gstreamer.freedesktop.org/"
-  url "https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.18.5.tar.xz"
-  sha256 "3aaeeea7765fbf8801acce4a503a9b05f73f04e8a35352e9d00232cfd555796b"
+  url "https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.20.3.tar.xz"
+  sha256 "f8f3c206bf5cdabc00953920b47b3575af0ef15e9f871c0b6966f6d0aa5868b7"
   license "LGPL-2.0-or-later"
   head "https://gitlab.freedesktop.org/gstreamer/gst-plugins-good.git", branch: "master"
 
@@ -13,7 +13,7 @@ class GstPluginsGood < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/gst-plugins-good"
-    sha256 mojave: "b863dcc7a7ebd073b661fa20a082e9e3435acc9a92d007fc7f8f2a8e65e81a61"
+    sha256 mojave: "2549c5d1ab6434b71c736d05cd57ae091b010f12ed2f4c78e160cd4484768ac8"
   end
 
   depends_on "meson" => :build
@@ -28,7 +28,7 @@ class GstPluginsGood < Formula
   depends_on "lame"
   depends_on "libpng"
   depends_on "libshout"
-  depends_on "libsoup@2"
+  depends_on "libsoup"
   depends_on "libvpx"
   depends_on "orc"
   depends_on "speex"

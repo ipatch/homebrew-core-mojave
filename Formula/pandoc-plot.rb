@@ -1,13 +1,13 @@
 class PandocPlot < Formula
   desc "Render and include figures in Pandoc documents using many plotting toolkits"
   homepage "https://github.com/LaurentRDC/pandoc-plot"
-  url "https://hackage.haskell.org/package/pandoc-plot-1.4.0/pandoc-plot-1.4.0.tar.gz"
-  sha256 "7e2127f23583ca63cbc85a459114fbb51f2fc67ca6723f84362ae263469bb71e"
+  url "https://hackage.haskell.org/package/pandoc-plot-1.5.3/pandoc-plot-1.5.3.tar.gz"
+  sha256 "ec7646e2361ca4a6dc7a01d6f55a2817a8c77d65a0eb43ac0a04d465695ae334"
   license "GPL-2.0-or-later"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/pandoc-plot"
-    sha256 cellar: :any_skip_relocation, mojave: "a5d1618676f4002c545774f8857da1631a68e75ab568f0e0c90c4f28aa703316"
+    sha256 cellar: :any_skip_relocation, mojave: "2dfae7785b0146540b75485518ea4fc3caec86e3fd7eeb313e8c908db9f1fe21"
   end
 
   depends_on "cabal-install" => :build
@@ -47,9 +47,7 @@ class PandocPlot < Formula
 
     expected_html_2 = <<~EOS
       <h1 id="repeat-the-same-thing">repeat the same thing</h1>
-      <figure>
-      <img src="#{filename}" />
-      </figure>
+      <p><img src="#{filename}" /></p>
     EOS
 
     assert_equal expected_html_2, output_html_2

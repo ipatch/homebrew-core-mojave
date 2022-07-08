@@ -1,9 +1,9 @@
 class ManDb < Formula
   desc "Unix documentation system"
   homepage "https://www.nongnu.org/man-db/"
-  url "https://download.savannah.gnu.org/releases/man-db/man-db-2.10.1.tar.xz"
-  mirror "https://download-mirror.savannah.gnu.org/releases/man-db/man-db-2.10.1.tar.xz"
-  sha256 "2ffd8f2e80122fe72e60c740c851e6a3e15c9a7921185eb4752c1c672824bed6"
+  url "https://download.savannah.gnu.org/releases/man-db/man-db-2.10.2.tar.xz"
+  mirror "https://download-mirror.savannah.gnu.org/releases/man-db/man-db-2.10.2.tar.xz"
+  sha256 "ee97954d492a13731903c9d0727b9b01e5089edbd695f0cdb58d405a5af5514d"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -13,7 +13,8 @@ class ManDb < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/man-db"
-    sha256 mojave: "74dcbd5578fb6f1c37ce5a36f950a920bb5404706c0cbad66eea47a328bd1a1d"
+    rebuild 1
+    sha256 mojave: "0bdd868c7da490af5912720062bf4084f0013ce14c8c2128e8f0b8587d4ce9ea"
   end
 
   depends_on "pkg-config" => :build
@@ -82,11 +83,10 @@ class ManDb < Formula
   test do
     ENV["PAGER"] = "cat"
     output = shell_output("#{bin}/gman true")
-    on_macos do
+    if OS.mac?
       assert_match "BSD General Commands Manual", output
-      assert_match "The true utility always returns with exit code zero", output
-    end
-    on_linux do
+      assert_match(/The true utility always returns with (an )?exit code (of )?zero/, output)
+    else
       assert_match "true - do nothing, successfully", output
       assert_match "GNU coreutils online help: <http://www.gnu.org/software/coreutils/", output
     end

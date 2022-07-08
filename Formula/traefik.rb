@@ -1,25 +1,18 @@
 class Traefik < Formula
   desc "Modern reverse proxy"
   homepage "https://traefik.io/"
-  url "https://github.com/traefik/traefik/releases/download/v2.6.3/traefik-v2.6.3.src.tar.gz"
-  sha256 "5cffbcd97dc8138c87fbf8e6c3c692edf09ffea4555b21c8fdd0dd47a3baaf3d"
+  url "https://github.com/traefik/traefik/releases/download/v2.7.1/traefik-v2.7.1.src.tar.gz"
+  sha256 "23b6e4dc5c21c787ebefaae4a15046d19608fbb000a983ae0a1bfd2e1bbbcdf0"
   license "MIT"
   head "https://github.com/traefik/traefik.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/traefik"
-    sha256 cellar: :any_skip_relocation, mojave: "0f99bc51f31559d39d5bc120c307c5a2bfaf549f2020e906875d33395e086fcb"
+    sha256 cellar: :any_skip_relocation, mojave: "34b9d81111ba328ac4c8abce64178405b71d6ee076fa19b7757575ec6671e30b"
   end
 
   depends_on "go" => :build
   depends_on "go-bindata" => :build
-
-  # Fix build with Go 1.18.
-  # Remove with v2.7.
-  patch do
-    url "https://github.com/traefik/traefik/commit/9297055ad8f651c751473b5fd4103eb224a8337e.patch?full_index=1"
-    sha256 "b633710c7bde8737fbe0170066a765ee749f014d38afd06ef40085773e152fd0"
-  end
 
   def install
     ldflags = %W[

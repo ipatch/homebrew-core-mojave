@@ -1,15 +1,14 @@
 class Httpd < Formula
   desc "Apache HTTP server"
   homepage "https://httpd.apache.org/"
-  url "https://dlcdn.apache.org/httpd/httpd-2.4.53.tar.bz2"
-  mirror "https://downloads.apache.org/httpd/httpd-2.4.53.tar.bz2"
-  sha256 "d0bbd1121a57b5f2a6ff92d7b96f8050c5a45d3f14db118f64979d525858db63"
+  url "https://dlcdn.apache.org/httpd/httpd-2.4.54.tar.bz2"
+  mirror "https://downloads.apache.org/httpd/httpd-2.4.54.tar.bz2"
+  sha256 "eb397feeefccaf254f8d45de3768d9d68e8e73851c49afd5b7176d1ecf80c340"
   license "Apache-2.0"
-  revision 1
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/httpd"
-    sha256 mojave: "f9cbee649c51f3d88415cba030c7d57baff33fad555fe86e92c60d93c97ef092"
+    sha256 mojave: "f3ae23f63a24b4142ec646e8ac3ae7a6d207b376d8043c8a16010f7fb24d3ff5"
   end
 
   depends_on "apr"
@@ -167,6 +166,9 @@ class Httpd < Formula
       sleep 3
 
       assert_match expected_output, shell_output("curl -s 127.0.0.1:#{port}")
+
+      # Check that `apxs` can find `apu-1-config`.
+      system bin/"apxs", "-q", "APU_CONFIG"
     ensure
       Process.kill("TERM", pid)
       Process.wait(pid)

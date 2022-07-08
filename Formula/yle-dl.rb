@@ -1,14 +1,14 @@
 class YleDl < Formula
   desc "Download Yle videos from the command-line"
   homepage "https://aajanki.github.io/yle-dl/index-en.html"
-  url "https://files.pythonhosted.org/packages/88/7f/bd83f99ce0de2a6b05dbf2b67657b167f5c23b46d86029f4b8f17bef6cc8/yle-dl-20220213.tar.gz"
-  sha256 "b6b1cc9d03d5416f342bcfd2c0304988e6cc3f8bd09e0c1bf5a63790cf775f9d"
+  url "https://files.pythonhosted.org/packages/94/47/f3b211390a7431cda4d2e1ae0b25e7ed3a3f4ffcaa99c6bbf7f911483a9f/yle-dl-20220518.tar.gz"
+  sha256 "df244e8018166326f4a668118b0cc12e817d3cd5a2b2215d98cc141774aaffab"
   license "GPL-3.0-or-later"
   head "https://github.com/aajanki/yle-dl.git", branch: "master"
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/yle-dl"
-    sha256 cellar: :any_skip_relocation, mojave: "32e9e6dde6bdd0b09b06bbc9872d270cb0c30482f11b5143f2c465be38aa2828"
+    sha256 cellar: :any_skip_relocation, mojave: "82fcf24a4a5b72ab83ac065e0d5743a118d54e3411b340c258ce2d370b2fb598"
   end
 
   depends_on "ffmpeg"
@@ -67,14 +67,11 @@ class YleDl < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/b0/b1/7bbf5181f8e3258efae31702f5eab87d8a74a72a0aa78bc8c08c1466e243/urllib3-1.26.8.tar.gz"
-    sha256 "0e7c33d9a63e7ddfcb86780aac87befc2fbddf46c58dbb487e0855f7ceec283c"
+    url "https://files.pythonhosted.org/packages/1b/a5/4eab74853625505725cefdf168f48661b2cd04e7843ab836f3f63abf81da/urllib3-1.26.9.tar.gz"
+    sha256 "aabaf16477806a5e1dd19aa41f8c2b7950dd3c746362d7e3223dbe6de6ac448e"
   end
 
   def install
-    # Fix "ld: file not found: /usr/lib/system/libsystem_darwin.dylib" for lxml
-    ENV["SDKROOT"] = MacOS.sdk_path if MacOS.version == :sierra
-
     xy = Language::Python.major_minor_version "python3"
     ENV.prepend_create_path "PYTHONPATH", libexec/"vendor/lib/python#{xy}/site-packages"
     (resources - [resource("AdobeHDS.php")]).each do |r|

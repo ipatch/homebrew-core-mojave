@@ -1,9 +1,10 @@
 class Rsyslog < Formula
   desc "Enhanced, multi-threaded syslogd"
   homepage "https://www.rsyslog.com/"
-  url "https://www.rsyslog.com/files/download/rsyslog/rsyslog-8.2112.0.tar.gz"
-  sha256 "6a2a973861e9266db37bd2b7b9f672b6b970bfcd743a397b8eee6b0dc4852c41"
+  url "https://www.rsyslog.com/files/download/rsyslog/rsyslog-8.2206.0.tar.gz"
+  sha256 "a1377218b26c0767a7a3f67d166d5338af7c24b455d35ec99974e18e6845ba27"
   license all_of: ["Apache-2.0", "GPL-3.0-or-later", "LGPL-3.0-or-later"]
+  revision 1
 
   livecheck do
     url "https://www.rsyslog.com/downloads/download-v8-stable/"
@@ -12,10 +13,11 @@ class Rsyslog < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/rsyslog"
-    sha256 mojave: "939f5bf97600dafbd47e7d970a30add575942585105c44833fd969d89e650f39"
+    sha256 mojave: "3e3358ab23f08938c9784ffdebdb4e3e435ce48caf16087a4e90c993bc4d9fc6"
   end
 
   depends_on "pkg-config" => :build
+  depends_on "gnutls"
   depends_on "libestr"
 
   uses_from_macos "curl"
@@ -42,7 +44,8 @@ class Rsyslog < Formula
                           "--enable-usertools",
                           "--enable-diagtools",
                           "--disable-uuid",
-                          "--disable-libgcrypt"
+                          "--disable-libgcrypt",
+                          "--enable-gnutls"
     system "make"
     system "make", "install"
 

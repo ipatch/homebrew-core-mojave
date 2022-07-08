@@ -1,13 +1,13 @@
 class Avrdude < Formula
   desc "Atmel AVR MCU programmer"
-  homepage "https://savannah.nongnu.org/projects/avrdude/"
+  homepage "https://www.nongnu.org/avrdude/"
   license "GPL-2.0-or-later"
-  revision 1
+  revision 2
 
   stable do
-    url "https://download.savannah.gnu.org/releases/avrdude/avrdude-6.4.tar.gz"
-    mirror "https://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-6.4.tar.gz"
-    sha256 "a9be7066f70a9dcf4bf0736fcf531db6a3250aed1a24cc643add27641b7110f9"
+    url "https://download.savannah.gnu.org/releases/avrdude/avrdude-7.0.tar.gz"
+    mirror "https://download-mirror.savannah.gnu.org/releases/avrdude/avrdude-7.0.tar.gz"
+    sha256 "c0ef65d98d6040ca0b4f2b700d51463c2a1f94665441f39d15d97442dbb79b54"
 
     # Fix -flat_namespace being used on Big Sur and later.
     patch do
@@ -23,54 +23,54 @@ class Avrdude < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/avrdude"
-    sha256 mojave: "b17bf1487a0c03df2ed77efffd5098dc542bf69569d57c608a21a12fc7a1c4e9"
+    sha256 mojave: "3fe22bdf0e0bfc5d98f8ae68210a1889c20fb57d3a6e96887b182e5fe4522a3e"
   end
 
   head do
-    url "https://svn.savannah.nongnu.org/svn/avrdude/trunk/avrdude"
-
-    depends_on "autoconf" => :build
-    depends_on "automake" => :build
-    depends_on "libtool" => :build
+    url "https://github.com/avrdudes/avrdude.git", branch: "main"
+    depends_on "cmake" => :build
   end
 
-  depends_on "automake" => :build
   depends_on "hidapi"
-  depends_on "libftdi0"
-  depends_on "libhid"
+  depends_on "libftdi"
+  depends_on "libusb"
   depends_on "libusb-compat"
 
-  uses_from_macos "bison"
-  uses_from_macos "flex"
+  uses_from_macos "bison" => :build
+  uses_from_macos "flex" => :build
 
   on_macos do
-    depends_on "libelf"
+    depends_on "libelf" => :build
   end
 
   on_linux do
     depends_on "elfutils"
+    depends_on "readline"
   end
 
   def install
-    # Workaround for ancient config files not recognizing aarch64 macos.
-    am = Formula["automake"]
-    am_share = am.opt_share/"automake-#{am.version.major_minor}"
-    %w[config.guess config.sub].each do |fn|
-      chmod "u+w", fn
-      cp am_share/fn, fn
-    end
-
     if build.head?
-      inreplace "bootstrap", /libtoolize/, "glibtoolize"
-      system "./bootstrap"
+      args = std_cmake_args + ["-DCMAKE_INSTALL_SYSCONFDIR=#{etc}"]
+      shared_args = ["-DBUILD_SHARED_LIBS=ON", "-DCMAKE_INSTALL_RPATH=#{rpath}"]
+      shared_args << "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-undefined,dynamic_lookup" if OS.mac?
+
+      system "cmake", "-S", ".", "-B", "build/shared", *args, *shared_args
+      system "cmake", "--build", "build/shared"
+      system "cmake", "--install", "build/shared"
+
+      system "cmake", "-S", ".", "-B", "build/static", *args
+      system "cmake", "--build", "build/static"
+      lib.install "build/static/src/libavrdude.a"
+    else
+      system "./configure", *std_configure_args, "--sysconfdir=#{etc}"
+      system "make"
+      system "make", "install"
     end
-    system "./configure", *std_configure_args
-    system "make"
-    system "make", "install"
   end
 
   test do
-    assert_equal "avrdude done.  Thank you.",
-      shell_output("#{bin}/avrdude -c jtag2 -p x16a4 2>&1", 1).strip
+    output = shell_output("#{bin}/avrdude -c jtag2 -p x16a4 2>&1", 1).strip
+    refute_match "avrdude was compiled without usb support", output
+    assert_match "avrdude done.  Thank you.", output
   end
 end

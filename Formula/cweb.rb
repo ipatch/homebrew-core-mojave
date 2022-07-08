@@ -1,8 +1,8 @@
 class Cweb < Formula
   desc "Literate documentation system for C, C++, and Java"
   homepage "https://cs.stanford.edu/~knuth/cweb.html"
-  url "https://github.com/ascherer/cweb/archive/cweb-4.7.tar.gz"
-  sha256 "818c1a2966744548935f67e899ffa41605056fb06492d959af9fa276353f0dbf"
+  url "https://github.com/ascherer/cweb/archive/cweb-4.8.1.tar.gz"
+  sha256 "3d1468408aaf2853bc8fbbc64b0f06e9be9c3c89638d78da907bf6f4656d52ce"
   # See disucssions in this thread, https://github.com/ascherer/cweb/issues/29
   license :cannot_represent
 
@@ -13,7 +13,7 @@ class Cweb < Formula
 
   bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/cweb"
-    sha256 mojave: "1a50a0fb3781715522f7f3224e85e691e24b6bd3c859b6f0e23d3b0e37bea30b"
+    sha256 mojave: "0f6c2be05484a7981e6f1c67e21bf240fca0788fe990a57a19682dac8e8da4b9"
   end
 
   conflicts_with "texlive", because: "both install `cweb` binaries"

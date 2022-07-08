@@ -2,14 +2,19 @@ class BrigadeCli < Formula
   desc "Brigade command-line interface"
   homepage "https://brigade.sh"
   url "https://github.com/brigadecore/brigade.git",
-      tag:      "v2.3.1",
-      revision: "c0c965c21aa6ac6d7cfaf1f4f8c1715380bd827c"
+      tag:      "v2.6.0",
+      revision: "e455508e5ec5bb9352e635c179ab44b0bc44c320"
   license "Apache-2.0"
   head "https://github.com/brigadecore/brigade.git", branch: "main"
 
-bottle do
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
+
+  bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/brigade-cli"
-    sha256 cellar: :any_skip_relocation, mojave: "e591ec833450d6d2ce1e1c2acd8bcc1e9273a17aa1b05436fba7fd6033a02b22"
+    sha256 cellar: :any_skip_relocation, mojave: "628bce3de89083c8026b075c3ab0dd1e24f13d14f0305d02a72407bcb77deafa"
   end
 
   depends_on "go" => :build
