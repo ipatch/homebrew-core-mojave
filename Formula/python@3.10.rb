@@ -12,6 +12,7 @@ class PythonAT310 < Formula
   end
 
   bottle do
+    root_url "https://ghcr.io/v2/ipatch/homebrew-core-mojave"
     rebuild 1
     sha256 mojave: "aa249ec275e603ca796ac0948302d5e2c420326c64d526c510662c70c151c133"
   end
