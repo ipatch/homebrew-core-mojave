@@ -1,8 +1,8 @@
 class PythonTkAT310 < Formula
   desc "Python interface to Tcl/Tk"
   homepage "https://www.python.org/"
-  url "https://www.python.org/ftp/python/3.10.5/Python-3.10.5.tgz"
-  sha256 "18f57182a2de3b0be76dfc39fdcfd28156bb6dd23e5f08696f7492e9e3d0bf2d"
+  url "https://www.python.org/ftp/python/3.10.6/Python-3.10.6.tgz"
+  sha256 "848cb06a5caa85da5c45bd7a9221bb821e33fc2bdcba088c127c58fad44e6343"
   license "Python-2.0"
 
   livecheck do
@@ -10,8 +10,12 @@ class PythonTkAT310 < Formula
   end
 
   bottle do
-    root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/python-tk@3.10"
-    sha256 cellar: :any, mojave: "292f34dd1c0c32368250766d1c1d556418e18cb6786ef44a3e47b7e2a94489a2"
+    sha256 cellar: :any, arm64_monterey: "979c43ff9c7c60b5cbfd9cd2627a1f946300a6d49a2d80824635b711790a999e"
+    sha256 cellar: :any, arm64_big_sur:  "805badbd996b38578881e534a496e96375af6b7061d68174118c9a9cec723c15"
+    sha256 cellar: :any, monterey:       "0cf1d9bb358c244a58948e5e2c462379c0cfcaee0ea406f44d1269c469b0e725"
+    sha256 cellar: :any, big_sur:        "1a2d5cd59b4824caaac421614d8a73e6348f9219bfe86fcb4cb1ca0f6fc82830"
+    sha256 cellar: :any, catalina:       "c26191c478b1ae9a53263f46f298d81fc987af82e54b57c18d1c233fe213a278"
+    sha256               x86_64_linux:   "bdad24445f50dfb2a35af261594b476a202081d8adde64cb4b42de802ff15baf"
   end
 
   keg_only :versioned_formula
