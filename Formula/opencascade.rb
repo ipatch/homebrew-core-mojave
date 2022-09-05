@@ -65,6 +65,7 @@ class Opencascade < Formula
                     "-D3RDPARTY_TCL_LIBRARY:FILEPATH=#{tcltk.opt_lib}/libtcl#{tcltk.version.major_minor}.dylib",
                     "-D3RDPARTY_TK_LIBRARY:FILEPATH=#{tcltk.opt_lib}/libtk#{tcltk.version.major_minor}.dylib",
                     "-DCMAKE_INSTALL_RPATH:FILEPATH=#{lib}",
+                    "-DBUILD_RELEASE_DISABLE_EXCEPTIONS=OFF",
                     *std_cmake_args
     system "make", "install"
 
