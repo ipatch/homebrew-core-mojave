@@ -12,8 +12,8 @@ class BoostPython3 < Formula
   end
 
   bottle do
-    root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/boost-python3"
-    sha256 cellar: :any, mojave: "2816fcf1e76c3f83c87b40cbe17f883791eef437947c7f4da097ad4d8607fba6"
+    root_url "https://ghcr.io/v2/ipatch/core-mojave"
+    sha256 cellar: :any, mojave: "62ca53cb2515bfd5927012bf46a46414865ae7f73312199a733f5e75333f4f13"
   end
 
   depends_on "numpy" => :build
