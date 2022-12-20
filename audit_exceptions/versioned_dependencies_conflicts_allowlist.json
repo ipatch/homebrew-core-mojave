@@ -6,5 +6,5 @@
   "predictionio",
   "sqoop",
   "swtpm",
-e "tomcat-native"
+  "tomcat-native"
 ]
