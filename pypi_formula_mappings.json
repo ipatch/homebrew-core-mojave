@@ -43,9 +43,6 @@
   "aws-google-auth": {
     "exclude_packages": ["pillow", "six", "tabulate"]
   },
-  "aws-sam-cli" : {
-    "exclude_packages": ["six", "typing-extensions"]
-  },
   "aws-shell" : {
     "exclude_packages": ["six", "Pygments", "docutils"]
   },
@@ -116,13 +113,6 @@
     "extra_packages": ["appdirs", "pydantic"],
     "exclude_packages": ["six", "tabulate", "PyYAML", "typing-extensions"]
   },
-  "check-jsonschema": {
-    "exclude_packages": ["six"],
-    "extra_packages": [
-      "fqdn", "idna", "isoduration", "jsonpointer", "rfc3339-validator",
-      "rfc3987", "uri_template", "webcolors"
-    ]
-  },
   "ciphey": {
     "exclude_packages": ["six"]
   },
@@ -191,9 +181,6 @@
   },
   "dooit": {
     "exclude_packages": ["six", "PyYAML", "virtualenv"]
-  },
-  "dstack": {
-    "exclude_packages": ["six", "PyYAML", "typing-extensions"]
   },
   "duplicity": {
     "extra_packages": [
@@ -494,9 +481,6 @@
   "proselint": {
     "exclude_packages": ["six"]
   },
-  "prowler": {
-    "exclude_packages": ["six", "tabulate", "typing-extensions", "PyYAML"]
-  },
   "ptpython": {
     "exclude_packages": ["Pygments"]
   },
@@ -615,11 +599,6 @@
   },
   "shallow-backup": {
     "exclude_packages": ["six"]
-  },
-  "snakefmt": {
-    "exclude_packages": [
-      "pathspec", "black", "click", "mypy-extensions", "platformdirs"
-    ]
   },
   "snakemake": {
     "exclude_packages": ["tabulate", "PyYAML", "docutils"]
