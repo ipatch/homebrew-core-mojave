@@ -11,7 +11,6 @@ class ApacheArchiva < Formula
     sha256 cellar: :any_skip_relocation, mojave: "913c76a504715082fa98026788b5b1b20b7a9f67d6693f21c9bb627fc30a49d3"
   end
 
-
   depends_on "ant" => :build
   depends_on "java-service-wrapper"
   depends_on "openjdk"

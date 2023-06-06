@@ -6,7 +6,7 @@ class GradleCompletion < Formula
   license "MIT"
   head "https://github.com/gradle/gradle-completion.git", branch: "master"
 
-bottle do
+  bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/gradle-completion"
     rebuild 1
     sha256 cellar: :any_skip_relocation, mojave: "3563d6c6bf5483f456fdbd43a037240bf7375f8f7e0ecabbc2787e82e7074d97"

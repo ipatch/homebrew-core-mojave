@@ -29,13 +29,15 @@ class Root < Formula
   depends_on "python@3.9"
   depends_on "sqlite"
   depends_on "tbb"
-  depends_on :xcode if MacOS.version <= :catalina
   depends_on "xrootd"
-  depends_on "xz" # for LZMA
+  depends_on "xz"
   depends_on "zstd"
-
   uses_from_macos "libxml2"
   uses_from_macos "zlib"
+
+  on_system :linux, macos: :catalina_or_older do
+    depends_on :xcode
+  end
 
   on_linux do
     depends_on "libxft"

@@ -10,7 +10,7 @@ class Dafny < Formula
     strategy :github_latest
   end
 
-bottle do
+  bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/dafny"
     rebuild 1
     sha256 cellar: :any_skip_relocation, mojave: "2181558b38487158cffcb1369b54e11edc6a9b7d422e6b571bd4b80781b34fa4"

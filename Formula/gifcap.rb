@@ -6,7 +6,7 @@ class Gifcap < Formula
   license "MIT"
   head "https://github.com/outlook/gifcap.git", branch: "master"
 
-bottle do
+  bottle do
     root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/gifcap"
     rebuild 1
     sha256 cellar: :any_skip_relocation, mojave: "f25f60b65c687a399b360d7a44fd439ec12177a86fcd3b3d77fe8b77dc95ba26"

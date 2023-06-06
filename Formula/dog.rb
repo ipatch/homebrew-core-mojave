@@ -12,7 +12,6 @@ class Dog < Formula
     sha256 cellar: :any_skip_relocation, mojave: "381602ce73d1eec082a70017ed4dd6b325eecdeeaefa7b051be2f438ef0fb13b"
   end
 
-
   depends_on "just" => :build
   depends_on "pandoc" => :build
   depends_on "rust" => :build

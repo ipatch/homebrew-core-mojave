@@ -13,7 +13,6 @@ class Flamegraph < Formula
     sha256 cellar: :any_skip_relocation, mojave: "aa1470ea057c547694c5f544dd52a490942627e2968775f1301e78ba01c2487b"
   end
 
-
   uses_from_macos "perl"
 
   def install

@@ -7,24 +7,6 @@ class Readline < Formula
   sha256 "3feb7171f16a84ee82ca18a36d7b9be109a52c04f492a053331d7d1095007c35"
   license "GPL-3.0-or-later"
 
-  bottle do
-    root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/readline"
-    rebuild 2
-    sha256 cellar: :any, mojave: "65c82c7903044d66eab8542351566359361401f308568975fb326ee4f81fe7df"
-  end
-
-  %w[
-    001 bbf97f1ec40a929edab5aa81998c1e2ef435436c597754916e6a5868f273aff7
-  ].each_slice(2) do |p, checksum|
-    patch :p0 do
-      url "https://ftp.gnu.org/gnu/readline/readline-8.2-patches/readline82-#{p}"
-      mirror "https://ftpmirror.gnu.org/readline/readline-8.2-patches/readline82-#{p}"
-      sha256 checksum
-    end
-  end
-
-  # We're not using `url :stable` here because we need `url` to be a string
-  # when we use it in the `strategy` block.
   livecheck do
     url "https://ftp.gnu.org/gnu/readline/"
     regex(/href=.*?readline[._-]v?(\d+(?:\.\d+)+)\.t/i)
@@ -58,6 +40,25 @@ class Readline < Formula
       versions
     end
   end
+
+  bottle do
+    root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/readline"
+    rebuild 2
+    sha256 cellar: :any, mojave: "65c82c7903044d66eab8542351566359361401f308568975fb326ee4f81fe7df"
+  end
+
+  %w[
+    001 bbf97f1ec40a929edab5aa81998c1e2ef435436c597754916e6a5868f273aff7
+  ].each_slice(2) do |p, checksum|
+    patch :p0 do
+      url "https://ftp.gnu.org/gnu/readline/readline-8.2-patches/readline82-#{p}"
+      mirror "https://ftpmirror.gnu.org/readline/readline-8.2-patches/readline82-#{p}"
+      sha256 checksum
+    end
+  end
+
+  # We're not using `url :stable` here because we need `url` to be a string
+  # when we use it in the `strategy` block.
 
   keg_only :shadowed_by_macos, "macOS provides BSD libedit"
 

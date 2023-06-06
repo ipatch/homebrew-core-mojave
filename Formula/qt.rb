@@ -22,8 +22,6 @@ class Qt < Formula
   depends_on "ninja"      => :build
   depends_on "node"       => :build
   depends_on "pkg-config" => :build
-  depends_on xcode: [:build, :test] if MacOS.version <= :mojave
-
   depends_on "assimp"
   depends_on "brotli"
   depends_on "dbus"
@@ -43,15 +41,17 @@ class Qt < Formula
   depends_on "sqlite"
   depends_on "webp"
   depends_on "zstd"
-
   uses_from_macos "bison" => :build
   uses_from_macos "flex"  => :build
   uses_from_macos "gperf" => :build
   uses_from_macos "perl"  => :build
-
   uses_from_macos "cups"
   uses_from_macos "krb5"
   uses_from_macos "zlib"
+
+  on_system :linux, macos: :mojave_or_older do
+    depends_on xcode: [:build, :test]
+  end
 
   on_linux do
     depends_on "at-spi2-core"
@@ -64,11 +64,11 @@ class Qt < Formula
     # TODO: depends_on "gypsy"
     depends_on "harfbuzz"
     # TODO: depends_on "libevent"
-    depends_on "libxkbcommon"
+    depends_on "libdrm"
     depends_on "libice"
     depends_on "libsm"
     depends_on "libxcomposite"
-    depends_on "libdrm"
+    depends_on "libxkbcommon"
     # TODO: depends_on "libvpx"
     # TODO: depends_on "little-cms2"
     depends_on "mesa"
@@ -79,12 +79,12 @@ class Qt < Formula
     depends_on "sdl2"
     # TODO: depends_on "snappy"
     depends_on "systemd"
+    depends_on "wayland"
     depends_on "xcb-util"
     depends_on "xcb-util-image"
     depends_on "xcb-util-keysyms"
     depends_on "xcb-util-renderutil"
     depends_on "xcb-util-wm"
-    depends_on "wayland"
   end
 
   fails_with gcc: "5"

@@ -29,8 +29,16 @@ class GccAT5 < Formula
     depends_on "glibc" if Formula["glibc"].any_version_installed?
   end
 
-  # GCC bootstraps itself, so it is OK to have an incompatible C++ stdlib
   cxxstdlib_check :skip
+
+  patch do
+    on_high_sierra do
+      url "https://raw.githubusercontent.com/Homebrew/formula-patches/413cfac6/gcc%405/10.13_headers.patch"
+      sha256 "94aaec20c8c7bfd3c41ef8fb7725bd524b1c0392d11a411742303a3465d18d09"
+    end
+  end
+
+  # GCC bootstraps itself, so it is OK to have an incompatible C++ stdlib
 
   # Fix build with Xcode 9
   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82091
@@ -44,12 +52,6 @@ class GccAT5 < Formula
   # Fix Apple headers, otherwise they trigger a build failure in libsanitizer
   # GCC bug report: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83531
   # Apple radar 36176941
-  if MacOS.version == :high_sierra
-    patch do
-      url "https://raw.githubusercontent.com/Homebrew/formula-patches/413cfac6/gcc%405/10.13_headers.patch"
-      sha256 "94aaec20c8c7bfd3c41ef8fb7725bd524b1c0392d11a411742303a3465d18d09"
-    end
-  end
 
   # Patch for Xcode bug, taken from https://gcc.gnu.org/bugzilla/show_bug.cgi?id=89864#c43
   # This should be removed in the next release of GCC if fixed by apple; this is an xcode bug,
