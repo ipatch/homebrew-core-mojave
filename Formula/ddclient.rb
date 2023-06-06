@@ -62,7 +62,6 @@ class Ddclient < Formula
     EOS
   end
 
-  plist_options startup: true
 
   service do
     run [opt_bin/"ddclient", "-file", etc/"ddclient.conf"]

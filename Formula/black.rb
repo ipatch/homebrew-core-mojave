@@ -89,8 +89,6 @@ class Black < Formula
     virtualenv_install_with_resources
   end
 
-  plist_options startup: true
-
   service do
     run opt_bin/"blackd"
     keep_alive true

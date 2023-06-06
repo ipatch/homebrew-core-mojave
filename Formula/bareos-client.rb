@@ -87,7 +87,6 @@ class BareosClient < Formula
     end
   end
 
-  plist_options startup: true
   service do
     run [opt_sbin/"bareos-fd", "-f"]
     log_path var/"run/bareos-fd.log"

@@ -78,7 +78,6 @@ class Bind < Formula
     EOS
   end
 
-  plist_options startup: true
 
   service do
     run [opt_sbin/"named", "-f", "-L", var/"log/named/named.log"]

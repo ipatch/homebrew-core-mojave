@@ -28,7 +28,6 @@ class Zrepl < Formula
     (etc/"zrepl").mkpath
   end
 
-  plist_options startup: true
   service do
     run [opt_bin/"zrepl", "daemon"]
     keep_alive true

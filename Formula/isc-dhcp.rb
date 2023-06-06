@@ -88,7 +88,6 @@ class IscDhcp < Formula
     EOS
   end
 
-  plist_options startup: true
 
   service do
     run [opt_sbin/"dhcpd", "-f"]

@@ -28,7 +28,6 @@ class Coredns < Formula
     bin.install "coredns"
   end
 
-  plist_options startup: true
 
   service do
     run [opt_bin/"coredns", "-conf", etc/"coredns/Corefile"]

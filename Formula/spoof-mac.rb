@@ -50,7 +50,6 @@ class SpoofMac < Formula
     EOS
   end
 
-  plist_options startup: true
   service do
     run [opt_bin/"spoof-mac", "randomize", "en0"]
     log_path "/dev/null"

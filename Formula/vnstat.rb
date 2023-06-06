@@ -47,7 +47,6 @@ class Vnstat < Formula
     EOS
   end
 
-  plist_options startup: true
   service do
     run [opt_bin/"vnstatd", "--nodaemon", "--config", etc/"vnstat.conf"]
     keep_alive true

@@ -46,7 +46,6 @@ class Lldpd < Formula
     (var/"run").mkpath
   end
 
-  plist_options startup: true
   service do
     run opt_sbin/"lldpd"
     keep_alive true

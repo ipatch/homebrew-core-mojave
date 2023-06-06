@@ -99,7 +99,6 @@ class Fail2ban < Formula
     EOS
   end
 
-  plist_options startup: true
 
   service do
     run [opt_bin/"fail2ban-client", "-x", "start"]

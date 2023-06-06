@@ -54,7 +54,6 @@ class ShibbolethSp < Formula
     (var/"cache/shibboleth").mkpath
   end
 
-  plist_options startup: true
   service do
     run [opt_sbin/"shibd", "-F", "-f", "-p", var/"run/shibboleth/shibd.pid"]
     keep_alive true

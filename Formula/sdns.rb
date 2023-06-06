@@ -18,7 +18,6 @@ class Sdns < Formula
     bin.install "sdns"
   end
 
-  plist_options startup: true
 
   service do
     run [opt_bin/"sdns", "-config", etc/"sdns.conf"]

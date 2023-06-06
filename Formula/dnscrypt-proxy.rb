@@ -52,7 +52,6 @@ class DnscryptProxy < Formula
     EOS
   end
 
-  plist_options startup: true
 
   service do
     run [opt_sbin/"dnscrypt-proxy", "-config", etc/"dnscrypt-proxy.toml"]

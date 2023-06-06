@@ -118,7 +118,6 @@ class Nagios < Formula
     EOS
   end
 
-  plist_options startup: true
   service do
     run [opt_bin/"nagios", etc/"nagios/nagios.cfg"]
     keep_alive true

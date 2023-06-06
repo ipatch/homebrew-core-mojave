@@ -79,7 +79,6 @@ class Knot < Formula
     EOS
   end
 
-  plist_options startup: true
   service do
     run opt_sbin/"knotd"
     input_path "/dev/null"

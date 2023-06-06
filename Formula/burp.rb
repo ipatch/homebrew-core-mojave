@@ -73,7 +73,6 @@ class Burp < Formula
     EOS
   end
 
-  plist_options startup: true
 
   service do
     run [opt_bin/"burp", "-a", "t"]
