@@ -11,25 +11,17 @@ class Caffe < Formula
     strategy :github_latest
   end
 
-  bottle do
-    sha256 cellar: :any, arm64_monterey: "9f3317ce440f2a169ae23871d183397a62af7ca3f1ecbf925c1b57cedf7000e4"
-    sha256 cellar: :any, arm64_big_sur:  "22169addf9ac9ae8a7b3477716499799fd85a4aeccb732a0c580a87d1b171e59"
-    sha256 cellar: :any, big_sur:        "b7f91af462268b50722ce6f993232034c297e01765ea9016cc46543c9d50a2dd"
-    sha256 cellar: :any, catalina:       "691fb884f9a4a8db955e318ea71a2a6c6908feb3f3fa1271fd3a6ec56e641571"
-    sha256 cellar: :any, mojave:         "5f1c675912742ac91bf9bddb0360509b6f307a122bc8329d5c02be23df6c420c"
-  end
-
   depends_on "cmake" => :build
   depends_on "boost"
   depends_on "gflags"
   depends_on "glog"
   depends_on "hdf5"
   depends_on "leveldb"
+  depends_on "libaec"
   depends_on "lmdb"
   depends_on "opencv"
   depends_on "protobuf"
   depends_on "snappy"
-  depends_on "szip"
 
   resource "test_model" do
     url "https://github.com/nandahkrishna/CaffeMNIST/archive/2483b0ba9b04728041f7d75a3b3cf428cb8edb12.tar.gz"
