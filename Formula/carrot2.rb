@@ -35,7 +35,6 @@ class Carrot2 < Formula
       SCRIPT_HOME: libexec/"dcs"
   end
 
-  plist_options manual: "carrot2"
 
   def plist
     <<~EOS

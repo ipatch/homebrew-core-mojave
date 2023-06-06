@@ -62,7 +62,6 @@ class KibanaAT6 < Formula
     EOS
   end
 
-  plist_options manual: "kibana"
 
   service do
     run opt_bin/"kibana"

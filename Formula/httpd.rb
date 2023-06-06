@@ -131,7 +131,6 @@ class Httpd < Formula
     EOS
   end
 
-  plist_options manual: "apachectl start"
 
   service do
     run [opt_bin/"httpd", "-D", "FOREGROUND"]

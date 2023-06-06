@@ -77,7 +77,6 @@ class Opentsdb < Formula
     end
   end
 
-  plist_options manual: "#{HOMEBREW_PREFIX}/opt/opentsdb/bin/start-tsdb.sh"
 
   def plist
     <<~EOS

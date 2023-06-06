@@ -108,7 +108,6 @@ class CassandraAT21 < Formula
     (bin/"cqlsh").write_env_script libexec/"bin/cqlsh", PYTHONPATH: pypath
   end
 
-  plist_options manual: "#{HOMEBREW_PREFIX}/opt/cassandra@2.1/bin/cassandra -f"
 
   def plist
     <<~EOS

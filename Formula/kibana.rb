@@ -60,7 +60,6 @@ class Kibana < Formula
     EOS
   end
 
-  plist_options manual: "kibana"
 
   def plist
     <<~EOS

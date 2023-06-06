@@ -43,7 +43,6 @@ class Mpdscribble < Formula
     EOS
   end
 
-  plist_options manual: "mpdscribble"
 
   service do
     run [opt_bin/"mpdscribble", "--no-daemon"]
