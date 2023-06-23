@@ -5,20 +5,14 @@ class GnuTar < Formula
   mirror "https://ftpmirror.gnu.org/tar/tar-1.34.tar.gz"
   sha256 "03d908cf5768cfe6b7ad588c921c6ed21acabfb2b79b788d1330453507647aed"
   license "GPL-3.0-or-later"
-  revision 1
-
-  bottle do
-    root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/gnu-tar"
-    rebuild 2
-    sha256 mojave: "7432e2c29fc450d92ff0bb7a3fe524fdcd1babc6604186cda3f16dafd9c3599b"
-  end
 
   head do
     url "https://git.savannah.gnu.org/git/tar.git", branch: "master"
 
     depends_on "autoconf" => :build
     depends_on "automake" => :build
-    depends_on "gettext" => :build
+    # gettext also appears to be a runtime dep as well
+    depends_on "gettext"
   end
 
   on_linux do
