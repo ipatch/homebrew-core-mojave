@@ -1,8 +1,38 @@
-**UPDATE 2022-Feb-25**: Apologies, I forgot that Homebrew hardcodes a "master" branch for `homebrew/core`, so I've had to rename the original `main` branch accordingly. If you installed my tap before the mentioned date, please repeat the installation steps below to reinstall my tap.
+this is my fork of https://github.com/gromgit/homebrew-core-mojave primarily used for a homebrew-freecad github self-hosted runner.
 
----
+## building adhoc bottles directly from a CLI without the github ci/cd pipleline
 
-# Experimental support for Homebrew Core on Mojave
+homebrew does support building adhoc bottles can be uploaded to a github repo and later used. one such method is to use test-bot locally from a cli. an example command is provided below,
+
+```
+ brew test-bot \
+    --only-formulae \
+    --skip-online-checks \
+    --keep-old \
+    --only-json-tab \
+    --skip-recursive-dependents \
+    --root-url=https://ghcr.io/v2/ipatch/homebrew-core-mojave \
+    -v \
+llvm@15
+```
+
+after the bottle is successfully built using test-bot the artifacts can be uploaded using the below command
+
+```
+brew pr-upload -v --upload-only --committer ipatch --warn-on-upload-failure llvm@15
+```
+
+> the above command requires the below 2 env vars are set
+
+```
+HOMEBREW_GITHUB_PACKAGES_TOKEN
+HOMEBREW_GITHUB_PACKAGES_USER
+```
+
+> i believe using the `--upload-only` may make the uploaded pkg private.
+
+
+## Experimental support for Homebrew Core on Mojave
 
 This repo mirrors the main Homebrew core repo as much as possible, only making concessions to stuff that can no longer be built under Mojave. I'll provide bottles to the best of my ability, as they're expired from the main Homebrew core repo.
 
