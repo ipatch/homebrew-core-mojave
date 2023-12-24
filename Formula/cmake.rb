@@ -9,7 +9,6 @@ class Cmake < Formula
   head "https://gitlab.kitware.com/cmake/cmake.git", branch: "master"
 
   # The "latest" release on GitHub has been an unstable version before, so we
-  # NOTE: ipatch
   # check the Git tags instead.
   livecheck do
     url :stable
