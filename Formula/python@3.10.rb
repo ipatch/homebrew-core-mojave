@@ -11,9 +11,9 @@ class PythonAT310 < Formula
   end
 
   bottle do
-    root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/python@3.10"
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, mojave: "54aa2065b0b16c90da9491cfb7f994c4c7ff65db5ce25da2aae658f6beb12e1b"
+    root_url "https://ghcr.io/v2/ipatch/core-mojave"
+    rebuild 2
+    sha256 mojave: "969444da91d358b938153f80f7f91d881d1e3f91644eb2c27268becb76bc3577"
   end
 
   # setuptools remembers the build flags python is built with and uses them to
@@ -22,6 +22,7 @@ class PythonAT310 < Formula
 
   depends_on "pkg-config" => :build
   depends_on "gdbm"
+  depends_on "gettext"
   depends_on "mpdecimal"
   depends_on "openssl@1.1"
   depends_on "readline"
