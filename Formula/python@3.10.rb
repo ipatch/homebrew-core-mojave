@@ -13,7 +13,7 @@ class PythonAT310 < Formula
   bottle do
     root_url "https://ghcr.io/v2/ipatch/core-mojave"
     rebuild 2
-    sha256 mojave: "969444da91d358b938153f80f7f91d881d1e3f91644eb2c27268becb76bc3577"
+    sha256 mojave: "629a70bcf1911eca3ad2dcbda86f6f8e8725ec73357f3cab0df1034525bacde3"
   end
 
   # setuptools remembers the build flags python is built with and uses them to
@@ -24,7 +24,7 @@ class PythonAT310 < Formula
   depends_on "gdbm"
   depends_on "gettext"
   depends_on "mpdecimal"
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
   depends_on "readline"
   depends_on "sqlite"
   depends_on "xz"
@@ -137,7 +137,7 @@ class PythonAT310 < Formula
       --datadir=#{share}
       --without-ensurepip
       --enable-loadable-sqlite-extensions
-      --with-openssl=#{Formula["openssl@1.1"].opt_prefix}
+      --with-openssl=#{Formula["openssl@3"].opt_prefix}
       --with-dbmliborder=gdbm:ndbm
       --enable-optimizations
       --with-system-expat
@@ -209,7 +209,7 @@ class PythonAT310 < Formula
     # `brew install enchant && pip install pyenchant`
     inreplace "./Lib/ctypes/macholib/dyld.py" do |f|
       f.gsub! "DEFAULT_LIBRARY_FALLBACK = [",
-              "DEFAULT_LIBRARY_FALLBACK = [ '#{HOMEBREW_PREFIX}/lib', '#{Formula["openssl@1.1"].opt_lib}',"
+              "DEFAULT_LIBRARY_FALLBACK = [ '#{HOMEBREW_PREFIX}/lib', '#{Formula["openssl@3"].opt_lib}',"
       f.gsub! "DEFAULT_FRAMEWORK_FALLBACK = [", "DEFAULT_FRAMEWORK_FALLBACK = [ '#{HOMEBREW_PREFIX}/Frameworks',"
     end
 
