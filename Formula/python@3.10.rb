@@ -16,6 +16,7 @@ class PythonAT310 < Formula
     sha256 mojave: "629a70bcf1911eca3ad2dcbda86f6f8e8725ec73357f3cab0df1034525bacde3"
   end
 
+  # NOTE: ipatch
   # setuptools remembers the build flags python is built with and uses them to
   # build packages later. Xcode-only systems need different flags.
   pour_bottle? only_if: :clt_installed
