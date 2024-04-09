@@ -4,21 +4,14 @@ class Rust < Formula
   license any_of: ["Apache-2.0", "MIT"]
 
   stable do
-    url "https://static.rust-lang.org/dist/rustc-1.66.1-src.tar.gz"
-    sha256 "5b3c933a94c72187705d4ee293198babfdd09442f5937fbd685db3a81f4959ba"
+    url "https://static.rust-lang.org/dist/rustc-1.77.1-src.tar.gz"
+    sha256 "ee106e4c569f52dba3b5b282b105820f86bd8f6b3d09c06b8dce82fb1bb3a4a1"
 
     # From https://github.com/rust-lang/rust/tree/#{version}/src/tools
     resource "cargo" do
-      url "https://github.com/rust-lang/cargo.git",
-          tag:      "0.67.1",
-          revision: "ad779e08be893e57a9e17a810223a3e966f8c0d8"
+      url "https://github.com/rust-lang/cargo/archive/refs/tags/0.78.1.tar.gz"
+      sha256 "0283fecebb6d3cbd111688eb0359edaf6676f4b2829201a8afe5a0e3afdb4b48"
     end
-  end
-
-  bottle do
-    root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/rust"
-    rebuild 1
-    sha256 cellar: :any, mojave: "11f89f1e524587f8b855363774d812a671eb659db6c6ebf6a4681eb4a26bfebf"
   end
 
   head do
@@ -29,49 +22,51 @@ class Rust < Formula
     end
   end
 
-  depends_on "cmake" => :build
-  depends_on "ninja" => :build
-  depends_on "python@3.11" => :build
-  depends_on "openssl@1.1"
+  depends_on "libgit2"
+  depends_on "libssh2"
+  depends_on "llvm"
+  depends_on macos: :sierra
+  depends_on "openssl@3"
   depends_on "pkg-config"
 
+  uses_from_macos "python" => :build
   uses_from_macos "curl"
   uses_from_macos "zlib"
 
+  # From https://github.com/rust-lang/rust/blob/#{version}/src/stage0.json
   resource "cargobootstrap" do
     on_macos do
-      # From https://github.com/rust-lang/rust/blob/#{version}/src/stage0.json
       on_arm do
-        url "https://static.rust-lang.org/dist/2022-11-03/cargo-1.65.0-aarch64-apple-darwin.tar.gz"
-        sha256 "40858f3078b277165c191b6478c2aba7bf0010162273e28e9964404993eba188"
+        url "https://static.rust-lang.org/dist/2024-02-08/cargo-1.76.0-aarch64-apple-darwin.tar.xz"
+        sha256 "c963d3bf8f07077b0c87922e53ebb8999c601848def13d6f60a7a102dfa2a8a5"
       end
       on_intel do
-        url "https://static.rust-lang.org/dist/2022-11-03/cargo-1.65.0-x86_64-apple-darwin.tar.gz"
-        sha256 "40cbbd62013130d5208435dc45d6c91703eb6a469b6d8eacf746eedc6974ccc0"
+        url "https://static.rust-lang.org/dist/2024-02-08/cargo-1.76.0-x86_64-apple-darwin.tar.xz"
+        sha256 "c69b9e1167d8c67e46b6c933417af09fd8e26e2ee14c04aadad097977b3cd6a3"
       end
     end
 
     on_linux do
-      # From: https://github.com/rust-lang/rust/blob/#{version}/src/stage0.json
       on_arm do
-        url "https://static.rust-lang.org/dist/2022-11-03/cargo-1.65.0-aarch64-unknown-linux-gnu.tar.gz"
-        sha256 "406d244def7ea78ed75ca4852498a1b632360626fb5fec69a8442b14ef04aee8"
+        url "https://static.rust-lang.org/dist/2024-02-08/cargo-1.76.0-aarch64-unknown-linux-gnu.tar.xz"
+        sha256 "d0c54d824e64b7313a974409541ca3a157b3ed7299865786bd0c440b0e073091"
       end
       on_intel do
-        url "https://static.rust-lang.org/dist/2022-11-03/cargo-1.65.0-x86_64-unknown-linux-gnu.tar.gz"
-        sha256 "f7d67cf3b34a7d82fa2b22d42ad2aed20ee8f4be95ab97f88b8bf03a397217c2"
+        url "https://static.rust-lang.org/dist/2024-02-08/cargo-1.76.0-x86_64-unknown-linux-gnu.tar.xz"
+        sha256 "30ec0ad9fca443ec12c544f9ce448dacdde411a45b9042961938b650e918ccfb"
       end
     end
   end
 
   def install
-    ENV.prepend_path "PATH", Formula["python@3.11"].opt_libexec/"bin"
-
     # Ensure that the `openssl` crate picks up the intended library.
-    # https://crates.io/crates/openssl#manual-configuration
-    ENV["OPENSSL_DIR"] = Formula["openssl@1.1"].opt_prefix
+    # https://docs.rs/openssl/latest/openssl/#manual
+    ENV["OPENSSL_DIR"] = Formula["openssl@3"].opt_prefix
 
-    if OS.mac? && MacOS.version <= :sierra
+    ENV["LIBGIT2_NO_VENDOR"] = "1"
+    ENV["LIBSSH2_SYS_USE_PKG_CONFIG"] = "1"
+
+    if OS.mac?
       # Requires the CLT to be the active developer directory if Xcode is installed
       ENV["SDKROOT"] = MacOS.sdk_path
       # Fix build failure for compiler_builtins "error: invalid deployment target
@@ -79,7 +74,42 @@ class Rust < Formula
       ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version
     end
 
-    args = %W[--prefix=#{prefix} --enable-vendor --set rust.jemalloc]
+    resource("cargobootstrap").stage do
+      system "./install.sh", "--prefix=#{buildpath}/cargobootstrap"
+    end
+    ENV.prepend_path "PATH", buildpath/"cargobootstrap/bin"
+
+    cargo_src_path = buildpath/"src/tools/cargo"
+    cargo_src_path.rmtree
+    resource("cargo").stage cargo_src_path
+    if OS.mac?
+      inreplace cargo_src_path/"Cargo.toml",
+                /^curl\s*=\s*"(.+)"$/,
+                'curl = { version = "\\1", features = ["force-system-lib-on-osx"] }'
+    end
+
+    # rustfmt and rust-analyzer are available in their own formulae.
+    tools = %w[
+      analysis
+      cargo
+      clippy
+      rustdoc
+      rust-analyzer-proc-macro-srv
+      rust-demangler
+      src
+    ]
+    args = %W[
+      --prefix=#{prefix}
+      --sysconfdir=#{etc}
+      --tools=#{tools.join(",")}
+      --llvm-root=#{Formula["llvm"].opt_prefix}
+      --enable-llvm-link-shared
+      --enable-vendor
+      --disable-cargo-native-static
+      --enable-profiler
+      --set=rust.jemalloc
+      --release-description=#{tap.user}
+    ]
     if build.head?
       args << "--disable-rpath"
       args << "--release-channel=nightly"
@@ -91,31 +121,29 @@ class Rust < Formula
     system "make"
     system "make", "install"
 
-    resource("cargobootstrap").stage do
-      system "./install.sh", "--prefix=#{buildpath}/cargobootstrap"
-    end
-    ENV.prepend_path "PATH", buildpath/"cargobootstrap/bin"
-
-    resource("cargo").stage do
-      ENV["RUSTC"] = bin/"rustc"
-      args = %W[--root #{prefix} --path .]
-      args += %w[--features curl-sys/force-system-lib-on-osx] if OS.mac?
-      system "cargo", "install", *args
-      man1.install Dir["src/etc/man/*.1"]
-      bash_completion.install "src/etc/cargo.bashcomp.sh"
-      zsh_completion.install "src/etc/_cargo"
-    end
-
     (lib/"rustlib/src/rust").install "library"
-    rm_rf prefix/"lib/rustlib/uninstall.sh"
-    rm_rf prefix/"lib/rustlib/install.log"
+    rm_f [
+      bin.glob("*.old"),
+      lib/"rustlib/install.log",
+      lib/"rustlib/uninstall.sh",
+      (lib/"rustlib").glob("manifest-*"),
+    ]
   end
 
   def post_install
     Dir["#{lib}/rustlib/**/*.dylib"].each do |dylib|
       chmod 0664, dylib
       MachO::Tools.change_dylib_id(dylib, "@rpath/#{File.basename(dylib)}")
+      MachO.codesign!(dylib) if Hardware::CPU.arm?
       chmod 0444, dylib
+    end
+  end
+
+  def check_binary_linkage(binary, library)
+    binary.dynamically_linked_libraries.any? do |dll|
+      next false unless dll.start_with?(HOMEBREW_PREFIX.to_s)
+
+      File.realpath(dll) == File.realpath(library)
     end
   end
 
@@ -130,5 +158,30 @@ class Rust < Formula
     assert_equal "Hello World!\n", shell_output("./hello")
     system bin/"cargo", "new", "hello_world", "--bin"
     assert_equal "Hello, world!", cd("hello_world") { shell_output("#{bin}/cargo run").split("\n").last }
+
+    # We only check the tools' linkage here. No need to check rustc.
+    expected_linkage = {
+      bin/"cargo" => [
+        Formula["libgit2"].opt_lib/shared_library("libgit2"),
+        Formula["libssh2"].opt_lib/shared_library("libssh2"),
+        Formula["openssl@3"].opt_lib/shared_library("libcrypto"),
+        Formula["openssl@3"].opt_lib/shared_library("libssl"),
+      ],
+    }
+    unless OS.mac?
+      expected_linkage[bin/"cargo"] += [
+        Formula["curl"].opt_lib/shared_library("libcurl"),
+        Formula["zlib"].opt_lib/shared_library("libz"),
+      ]
+    end
+    missing_linkage = []
+    expected_linkage.each do |binary, dylibs|
+      dylibs.each do |dylib|
+        next if check_binary_linkage(binary, dylib)
+
+        missing_linkage << "#{binary} => #{dylib}"
+      end
+    end
+    assert missing_linkage.empty?, "Missing linkage: #{missing_linkage.join(", ")}"
   end
 end
