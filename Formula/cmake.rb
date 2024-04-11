@@ -1,22 +1,24 @@
 class Cmake < Formula
   desc "Cross-platform make"
   homepage "https://www.cmake.org/"
-  url "https://github.com/Kitware/CMake/releases/download/v3.28.1/cmake-3.28.1.tar.gz"
-  mirror "http://fresh-center.net/linux/misc/cmake-3.28.1.tar.gz"
-  sha256 "15e94f83e647f7d620a140a7a5da76349fc47a1bfed66d0f5cdee8e7344079ad"
+  url "https://github.com/Kitware/CMake/releases/download/v3.29.1/cmake-3.29.1.tar.gz"
+  mirror "http://fresh-center.net/linux/misc/cmake-3.29.1.tar.gz"
+  mirror "http://fresh-center.net/linux/misc/legacy/cmake-3.29.1.tar.gz"
+  sha256 "7fb02e8f57b62b39aa6b4cf71e820148ba1a23724888494735021e32ab0eefcc"
   license "BSD-3-Clause"
   head "https://gitlab.kitware.com/cmake/cmake.git", branch: "master"
 
-  # The "latest" release on GitHub has been an unstable version before, so we
-  # check the Git tags instead.
+  # The "latest" release on GitHub has been an unstable version before, and
+  # there have been delays between the creation of a tag and the corresponding
+  # release, so we check the website's downloads page instead.
   livecheck do
-    url :stable
-    regex(/^v?(\d+(?:\.\d+)+)$/i)
+    url "https://cmake.org/download/"
+    regex(/href=.*?cmake[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
     root_url "https://ghcr.io/v2/ipatch/core-mojave"
-    sha256 cellar: :any_skip_relocation, mojave: "61baa4af8729d01a8b27da7afb8d631ece57ccf967edf732d62f46dbf663b09c"
+    sha256 cellar: :any_skip_relocation, mojave: "1e2bb3577dcab5d4ac0921b8139d9e1246b6a31e3704e65dbf579a7dee3e0966"
   end
 
   uses_from_macos "ncurses"
