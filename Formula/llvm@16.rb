@@ -12,17 +12,6 @@ class LlvmAT16 < Formula
     regex(/^llvmorg[._-]v?(16(?:\.\d+)+)$/i)
   end
 
-  bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_sonoma:   "9bab38bfbe2c1e785fa2fc46929ebf75ca50eb8d20926f1b290ae103f51d4216"
-    sha256 cellar: :any,                 arm64_ventura:  "833e6a2c39b667ecbb39c10f549d7e79187e8c4395c056eebae5439af4eac77c"
-    sha256 cellar: :any,                 arm64_monterey: "8da9dba46e6be61025f2b40e3e67d1c154cddb5db282ee2cc063a9330bf488b9"
-    sha256 cellar: :any,                 sonoma:         "336f479820f2a8fd236ef5c7cdf4d58acdc2b84879fd37586403aec3ef3c134a"
-    sha256 cellar: :any,                 ventura:        "fca6a8c3cde7cf7c6c2038c28a4836b8675d62ebb9c126a29f74c960571ffae0"
-    sha256 cellar: :any,                 monterey:       "9bedaf4519f8bba86b4deb6b3bbf2c1651f204b19d5789425c267c7fc94de80c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "165c4888dd34e3722ade1ea7dc35b2e4aa4ad1ead86e250cc027572862901257"
-  end
-
   # Clang cannot find system headers if Xcode CLT is not installed
   pour_bottle? only_if: :clt_installed
 
@@ -32,7 +21,8 @@ class LlvmAT16 < Formula
   depends_on "cmake" => :build
   depends_on "ninja" => :build
   depends_on "swig" => :build
-  depends_on "python@3.12"
+  depends_on "llvm@15" => :build
+  depends_on "python@3.10"
   depends_on "six" # TODO: Remove at next release.
   depends_on "z3"
   depends_on "zstd"
@@ -63,6 +53,12 @@ class LlvmAT16 < Formula
   end
 
   def install
+    # NOTE: apple's clang & clang++ don not provide batteries for open-mpi
+    # NOTE: when setting the compilers to brews' llvm, set the cmake_ar linker as well
+    ENV["CC"] = Formula["llvm@15"].opt_bin/"clang"
+    ENV["CXX"] = Formula["llvm@15"].opt_bin/"clang++"
+
+
     # The clang bindings need a little help finding our libclang.
     inreplace "clang/bindings/python/clang/cindex.py",
               /^(\s*library_path\s*=\s*)None$/,
@@ -134,6 +130,7 @@ class LlvmAT16 < Formula
       -DPACKAGE_VENDOR=#{tap.user}
       -DBUG_REPORT_URL=#{tap.issues_url}
       -DCLANG_VENDOR_UTI=org.#{tap.user.downcase}.clang
+      -DCMAKE_LINKER_TYPE=LLD
     ]
 
     runtimes_cmake_args = []
