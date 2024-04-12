@@ -1,8 +1,8 @@
 class Libgit2 < Formula
   desc "C library of Git core methods that is re-entrant and linkable"
   homepage "https://libgit2.github.com/"
-  url "https://github.com/libgit2/libgit2/archive/v1.5.0.tar.gz"
-  sha256 "8de872a0f201b33d9522b817c92e14edb4efad18dae95cf156cf240b2efff93e"
+  url "https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.2.tar.gz"
+  sha256 "de384e29d7efc9330c6cdb126ebf88342b5025d920dcb7c645defad85195ea7f"
   license "GPL-2.0-only" => { with: "GCC-exception-2.0" }
   head "https://github.com/libgit2/libgit2.git", branch: "main"
 
@@ -11,33 +11,21 @@ class Libgit2 < Formula
     strategy :github_latest
   end
 
-  bottle do
-    root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/libgit2"
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, mojave: "49b927c7981868c71a2a451ad8d731e67a8b689fb74828881534a815be023e68"
-  end
-
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on "libssh2"
+  depends_on "openssl@3"
 
   def install
-    args = std_cmake_args
-    args << "-DBUILD_EXAMPLES=YES"
-    args << "-DBUILD_TESTS=OFF" # Don't build tests.
-    args << "-DUSE_SSH=YES"
+    args = %w[-DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DUSE_SSH=ON]
 
-    mkdir "build" do
-      system "cmake", "..", *args
-      system "make", "install"
-      cd "examples" do
-        (pkgshare/"examples").install "lg2"
-      end
-      system "make", "clean"
-      system "cmake", "..", "-DBUILD_SHARED_LIBS=OFF", *args
-      system "make"
-      lib.install "libgit2.a"
-    end
+    system "cmake", "-S", ".", "-B", "build", "-DBUILD_SHARED_LIBS=ON", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
+
+    system "cmake", "-S", ".", "-B", "build-static", "-DBUILD_SHARED_LIBS=OFF", *args, *std_cmake_args
+    system "cmake", "--build", "build-static"
+    lib.install "build-static/libgit2.a"
   end
 
   test do
