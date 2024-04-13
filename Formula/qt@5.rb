@@ -115,7 +115,7 @@ class QtAT5 < Formula
   # Fix build for GCC 11
   patch do
     url "https://invent.kde.org/qt/qt/qtbase/commit/92646a2e0a4264dc9da97bc5e884a0116c0a32fb.patch"
-    sha256 "bd1a637da853e841259a9824481fe05b9c01563cc4e077e95fa8e0a7a479c653"
+    sha256 "fb47d5d40ed86431b205d01016543d589befbe28239e5c57ecae607b2458039e"
     directory "qtbase"
   end
 
