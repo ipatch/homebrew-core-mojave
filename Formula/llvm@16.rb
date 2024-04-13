@@ -19,9 +19,9 @@ class LlvmAT16 < Formula
 
   # https://llvm.org/docs/GettingStarted.html#requirement
   depends_on "cmake" => :build
+  depends_on "llvm@15" => :build
   depends_on "ninja" => :build
   depends_on "swig" => :build
-  depends_on "llvm@15" => :build
   depends_on "python@3.10"
   depends_on "six" # TODO: Remove at next release.
   depends_on "z3"
@@ -49,7 +49,7 @@ class LlvmAT16 < Formula
   end
 
   def python3
-    "python3.12"
+    "python3.10"
   end
 
   def install
@@ -57,7 +57,6 @@ class LlvmAT16 < Formula
     # NOTE: when setting the compilers to brews' llvm, set the cmake_ar linker as well
     ENV["CC"] = Formula["llvm@15"].opt_bin/"clang"
     ENV["CXX"] = Formula["llvm@15"].opt_bin/"clang++"
-
 
     # The clang bindings need a little help finding our libclang.
     inreplace "clang/bindings/python/clang/cindex.py",
@@ -437,6 +436,11 @@ class LlvmAT16 < Formula
       <<~EOS
         To use the bundled libc++ please add the following LDFLAGS:
           LDFLAGS="-L#{opt_lib}/c++ -Wl,-rpath,#{opt_lib}/c++"
+
+        building from source on a 2015 mbp takes ~ time
+
+        ==> Summary
+        🍺  /Users/brewmaster/homebrew/Cellar/llvm@16/16.0.6: 5,828 files, 1.3GB, built in 639 minutes 8 seconds
       EOS
     end
   end
