@@ -24,7 +24,7 @@ class Node < Formula
   uses_from_macos "zlib"
 
   on_macos do
-    depends_on "llvm" => [:build, :test] if DevelopmentTools.clang_build_version <= 1100
+    depends_on "llvm@16" => [:build, :test] if DevelopmentTools.clang_build_version <= 1100
   end
 
   fails_with :clang do
@@ -135,6 +135,16 @@ class Node < Formula
     end
 
     (node_modules/"npm/npmrc").atomic_write("prefix = #{HOMEBREW_PREFIX}\n")
+  end
+
+  def caveats
+    <<-EOS
+    building node from source on a 2015 mbp takes ~
+    ==> Summary
+    🍺  /Users/brewmaster/homebrew/Cellar/node/19.3.0: 2,157 files, 55MB, built in 160 minutes 35 seconds
+    Warning: HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK is set: not checking for outdated
+    dependents or dependents with broken linkage!
+    EOS
   end
 
   test do
