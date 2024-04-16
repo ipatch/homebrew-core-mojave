@@ -1,19 +1,13 @@
 class PythonAT311 < Formula
   desc "Interpreted, interactive, object-oriented programming language"
   homepage "https://www.python.org/"
-  url "https://www.python.org/ftp/python/3.11.0/Python-3.11.0.tgz"
-  sha256 "64424e96e2457abbac899b90f9530985b51eef2905951febd935f0e73414caeb"
+  url "https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tgz"
+  sha256 "e7de3240a8bc2b1e1ba5c81bf943f06861ff494b69fda990ce2722a504c6153d"
   license "Python-2.0"
 
   livecheck do
     url "https://www.python.org/ftp/python/"
     regex(%r{href=.*?v?(3\.11(?:\.\d+)*)/?["' >]}i)
-  end
-
-  bottle do
-    root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/python@3.11"
-    rebuild 2
-    sha256 cellar: :any_skip_relocation, mojave: "b6862dff779b43763f7a40a8dd1db4f533024b4412bd971deb79d8c9bcf8e589"
   end
 
   # setuptools remembers the build flags python is built with and uses them to
@@ -22,7 +16,7 @@ class PythonAT311 < Formula
 
   depends_on "pkg-config" => :build
   depends_on "mpdecimal"
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
   depends_on "sqlite"
   depends_on "xz"
 
@@ -46,19 +40,24 @@ class PythonAT311 < Formula
               "bin/easy_install-3.7", "bin/easy_install-3.8", "bin/easy_install-3.9", "bin/easy_install-3.10"
 
   # Always update to latest release
-  resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/c5/41/247814d8b7a044717164c74080725a6c8f3d2b5fc82b34bd825b617df663/setuptools-65.5.0.tar.gz"
-    sha256 "512e5536220e38146176efb833d4a62aa726b7bbff82cfbc8ba9eaa3996e0b17"
+  resource "flit-core" do
+    url "https://files.pythonhosted.org/packages/c4/e6/c1ac50fe3eebb38a155155711e6e864e254ce4b6e17fe2429b4c4d5b9e80/flit_core-3.9.0.tar.gz"
+    sha256 "72ad266176c4a3fcfab5f2930d76896059851240570ce9a98733b658cb786eba"
   end
 
   resource "pip" do
-    url "https://files.pythonhosted.org/packages/f8/08/7f92782ff571c7c7cb6c5eeb8ebbb1f68cb02bdb24e55c5de4dd9ce98bc3/pip-22.3.tar.gz"
-    sha256 "8182aec21dad6c0a49a2a3d121a87cd524b950e0b6092b181625f07ebdde7530"
+    url "https://files.pythonhosted.org/packages/94/59/6638090c25e9bc4ce0c42817b5a234e183872a1129735a9330c472cc2056/pip-24.0.tar.gz"
+    sha256 "ea9bd1a847e8c5774a5777bb398c19e80bcd4e2aa16a4b301b718fe6f593aba2"
+  end
+
+  resource "setuptools" do
+    url "https://files.pythonhosted.org/packages/4d/5b/dc575711b6b8f2f866131a40d053e30e962e633b332acf7cd2c24843d83d/setuptools-69.2.0.tar.gz"
+    sha256 "0ff4183f8f42cd8fa3acea16c45205521a4ef28f73c6391d8a25e92893134f2e"
   end
 
   resource "wheel" do
-    url "https://files.pythonhosted.org/packages/c0/6c/9f840c2e55b67b90745af06a540964b73589256cb10cc10057c87ac78fc2/wheel-0.37.1.tar.gz"
-    sha256 "e9a504e793efbca1b8e0e9cb979a249cf4a0a7b5b8c9e8b65a5e39d49529c1c4"
+    url "https://files.pythonhosted.org/packages/b8/d6/ac9cd92ea2ad502ff7c1ab683806a9deb34711a1e2bd8a59814e8fc27e69/wheel-0.43.0.tar.gz"
+    sha256 "465ef92c69fa5c5da2d1cf8ac40559a8c940886afcef87dcf14b9470862f1d85"
   end
 
   # Modify default sysconfig to match the brew install layout.
@@ -123,26 +122,12 @@ class PythonAT311 < Formula
       --datadir=#{share}
       --without-ensurepip
       --enable-loadable-sqlite-extensions
-      --with-openssl=#{Formula["openssl@1.1"].opt_prefix}
+      --with-openssl=#{Formula["openssl@3"].opt_prefix}
       --enable-optimizations
       --with-system-expat
-      --with-system-ffi
       --with-system-libmpdec
       --with-readline=editline
     ]
-
-    if OS.mac?
-      # Enabling LTO on Linux makes libpython3.*.a unusable for anyone whose GCC
-      # install does not match the one in CI _exactly_ (major and minor version).
-      # https://github.com/orgs/Homebrew/discussions/3734
-      args << "--with-lto"
-      args << "--enable-framework=#{frameworks}"
-      args << "--with-dtrace"
-      args << "--with-dbmliborder=ndbm"
-    else
-      args << "--enable-shared"
-      args << "--with-dbmliborder=bdb"
-    end
 
     # Python re-uses flags when building native modules.
     # Since we don't want native modules prioritizing the brew
@@ -155,14 +140,27 @@ class PythonAT311 < Formula
     ldflags_nodist = ["-L#{HOMEBREW_PREFIX}/lib", "-Wl,-rpath,#{HOMEBREW_PREFIX}/lib"]
     cppflags       = ["-I#{HOMEBREW_PREFIX}/include"]
 
-    if MacOS.sdk_path_if_needed
-      # Help Python's build system (setuptools/pip) to build things on SDK-based systems
-      # The setup.py looks at "-isysroot" to get the sysroot (and not at --sysroot)
-      cflags  << "-isysroot #{MacOS.sdk_path}"
-      ldflags << "-isysroot #{MacOS.sdk_path}"
+    if OS.mac?
+      # Enabling LTO on Linux makes libpython3.*.a unusable for anyone whose GCC
+      # install does not match the one in CI _exactly_ (major and minor version).
+      # https://github.com/orgs/Homebrew/discussions/3734
+      args << "--with-lto"
+      args << "--enable-framework=#{frameworks}"
+      args << "--with-dtrace"
+      args << "--with-dbmliborder=ndbm"
+
+      if MacOS.sdk_path_if_needed
+        # Help Python's build system (setuptools/pip) to build things on SDK-based systems
+        # The setup.py looks at "-isysroot" to get the sysroot (and not at --sysroot)
+        cflags  << "-isysroot #{MacOS.sdk_path}"
+        ldflags << "-isysroot #{MacOS.sdk_path}"
+      end
+      # Avoid linking to libgcc https://mail.python.org/pipermail/python-dev/2012-February/116205.html
+      args << "MACOSX_DEPLOYMENT_TARGET=#{MacOS.version}"
+    else
+      args << "--enable-shared"
+      args << "--with-dbmliborder=bdb"
     end
-    # Avoid linking to libgcc https://mail.python.org/pipermail/python-dev/2012-February/116205.html
-    args << "MACOSX_DEPLOYMENT_TARGET=#{MacOS.version}"
 
     # Resolve HOMEBREW_PREFIX in our sysconfig modification.
     inreplace "Lib/sysconfig.py", "@@HOMEBREW_PREFIX@@", HOMEBREW_PREFIX
@@ -190,7 +188,7 @@ class PythonAT311 < Formula
     # `brew install enchant && pip install pyenchant`
     inreplace "./Lib/ctypes/macholib/dyld.py" do |f|
       f.gsub! "DEFAULT_LIBRARY_FALLBACK = [",
-              "DEFAULT_LIBRARY_FALLBACK = [ '#{HOMEBREW_PREFIX}/lib', '#{Formula["openssl@1.1"].opt_lib}',"
+              "DEFAULT_LIBRARY_FALLBACK = [ '#{HOMEBREW_PREFIX}/lib', '#{Formula["openssl@3"].opt_lib}',"
       f.gsub! "DEFAULT_FRAMEWORK_FALLBACK = [", "DEFAULT_FRAMEWORK_FALLBACK = [ '#{HOMEBREW_PREFIX}/Frameworks',"
     end
 
@@ -279,6 +277,9 @@ class PythonAT311 < Formula
     ]
     whl_build = buildpath/"whl_build"
     system python3, "-m", "venv", whl_build
+    resource("flit-core").stage do
+      system whl_build/"bin/pip3", "install", *common_pip_args, "."
+    end
     resource("wheel").stage do
       system whl_build/"bin/pip3", "install", *common_pip_args, "."
       system whl_build/"bin/pip3", "wheel", *common_pip_args,
@@ -345,7 +346,7 @@ class PythonAT311 < Formula
     rm_rf Dir["#{site_packages}/pip[-_.][0-9]*", "#{site_packages}/pip"]
     rm_rf Dir["#{site_packages}/wheel[-_.][0-9]*", "#{site_packages}/wheel"]
 
-    system python3, "-m", "ensurepip"
+    system python3, "-Im", "ensurepip"
 
     # Install desired versions of setuptools, pip, wheel using the version of
     # pip bootstrapped by ensurepip.
@@ -353,7 +354,7 @@ class PythonAT311 < Formula
     # ensurepip actually used them, since other existing installations could
     # have been picked up (and we can't pass --ignore-installed).
     bundled = lib_cellar/"ensurepip/_bundled"
-    system python3, "-m", "pip", "install", "-v",
+    system python3, "-Im", "pip", "install", "-v",
            "--no-deps",
            "--no-index",
            "--upgrade",
@@ -361,7 +362,7 @@ class PythonAT311 < Formula
            "--target=#{site_packages}",
            bundled/"setuptools-#{resource("setuptools").version}-py3-none-any.whl",
            bundled/"pip-#{resource("pip").version}-py3-none-any.whl",
-           libexec/"wheel-#{resource("wheel").version}-py2.py3-none-any.whl"
+           libexec/"wheel-#{resource("wheel").version}-py3-none-any.whl"
 
     # pip install with --target flag will just place the bin folder into the
     # target, so move its contents into the appropriate location
@@ -394,6 +395,7 @@ class PythonAT311 < Formula
       # <https://docs.brew.sh/Homebrew-and-Python>
       import re
       import os
+      import site
       import sys
       if sys.version_info[:2] != (#{version.major}, #{version.minor}):
           # This can only happen if the user has set the PYTHONPATH to a mismatching site-packages directory.
@@ -401,9 +403,10 @@ class PythonAT311 < Formula
           # because the PYTHONPATH is evaluated after the sitecustomize.py. Many modules (e.g. PyQt4) are
           # built only for a specific version of Python and will fail with cryptic error messages.
           # In the end this means: Don't set the PYTHONPATH permanently if you use different Python versions.
-          exit('Your PYTHONPATH points to a site-packages dir for Python #{version.major_minor} but you are running Python ' +
-                str(sys.version_info[0]) + '.' + str(sys.version_info[1]) + '!\\n     PYTHONPATH is currently: "' + str(os.environ['PYTHONPATH']) + '"\\n' +
-                '     You should `unset PYTHONPATH` to fix this.')
+          exit(f'Your PYTHONPATH points to a site-packages dir for Python #{version.major_minor} '
+               f'but you are running Python {sys.version_info[0]}.{sys.version_info[1]}!\\n'
+               f'     PYTHONPATH is currently: "{os.environ["PYTHONPATH"]}"\\n'
+               f'     You should `unset PYTHONPATH` to fix this.')
       # Only do this for a brewed python:
       if os.path.realpath(sys.executable).startswith('#{rack}'):
           # Shuffle /Library site-packages to the end of sys.path
@@ -414,22 +417,24 @@ class PythonAT311 < Formula
           sys.path.extend(library_packages)
           # the Cellar site-packages is a symlink to the HOMEBREW_PREFIX
           # site_packages; prefer the shorter paths
-          long_prefix = re.compile(r'#{rack}/[0-9._abrc]+/Frameworks/Python.framework/Versions/#{version.major_minor}/lib/python#{version.major_minor}/site-packages')
-          sys.path = [long_prefix.sub('#{HOMEBREW_PREFIX/"lib/python#{version.major_minor}/site-packages"}', p) for p in sys.path]
+          long_prefix = re.compile(r'#{rack}/[0-9\\._abrc]+/Frameworks/Python\\.framework/Versions/#{version.major_minor}/lib/python#{version.major_minor}/site-packages')
+          sys.path = [long_prefix.sub('#{site_packages}', p) for p in sys.path]
           # Set the sys.executable to use the opt_prefix. Only do this if PYTHONEXECUTABLE is not
           # explicitly set and we are not in a virtualenv:
           if 'PYTHONEXECUTABLE' not in os.environ and sys.prefix == sys.base_prefix:
               sys.executable = sys._base_executable = '#{opt_bin}/python#{version.major_minor}'
       if 'PYTHONHOME' not in os.environ:
-          cellar_prefix = re.compile(r'#{rack}/[0-9._abrc]+/')
+          cellar_prefix = re.compile(r'#{rack}/[0-9\\._abrc]+/')
           if os.path.realpath(sys.base_prefix).startswith('#{rack}'):
               new_prefix = cellar_prefix.sub('#{opt_prefix}/', sys.base_prefix)
               if sys.prefix == sys.base_prefix:
+                  site.PREFIXES[:] = [new_prefix if x == sys.prefix else x for x in site.PREFIXES]
                   sys.prefix = new_prefix
               sys.base_prefix = new_prefix
           if os.path.realpath(sys.base_exec_prefix).startswith('#{rack}'):
               new_exec_prefix = cellar_prefix.sub('#{opt_prefix}/', sys.base_exec_prefix)
               if sys.exec_prefix == sys.base_exec_prefix:
+                  site.PREFIXES[:] = [new_exec_prefix if x == sys.exec_prefix else x for x in site.PREFIXES]
                   sys.exec_prefix = new_exec_prefix
               sys.base_exec_prefix = new_exec_prefix
       # Check for and add the prefix of split Python formulae.
@@ -449,9 +454,6 @@ class PythonAT311 < Formula
       `python#{version.major_minor}`, `python#{version.major_minor}-config`, `pip#{version.major_minor}` etc., respectively, have been installed into
         #{opt_libexec}/bin
 
-      If you do not need a specific version of Python, and always want Homebrew's `python3` in your PATH:
-        brew install python3
-
       You can install Python packages with
         pip#{version.major_minor} install <package>
       They will install into the site-package directory
@@ -467,7 +469,14 @@ class PythonAT311 < Formula
       you'll need to read your database using the older version of Homebrew Python and convert to another format.
       `dbm` still defaults to `dbm.gnu` when it is installed.
 
+      If you do not need a specific version of Python, and always want Homebrew's `python3` in your PATH:
+        brew install python3
+
       For more information about Homebrew and Python, see: https://docs.brew.sh/Homebrew-and-Python
+
+      on my 2015 mbp it took ~ to build and install python@3.11
+      ==> Summary
+      /Users/brewmaster/homebrew/Cellar/python@3.11/3.11.9: 8,524 files, 197.5MB, built in 10 minutes 47 seconds
     EOS
   end
 
@@ -483,6 +492,7 @@ class PythonAT311 < Formula
     system python3, "-c", "import _ctypes"
     system python3, "-c", "import _decimal"
     system python3, "-c", "import pyexpat"
+    system python3, "-c", "import readline"
     system python3, "-c", "import zlib"
 
     # tkinter is provided in a separate formula
