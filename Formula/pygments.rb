@@ -8,10 +8,6 @@ class Pygments < Formula
   license "BSD-2-Clause"
   head "https://github.com/pygments/pygments.git", branch: "master"
 
-  bottle do
-    sha256 cellar: :any_skip_relocation, all: "d4b2214521e36150b21673e1e3b3e627a22919a98274bebeaa1fb8daa0ec086d"
-  end
-
   depends_on "python@3.10" => [:build, :test]
   depends_on "python@3.11" => [:build, :test]
 
