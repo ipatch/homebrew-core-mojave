@@ -20,8 +20,7 @@ class QtAT5 < Formula
   depends_on "node" => :build
   depends_on "pkg-config" => :build
   depends_on "python@3.11" => :build # NOTE: Python 3.12+ would need additional backports due to imp usage
-  # NOTE: ipatch, i believe a full xcode install is not necessary
-  # epends_on xcode: :build
+  depends_on xcode: :build # NOTE: required to build qtwebengine
   depends_on "freetype"
   depends_on "glib"
   depends_on "jpeg-turbo"
@@ -239,7 +238,6 @@ class QtAT5 < Formula
     sha256 "2129058a5e24d98ee80a776c49a58c2671e06c338dffa7fc0154e82eef96c9d4"
     directory "qtbase"
   end
-
   patch do
     url "https://download.qt.io/official_releases/qt/5.15/0002-CVE-2023-51714-qtbase-5.15.diff"
     sha256 "99d5d32527e767d6ab081ee090d92e0b11f27702619a4af8966b711db4f23e42"
@@ -322,7 +320,6 @@ class QtAT5 < Formula
     ENV.deparallelize
     system "make", "install"
 
-    # NOTE: ipatch, i believe the below command is causing install errors
     # Remove reference to shims directory
     inreplace prefix/"mkspecs/qmodule.pri",
               /^PKG_CONFIG_EXECUTABLE = .*$/,
@@ -394,13 +391,7 @@ class QtAT5 < Formula
       pressing "Choose..." and selecting as the Qt installation path:
         #{opt_prefix}
 
-      building qt@5 from source on my 2015 mbp takes ~
-      ==> Summary
-      /Users/brewmaster/homebrew/Cellar/qt@5/5.15.13: 10,465 files, 184.9MB, built in 608 minutes 13 seconds
-
-      presently this formula will fail to install, work around,
-      install with debug mode, `-d` and ignore the error
-      ref: https://github.com/Homebrew/homebrew-core/issues/169089
+      on my mbp 2015, building qt5 from source took ~ 3 days
     EOS
   end
 
