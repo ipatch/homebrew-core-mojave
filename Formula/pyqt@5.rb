@@ -1,15 +1,9 @@
 class PyqtAT5 < Formula
   desc "Python bindings for v5 of Qt"
   homepage "https://www.riverbankcomputing.com/software/pyqt/intro"
-  url "https://files.pythonhosted.org/packages/e1/57/2023316578646e1adab903caab714708422f83a57f97eb34a5d13510f4e1/PyQt5-5.15.7.tar.gz"
-  sha256 "755121a52b3a08cb07275c10ebb96576d36e320e572591db16cfdbc558101594"
+  url "https://files.pythonhosted.org/packages/4d/5d/b8b6e26956ec113ad3f566e02abd12ac3a56b103fcc7e0735e27ee4a1df3/PyQt5-5.15.10.tar.gz"
+  sha256 "d46b7804b1b10a4ff91753f8113e5b5580d2b4462f3226288e2d84497334898a"
   license "GPL-3.0-only"
-  revision 1
-
-  bottle do
-    root_url "https://github.com/gromgit/homebrew-core-mojave/releases/download/pyqt@5"
-    sha256 cellar: :any_skip_relocation, mojave: "b48d68852474a0fee79ff9e9aa70f2d72448a2c575e871effcc11d0362308bcc"
-  end
 
   depends_on "pyqt-builder" => :build
   depends_on "python@3.10"  => [:build, :test]
@@ -20,32 +14,32 @@ class PyqtAT5 < Formula
   fails_with gcc: "5"
 
   # extra components
-  resource "PyQt5-sip" do
-    url "https://files.pythonhosted.org/packages/39/5f/fd9384fdcb9cd0388088899c110838007f49f5da1dd1ef6749bfb728a5da/PyQt5_sip-12.11.0.tar.gz"
-    sha256 "b4710fd85b57edef716cc55fae45bfd5bfac6fc7ba91036f1dcc3f331ca0eb39"
+  resource "pyqt5-sip" do
+    url "https://files.pythonhosted.org/packages/ee/81/fce2a475aa56c1f49707d9306b930695b6ff078c2242c9f2fd72a3214e1f/PyQt5_sip-12.13.0.tar.gz"
+    sha256 "7f321daf84b9c9dbca61b80e1ef37bdaffc0e93312edae2cd7da25b953971d91"
   end
 
-  resource "PyQt3D" do
-    url "https://files.pythonhosted.org/packages/44/af/58684ce08013c0e16839662844b29cd73259a909982c4d6517ce5ffda05f/PyQt3D-5.15.5.tar.gz"
-    sha256 "c025e8a2de12a27e3bd34671d01cac39f78305128cc6cea3f0ba99e4ca3ec41b"
+  resource "pyqt3d" do
+    url "https://files.pythonhosted.org/packages/a5/80/26e3394c25187854bd3b68865b2b46cfd285aae01bbf448ddcac6f466af0/PyQt3D-5.15.6.tar.gz"
+    sha256 "7d6c6d55cd8fc221b313c995c0f8729a377114926f0377f8e9011d45ebf3881c"
   end
 
-  resource "PyQtChart" do
+  resource "pyqtchart" do
     url "https://files.pythonhosted.org/packages/eb/17/1d9bb859b3e09a06633264ad91249ede0abd68c1e3f2f948ae7df94702d3/PyQtChart-5.15.6.tar.gz"
     sha256 "2691796fe92a294a617592a5c5c35e785dc91f7759def9eb22da79df63762339"
   end
 
-  resource "PyQtDataVisualization" do
+  resource "pyqtdatavisualization" do
     url "https://files.pythonhosted.org/packages/9c/ff/6ba767b4e1dbc32c7ffb93cd5d657048f6a4edf318c5b8810c8931a1733b/PyQtDataVisualization-5.15.5.tar.gz"
     sha256 "8927f8f7aa70857ef00c51e3dfbf6f83dd9f3855f416e0d531592761cbb9dc7f"
   end
 
-  resource "PyQtNetworkAuth" do
+  resource "pyqtnetworkauth" do
     url "https://files.pythonhosted.org/packages/85/b6/6b8f30ebd7c15ded3d91ed8d6082dee8aebaf79c4e8d5af77b1172c805c2/PyQtNetworkAuth-5.15.5.tar.gz"
     sha256 "2230b6f56f4c9ad2e88bf5ac648e2f3bee9cd757550de0fb98fe0bcb31217b16"
   end
 
-  resource "PyQtWebEngine" do
+  resource "pyqtwebengine" do
     url "https://files.pythonhosted.org/packages/cf/4b/ca01d875eff114ba5221ce9311912fbbc142b7bb4cbc4435e04f4f1f73cb/PyQtWebEngine-5.15.6.tar.gz"
     sha256 "ae241ef2a61c782939c58b52c2aea53ad99b30f3934c8358d5e0a6ebb3fd0721"
   end
@@ -62,7 +56,7 @@ class PyqtAT5 < Formula
   end
 
   def install
-    components = %w[PyQt3D PyQtChart PyQtDataVisualization PyQtNetworkAuth PyQtWebEngine PyQtPurchasing]
+    components = %w[pyqt3d pyqtchart pyqtdatavisualization pyqtnetworkauth pyqtwebengine PyQtPurchasing]
 
     pythons.each do |python|
       site_packages = prefix/Language::Python.site_packages(python)
@@ -73,9 +67,14 @@ class PyqtAT5 < Formula
         "--no-designer-plugin",
         "--no-qml-plugin"
       ]
+
+      puts "---------------------------------------------------------"
+      puts `which sip-install`
+      puts "---------------------------------------------------------"
+
       system "sip-install", *args
 
-      resource("PyQt5-sip").stage do
+      resource("pyqt5-sip").stage do
         system python, *Language::Python.setup_install_args(prefix, python)
       end
 
@@ -85,13 +84,13 @@ class PyqtAT5 < Formula
             [tool.sip.project]
             sip-include-dirs = ["#{site_packages}/PyQt#{version.major}/bindings"]
           EOS
-          system "sip-install", "--target-dir", site_packages
+          system "sip-install", "--verbose", "--target-dir", site_packages
         end
       end
     end
 
     # Replace hardcoded reference to Python version used with sip/pyqt-builder with generic python3.
-    bin.children.each { |script| inreplace script, Formula["python@3.10"].opt_bin/"python3.10", "python3" }
+    # bin.children.each { |script| inreplace script, Formula["python@3.10"].opt_bin/"python3.10", "python3" }
   end
 
   test do
